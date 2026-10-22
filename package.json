@@ -1,0 +1,12 @@
+{
+  "name": "lash-cartel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "stripe": "^17.4.0"
+  }
+}

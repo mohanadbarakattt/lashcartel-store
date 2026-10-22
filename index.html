@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-site-verification" content="wMGhufumK97Z7XbJPtI0H0W-g8bW7H8Cc1xriBkWTLo" />
+<title>Lash Cartel Cosmetics — Beauty Without Compromise</title>
+<meta name="description" content="Lightweight cluster lashes, DIY lash kits and precision mascara — thin, seamless band, long-lasting, natural-looking wear that's easy to apply for beginners. AU designed." />
+<link rel="canonical" href="https://www.lashcartelcosmetics.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Lash Cartel Cosmetics" />
+<meta property="og:title" content="Lash Cartel Cosmetics — Beauty Without Compromise" />
+<meta property="og:description" content="Lightweight cluster lashes, DIY lash kits and precision mascara — thin, seamless band, long-lasting, natural-looking wear that's easy to apply for beginners. AU designed." />
+<meta property="og:url" content="https://www.lashcartelcosmetics.com/" />
+<meta property="og:image" content="https://www.lashcartelcosmetics.com/assets/hero.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Lash Cartel Cosmetics — Beauty Without Compromise" />
+<meta name="twitter:description" content="Lightweight cluster lashes, DIY lash kits and precision mascara — easy, natural-looking wear for beginners." />
+<meta name="twitter:image" content="https://www.lashcartelcosmetics.com/assets/hero.jpg" />
+<link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+<link rel="icon" type="image/png" href="/assets/favicon.png?v=3" />
+<link rel="apple-touch-icon" href="/assets/favicon.png?v=3" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Lash Cartel Cosmetics",
+  "url": "https://www.lashcartelcosmetics.com/",
+  "logo": "https://www.lashcartelcosmetics.com/assets/logo.png",
+  "sameAs": ["https://www.instagram.com/lashcartelcosmetics"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Lash Cartel Cosmetics",
+  "url": "https://www.lashcartelcosmetics.com/"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  :root {
+    --blush: #f5d6d2;          /* header / section pink */
+    --blush-soft: #fbe9e6;     /* light pink wash */
+    --blush-deep: #e8b5ae;     /* deeper rose */
+    --rose: #d98f86;           /* buttons / accents */
+    --rose-dark: #c2766c;
+    --ink: #2c2622;            /* near-black text */
+    --ink-soft: #6b615b;       /* muted text */
+    --gold: #c9a24b;           /* logo ring accent */
+    --cream: #fffaf8;          /* white content bg */
+    --line: rgba(44,38,34,0.10);
+    --radius: 16px;
+    --shadow: 0 18px 50px rgba(178,118,108,0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Poppins', -apple-system, sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: .2px; }
+  .script { font-family: 'Pinyon Script', cursive; font-weight: 400; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  .announce2 { background: var(--rose); color: #fff; text-align: center; padding: 8px 16px; font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+  .announce2 b { font-weight: 600; }
+
+  /* header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(245,214,210,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(44,38,34,0.06);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 84px; }
+  .nav-links { display: flex; gap: 30px; flex: 1; margin-left: 40px; }
+  .nav-links a { font-size: 12.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ink); transition: color .2s; font-weight: 500; }
+  .nav-links a:hover { color: var(--rose-dark); }
+  /* centre logo */
+  .logo { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .logo-img { height: 68px; width: auto; display: block; }
+  .logo .ring {
+    width: 58px; height: 58px; border-radius: 50%; border: 2px solid var(--gold);
+    display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, #fff7f4, var(--blush-soft));
+  }
+  .logo .mark { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+  .nav-right { display: flex; gap: 18px; flex: 1; justify-content: flex-end; align-items: center; }
+  .icon-btn { background: none; border: none; color: var(--ink); cursor: pointer; display: grid; place-items: center; padding: 4px; transition: color .2s; position: relative; }
+  .icon-btn:hover { color: var(--rose-dark); }
+  .cart-count {
+    position: absolute; top: -7px; right: -8px; background: var(--rose-dark); color: #fff;
+    font-size: 10px; font-weight: 600; min-width: 18px; height: 18px; border-radius: 9px;
+    display: grid; place-items: center; padding: 0 5px;
+  }
+
+  /* hero */
+  .hero { background: linear-gradient(180deg, var(--blush) 0%, var(--blush-soft) 100%); position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 30px; min-height: 560px; padding: 40px 0; }
+  .hero-copy .eyebrow { color: var(--rose-dark); letter-spacing: 3px; text-transform: uppercase; font-size: 11.5px; font-weight: 600; margin-bottom: 14px; }
+  .hero-copy h1 { font-size: clamp(46px, 7vw, 82px); line-height: 0.95; margin-bottom: 8px; }
+  .hero-copy h1 .script { display: block; color: var(--rose-dark); font-size: clamp(58px, 9vw, 104px); line-height: 1; }
+  .hero-copy p { color: var(--ink-soft); font-size: 16px; max-width: 440px; margin: 22px 0 30px; }
+  .hero-visual { position: relative; display: grid; place-items: center; }
+  .hero-visual .box {
+    width: 100%; max-width: 560px; aspect-ratio: 1672/941; border-radius: 24px;
+    background: linear-gradient(150deg, #fff7f4, var(--blush)); box-shadow: var(--shadow);
+    display: grid; place-items: center; position: relative; overflow: hidden;
+  }
+  .hero-visual .photo-tag { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: var(--ink-soft); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+    font-size: 12.5px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    padding: 15px 34px; border-radius: 50px; border: none; transition: all .25s; font-family: 'Poppins', sans-serif;
+  }
+  .btn-primary { background: var(--rose); color: #fff; }
+  .btn-primary:hover { background: var(--rose-dark); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(194,118,108,0.35); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--blush-soft); }
+
+  /* feature icon row */
+  .features { background: var(--cream); border-bottom: 1px solid var(--line); }
+  .features-grid { display: flex; justify-content: space-between; gap: 18px; padding: 30px 0; flex-wrap: wrap; }
+  .feature { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; flex: 1; min-width: 110px; }
+  .feature .ic { width: 40px; height: 40px; color: var(--rose-dark); }
+  .feature span { font-size: 11.5px; letter-spacing: .8px; text-transform: uppercase; font-weight: 500; color: var(--ink); }
+
+  /* section */
+  .section { padding: 84px 0; }
+  .sec-head { text-align: center; margin-bottom: 48px; }
+  .sec-head .eyebrow { color: var(--rose-dark); letter-spacing: 3px; text-transform: uppercase; font-size: 11.5px; font-weight: 600; margin-bottom: 10px; }
+  .sec-head h2 { font-size: clamp(36px, 5vw, 54px); line-height: 1.05; }
+  .sec-head .script { color: var(--rose-dark); }
+  .sec-head p { color: var(--ink-soft); margin-top: 10px; font-size: 15px; }
+
+  /* category tabs */
+  .cat-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px; }
+  .cat-tab {
+    background: #fff; border: 1.5px solid var(--line); color: var(--ink-soft);
+    font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 500;
+    padding: 10px 22px; border-radius: 40px; cursor: pointer; transition: all .2s; font-family: 'Poppins', sans-serif;
+  }
+  .cat-tab:hover { border-color: var(--rose); color: var(--rose-dark); }
+  .cat-tab.active { background: var(--rose); color: #fff; border-color: var(--rose); }
+
+  /* product grid */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .card { background: #fff; border-radius: var(--radius); overflow: hidden; transition: transform .3s, box-shadow .3s; display: flex; flex-direction: column; box-shadow: 0 8px 28px rgba(178,118,108,0.10); }
+  .card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .card-img { aspect-ratio: 1/1; position: relative; display: grid; place-items: center; overflow: hidden; background: linear-gradient(160deg, var(--blush-soft), var(--blush)); }
+  .card-img .lash { width: 60%; transition: transform .4s; }
+  .card:hover .card-img .lash { transform: scale(1.05); }
+  .badge { position: absolute; top: 12px; left: 12px; background: var(--ink); color: #fff; font-size: 9.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 500; padding: 5px 11px; border-radius: 30px; }
+  .badge.faith { background: var(--rose-dark); }
+  .badge.sold { background: #8a8079; }
+  .card-img.is-sold img { opacity: .55; filter: saturate(.6); }
+  .add-btn.is-sold-out { background: #e3dcd6; color: #8a8079; cursor: not-allowed; }
+  .add-btn.is-sold-out:hover { background: #e3dcd6; }
+  .card-body { padding: 20px; display: flex; flex-direction: column; gap: 5px; flex: 1; text-align: center; }
+  .card-badge-inline { align-self: center; background: var(--rose); color: #fff; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; padding: 5px 12px; border-radius: 50px; margin-bottom: 4px; }
+  .card-badge-inline.faith { background: var(--gold); color: var(--ink); }
+  .card-body .cat-label { color: var(--rose-dark); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  .card-body h3 { font-size: 22px; line-height: 1.1; }
+  .card-body .desc { color: var(--ink-soft); font-size: 13px; flex: 1; margin: 4px 0; }
+  .price { font-size: 18px; font-weight: 600; font-family: 'Cormorant Garamond', serif; margin-top: 4px; }
+  .price .was { color: var(--ink-soft); font-weight: 400; text-decoration: line-through; font-size: 15px; margin-left: 8px; }
+  .add-btn { background: var(--ink); border: none; color: #fff; font-size: 11.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 500; padding: 12px; border-radius: 40px; cursor: pointer; transition: all .2s; margin-top: 12px; }
+  .add-btn:hover { background: var(--rose-dark); }
+
+  /* faith / story split */
+  .split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 56px; }
+  .split .visual { aspect-ratio: 4/3.4; border-radius: var(--radius); background: linear-gradient(150deg, var(--blush), var(--blush-deep)); box-shadow: var(--shadow); display: grid; place-items: center; position: relative; overflow: hidden; }
+  .split .visual img { width: 100%; height: 100%; object-fit: cover; }
+  .split .visual .photo-tag { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: rgba(44,38,34,0.5); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .split h2 { font-size: clamp(32px, 4.5vw, 50px); line-height: 1.05; margin-bottom: 8px; }
+  .split .script { color: var(--rose-dark); }
+  .split p { color: var(--ink-soft); margin-bottom: 16px; font-size: 15.5px; }
+  .pill-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 20px 0 26px; }
+  .pill-list li { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--ink); }
+  .pill-list li svg { color: var(--rose-dark); flex-shrink: 0; }
+
+  /* how to apply */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .step { background: #fff; border-radius: var(--radius); padding: 30px 22px; text-align: center; box-shadow: 0 8px 24px rgba(178,118,108,0.08); }
+  .step .num { width: 46px; height: 46px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center; background: var(--blush); color: var(--rose-dark); font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 22px; }
+  .step h4 { font-family: 'Cormorant Garamond', serif; font-size: 21px; margin-bottom: 6px; }
+  .step p { color: var(--ink-soft); font-size: 13.5px; }
+
+  /* reviews */
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .review { background: #fff; border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 8px 24px rgba(178,118,108,0.08); }
+  .review .stars { color: var(--rose); letter-spacing: 3px; font-size: 14px; }
+  .review p { color: var(--ink); font-size: 14.5px; line-height: 1.6; flex: 1; }
+  .review .who { display: flex; align-items: center; gap: 12px; }
+  .review .ava { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--blush-deep); color: #fff; font-weight: 600; font-size: 15px; }
+  .review .who .n { font-weight: 500; font-size: 14px; }
+  .review .who .v { color: var(--rose-dark); font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
+
+  /* find us / vending — photo + map + address unified in one card */
+  .location-card { display: grid; grid-template-columns: 1.1fr 1fr; background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .location-photo { position: relative; min-height: 460px; display: grid; place-items: center; overflow: hidden; background: linear-gradient(160deg, var(--blush-soft), var(--blush)); }
+  .location-photo .machine-illus { width: 60%; max-width: 250px; filter: drop-shadow(0 20px 36px rgba(178,118,108,0.30)); }
+  .location-pin { position: absolute; top: 18px; left: 18px; background: var(--rose-dark); color: #fff; font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; padding: 7px 14px; border-radius: 30px; display: flex; align-items: center; gap: 7px; z-index: 2; }
+  .photo-caption { position: absolute; bottom: 16px; left: 18px; right: 18px; text-align: center; color: rgba(44,38,34,0.45); font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; }
+  .location-info { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .location-info .machine-tag { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; background: var(--blush-soft); color: var(--rose-dark); font-size: 11px; letter-spacing: .8px; text-transform: uppercase; font-weight: 600; padding: 8px 14px; border-radius: 30px; margin-bottom: 16px; }
+  .location-info h3 { font-size: 30px; margin-bottom: 12px; }
+  .location-info .addr { color: var(--ink); font-size: 15.5px; margin-bottom: 6px; font-weight: 500; display: flex; align-items: center; gap: 9px; }
+  .location-info .hours { color: var(--ink-soft); font-size: 13.5px; margin-bottom: 20px; padding-left: 26px; }
+  .location-map { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 175px; margin-bottom: 20px; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+  .location-map:hover { border-color: var(--rose); box-shadow: 0 6px 18px rgba(178,118,108,0.18); }
+  .location-map svg { width: 100%; height: 100%; display: block; }
+  .location-info .btn { align-self: flex-start; }
+
+  /* faq */
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq-item { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; background: #fff; overflow: hidden; }
+  .faq-q { width: 100%; text-align: left; background: none; border: none; color: var(--ink); cursor: pointer; padding: 20px 24px; font-size: 15.5px; font-weight: 500; font-family: inherit; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q .chev { color: var(--rose-dark); transition: transform .25s; flex-shrink: 0; }
+  .faq-item.open .faq-q .chev { transform: rotate(180deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+  .faq-a-inner { padding: 0 24px 20px; color: var(--ink-soft); font-size: 14.5px; line-height: 1.65; }
+  .faq-a-inner a { color: var(--rose-dark); }
+
+  /* footer */
+  footer { background: var(--blush); border-top: 1px solid rgba(44,38,34,0.06); padding: 56px 0 30px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+  .foot-brand .logo { align-items: flex-start; }
+  .foot-brand p { color: var(--ink-soft); font-size: 14px; max-width: 280px; margin-top: 14px; }
+  .foot-email { display: inline-block; margin-top: 12px; color: var(--rose-dark); font-size: 13.5px; font-weight: 500; transition: color .2s; }
+  .foot-email:hover { color: var(--ink); }
+  .foot-social { display: flex; gap: 10px; margin-top: 14px; }
+  .foot-social a { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; color: var(--ink); transition: all .2s; }
+  .foot-social a:hover { background: var(--rose); border-color: var(--rose); color: #fff; }
+  .foot-col h5 { font-size: 11.5px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--rose-dark); margin-bottom: 14px; font-weight: 600; }
+  .foot-col a { display: block; color: var(--ink-soft); font-size: 13.5px; margin-bottom: 9px; transition: color .2s; }
+  .foot-col a:hover { color: var(--ink); }
+  .foot-bottom { border-top: 1px solid rgba(44,38,34,0.10); padding-top: 22px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-soft); font-size: 12px; }
+  .foot-bottom a { color: var(--ink-soft); margin-left: 16px; }
+
+  /* cart drawer */
+  .overlay { position: fixed; inset: 0; background: rgba(44,38,34,0.4); backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: all .3s; z-index: 90; }
+  .overlay.show { opacity: 1; visibility: visible; }
+  .drawer { position: fixed; top: 0; right: 0; height: 100%; width: 420px; max-width: 90vw; background: var(--cream); z-index: 100; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(178,118,108,0.2); }
+  .drawer.show { transform: translateX(0); }
+  .drawer-head { padding: 24px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+  .drawer-head h3 { font-size: 24px; }
+  .close-x { background: none; border: none; color: var(--ink-soft); font-size: 26px; cursor: pointer; line-height: 1; transition: color .2s; }
+  .close-x:hover { color: var(--ink); }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 12px 24px; }
+  .cart-empty { text-align: center; color: var(--ink-soft); padding: 60px 20px; }
+  .cart-row { display: flex; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .cart-row .thumb { width: 60px; height: 60px; border-radius: 10px; flex-shrink: 0; display: grid; place-items: center; background: var(--blush-soft); }
+  .cart-row .thumb .lash { width: 72%; }
+  .cart-row .info { flex: 1; }
+  .cart-row .info h4 { font-size: 15px; font-weight: 500; font-family: 'Cormorant Garamond', serif; }
+  .cart-row .info .cat-label { color: var(--rose-dark); font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; }
+  .qty { display: inline-flex; align-items: center; gap: 12px; margin-top: 8px; background: #fff; border: 1px solid var(--line); border-radius: 30px; padding: 4px 6px; }
+  .qty button { background: none; border: none; color: var(--ink); width: 22px; height: 22px; cursor: pointer; font-size: 16px; border-radius: 50%; }
+  .qty button:hover { background: var(--blush-soft); }
+  .qty span { font-size: 13px; min-width: 16px; text-align: center; }
+  .cart-row .right { text-align: right; }
+  .cart-row .right .p { font-weight: 600; }
+  .cart-row .right .rm { background: none; border: none; color: var(--ink-soft); font-size: 11px; cursor: pointer; margin-top: 10px; letter-spacing: .5px; text-transform: uppercase; }
+  .cart-row .right .rm:hover { color: var(--rose-dark); }
+  .drawer-foot { padding: 22px 24px; border-top: 1px solid var(--line); }
+  .drawer-foot .line { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--ink-soft); font-size: 14px; }
+  .drawer-foot .line.total { color: var(--ink); font-size: 19px; font-weight: 600; font-family: 'Cormorant Garamond', serif; margin: 14px 0 16px; }
+  .ship-note { color: var(--rose-dark); font-size: 12px; margin-bottom: 14px; text-align: center; }
+  .gift-pick { background: var(--blush-soft); border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+  .gift-pick .g-title { display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--rose-dark); font-weight: 600; margin-bottom: 10px; }
+  .gift-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .gift-opt { background: #fff; border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 8px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500; color: var(--ink); transition: all .2s; text-align: center; }
+  .gift-opt img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 7px; display: block; margin-bottom: 7px; }
+  .gift-opt:hover { border-color: var(--rose); }
+  .gift-opt.sel { border-color: var(--rose); background: #fff; box-shadow: 0 0 0 1.5px var(--rose); color: var(--rose-dark); font-weight: 600; }
+
+  /* checkout modal */
+  .modal { position: fixed; inset: 0; z-index: 110; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal.show { display: flex; }
+  .modal-bg { position: absolute; inset: 0; background: rgba(44,38,34,0.5); backdrop-filter: blur(4px); }
+  .modal-card { position: relative; background: var(--cream); border-radius: 18px; width: 480px; max-width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow); }
+  .modal-head { padding: 24px 26px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; background: var(--cream); }
+  .modal-head h3 { font-size: 24px; }
+  .modal-body { padding: 26px; }
+  .checkout-summary { background: var(--blush-soft); border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+  .checkout-summary .row { display: flex; justify-content: space-between; font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; }
+  .checkout-summary .row.total { color: var(--ink); font-weight: 600; font-size: 17px; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; margin-bottom: 0; }
+  .checkout-section-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--rose-dark); margin: 20px 0 12px; font-weight: 600; }
+  .field { width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; color: var(--ink); font-size: 15px; font-family: inherit; }
+  .field::placeholder { color: var(--ink-soft); }
+  .field:focus { outline: none; border-color: var(--rose); }
+  .pay-btn { width: 100%; margin-top: 22px; background: var(--rose); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif; }
+  .pay-btn:hover { background: var(--rose-dark); }
+  .pay-btn:disabled { opacity: .6; cursor: not-allowed; }
+  .checkout-error { color: var(--rose-dark); font-size: 13px; margin-top: 12px; display: none; }
+  .checkout-error.show { display: block; }
+  .demo-note { background: var(--blush-soft); border: 1px solid var(--blush-deep); border-radius: 12px; padding: 16px; font-size: 13px; color: var(--ink); line-height: 1.55; margin-top: 18px; }
+  .demo-note b { color: var(--rose-dark); }
+  .checkout-loading { text-align: center; color: var(--ink-soft); padding: 30px; }
+
+  /* search */
+  .search-bg { position: fixed; inset: 0; background: rgba(44,38,34,0.4); backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: all .3s; z-index: 115; }
+  .search-bg.show { opacity: 1; visibility: visible; }
+  .search-panel { position: fixed; top: 0; left: 0; right: 0; background: var(--cream); z-index: 120; transform: translateY(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); box-shadow: 0 12px 40px rgba(178,118,108,0.22); }
+  .search-panel.show { transform: translateY(0); }
+  .search-head { display: flex; align-items: center; gap: 16px; max-width: 1180px; margin: 0 auto; padding: 22px 24px; }
+  .search-head .s-ico { color: var(--rose-dark); flex-shrink: 0; }
+  .search-head input { flex: 1; border: none; background: none; font-size: clamp(20px, 3vw, 26px); font-family: 'Cormorant Garamond', serif; color: var(--ink); outline: none; }
+  .search-head input::placeholder { color: var(--ink-soft); }
+  .search-head .s-close { background: none; border: none; font-size: 28px; color: var(--ink-soft); cursor: pointer; line-height: 1; }
+  .search-head .s-close:hover { color: var(--ink); }
+  .search-results { max-width: 1180px; margin: 0 auto; padding: 0 24px 24px; max-height: 62vh; overflow-y: auto; }
+  .s-result { display: flex; align-items: center; gap: 16px; padding: 14px 4px; border-top: 1px solid var(--line); transition: background .2s; border-radius: 10px; }
+  .s-result:hover { background: var(--blush-soft); }
+  .s-result img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; background: var(--blush-soft); flex-shrink: 0; }
+  .s-noimg { width: 56px; height: 56px; border-radius: 10px; background: var(--blush-soft); flex-shrink: 0; }
+  .s-result .s-info { flex: 1; }
+  .s-result .s-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; line-height: 1.1; }
+  .s-result .s-tag { color: var(--rose-dark); font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+  .s-result .s-price { font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+  .s-empty { padding: 36px 0; color: var(--ink-soft); text-align: center; }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s, transform .7s; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 980px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .reviews { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .nav-right { flex: 0; }
+    .nav { justify-content: space-between; }
+    .logo { order: -1; }
+  }
+  @media (max-width: 760px) {
+    .hero-grid, .split { grid-template-columns: 1fr; }
+    .hero-visual { order: -1; }
+    .location-card { grid-template-columns: 1fr; }
+    .location-photo { min-height: 300px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .features-grid { gap: 22px; }
+    .feature { min-width: 40%; }
+  }
+  @media (max-width: 520px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announce2"><b>Buy 2, Get 10% Off</b> &nbsp;·&nbsp; Free Gift With Every Purchase</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="Lash Cartel home">
+      <img src="/assets/logo.png" alt="Lash Cartel Cosmetics" class="logo-img" />
+    </a>
+    <nav class="nav-links">
+      <a href="#shop">Shop All</a>
+      <a href="#shop" onclick="setCategory('lashes')">Lashes</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="openSearch()" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button class="icon-btn" onclick="openCart()" aria-label="Open cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount" style="display:none;">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <h1>Beauty <span class="script">Without Compromise</span></h1>
+      <p>Lightweight cluster lashes with a thin, seamless band that disappears into your lash line — natural-looking, long-lasting wear that's easy enough for total beginners. For the baddies on the go.</p>
+      <div>
+        <a href="#shop" class="btn btn-primary">Shop Now</a>
+        <a href="#about" class="btn btn-ghost" style="margin-left:10px;">Our Story</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="box" style="padding:0;">
+        <img src="/assets/hero.jpg" alt="Lash Cartel lashes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap features-grid">
+    <div class="feature reveal">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/><path d="M19 4l1.5 1.5M21 8l1 .5"/></svg>
+      <span>Beginner-Friendly</span>
+    </div>
+    <div class="feature reveal">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9 2h6"/></svg>
+      <span>5-Min Application</span>
+    </div>
+    <div class="feature reveal">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/><text x="12" y="18" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none">7</text></svg>
+      <span>7-Day Wear</span>
+    </div>
+    <div class="feature reveal">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><path d="M9 12a3 3 0 0 0 6 0"/></svg>
+      <span>Invisible Band</span>
+    </div>
+    <div class="feature reveal">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 4C12 4 6 9 5 17c6 0 12-3 14-9"/><path d="M5 19c2-4 5-6 9-7"/></svg>
+      <span>Weightless Feel</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The Collection</div>
+      <h2>Shop the <span class="script">Range</span></h2>
+      <p>Premium cluster lashes, DIY kits and precision mascara — lightweight, long-lasting, and easy to apply at home.</p>
+    </div>
+    <div class="cat-tabs reveal" id="catTabs"></div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="about" style="background:var(--blush-soft);">
+  <div class="wrap split">
+    <div class="visual reveal">
+      <img src="/assets/lifestyle-lashes.jpg" alt="Lash Cartel lashes — before and after" />
+    </div>
+    <div class="reveal">
+      <div class="sec-head" style="text-align:left;margin-bottom:0;">
+        <div class="eyebrow">Our Story</div>
+        <h2>Effortless glam, <span class="script">made easy</span></h2>
+      </div>
+      <p>Lash Cartel isn't just about products — it's about empowerment, confidence, and self-expression. We make lightweight cluster lashes with a thin, seamless band that looks natural, lasts for days, and is easy enough to apply even if you've never worn lashes before.</p>
+      <ul class="pill-list">
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Thin, seamless band — blends into your natural lash line</li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Lightweight, long-lasting wear — applied in minutes</li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Beginner-friendly, reusable, and designed in Australia</li>
+      </ul>
+      <a href="#shop" class="btn btn-primary">Explore the Collection</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-to-apply">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">It's Easy</div>
+      <h2>Lashes On in <span class="script">4 Steps</span></h2>
+      <p>Salon-worthy lashes at home — no experience needed, ready in minutes.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="num">1</div><h4>Curl Your Lashes</h4><p>To achieve a good curl effect, curl your natural lashes with a lash curler.</p></div>
+      <div class="step reveal"><div class="num">2</div><h4>Place Under</h4><p>Our under-lash system sits beneath your natural lashes — gently position it close to the lash line.</p></div>
+      <div class="step reveal"><div class="num">3</div><h4>Press &amp; Set</h4><p>Press lightly to set. Weightless, invisible band — no heavy strip, no irritation.</p></div>
+      <div class="step reveal"><div class="num">4</div><h4>Wear &amp; Reuse</h4><p>Long-lasting hold that lasts for days. Store and reuse, wear after wear.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reviews" style="background:var(--blush-soft);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Loved By You</div>
+      <h2>From the <span class="script">Community</span></h2>
+      <p>Real words from the baddies who wear them.</p>
+    </div>
+    <div class="reviews">
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>"As soon as I gave them to my 18 yr old she went nuts — she said they are the perfect sizes, your prices are bloody awesome ❤️"</p>
+        <div class="who"><div class="ava">M</div><div><div class="n">MrsDarkKnight</div><div class="v">Verified Buyer</div></div></div>
+      </div>
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Just wanted to mention I've put them on and they are so comfortable and so pretty, I'm obsessed — will definitely be back for more!"</p>
+        <div class="who"><div class="ava">M</div><div><div class="n">Mel</div><div class="v">Verified Buyer</div></div></div>
+      </div>
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Grabbed a set from the Bankstown machine on my way out — so quick and the quality is gorgeous. Lasted me the whole week."</p>
+        <div class="who"><div class="ava">F</div><div><div class="n">Fatima S.</div><div class="v">Verified Buyer</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="find-us">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Find Us</div>
+      <h2>Shop the <span class="script">Machine</span> in Person</h2>
+      <p>Can't wait for the post? Grab your lashes from our self-serve vending machine.</p>
+    </div>
+    <div class="location-card reveal">
+      <div class="location-photo">
+        <span class="location-pin">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bankstown
+        </span>
+        <img src="/assets/vending-machine-real.jpg" alt="Lash Cartel vending machine in Bankstown" style="width:100%;height:100%;object-fit:cover;" />
+      </div>
+      <div class="location-info">
+        <span class="machine-tag">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M9 18h6"/></svg>
+          Now stocking · Self-serve 24/7
+        </span>
+        <h3>Bankstown Vending Machine</h3>
+        <p class="addr">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--rose-dark)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bankstown, NSW 2200
+        </p>
+        <p class="hours">Open 24/7 · Tap &amp; card pay at the machine · Restocked weekly</p>
+        <a class="location-map" href="https://www.google.com/maps/@-33.9157954,151.0385512,17.96z?entry=ttu&amp;g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" aria-label="Open Lash Cartel Bankstown location in Google Maps">
+          <svg viewBox="0 0 400 175" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map showing Lash Cartel in Bankstown">
+            <rect width="400" height="175" fill="#f7ddd9"/>
+            <rect x="278" y="14" width="104" height="58" rx="8" fill="#eccbc6"/>
+            <path d="M-10 150 Q90 132 180 150 T400 142 L400 175 L-10 175 Z" fill="#efd0cb"/>
+            <g stroke="#fffaf8" stroke-linecap="round">
+              <g stroke-width="13">
+                <line x1="0" y1="46" x2="400" y2="40"/>
+                <line x1="0" y1="104" x2="400" y2="100"/>
+                <line x1="70" y1="0" x2="64" y2="175"/>
+                <line x1="178" y1="0" x2="174" y2="175"/>
+                <line x1="300" y1="0" x2="296" y2="175"/>
+              </g>
+              <line x1="-10" y1="172" x2="410" y2="8" stroke-width="18"/>
+            </g>
+            <line x1="-10" y1="172" x2="410" y2="8" stroke="#e6b9b2" stroke-width="2" stroke-dasharray="7 8"/>
+            <g transform="translate(190 70)">
+              <ellipse cx="0" cy="32" rx="13" ry="4" fill="rgba(44,38,34,0.18)"/>
+              <path d="M0 30 C-12 12 -14 6 -14 -2 A14 14 0 1 1 14 -2 C14 6 12 12 0 30 Z" fill="#c2766c" stroke="#fffaf8" stroke-width="2"/>
+              <circle cx="0" cy="-2" r="5.5" fill="#fffaf8"/>
+            </g>
+            <text x="16" y="162" font-family="Poppins, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5" fill="#9c6f68">BANKSTOWN · NSW</text>
+          </svg>
+        </a>
+        <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=-33.9157954,151.0385512">Get Directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" style="background:var(--blush-soft);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Good to Know</div>
+      <h2>Your <span class="script">Questions</span>, Answered</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Are these beginner-friendly?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely. The cluster and pre-glued designs are made for easy at-home application — most people get the hang of it in a few minutes. The thin, seamless band sits close to your natural lash line so it looks natural even on your first try.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How long do they last?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Up to 7 days of continuous wear per application, and they're reusable with proper care. Gently store them after each wear to keep them looking new.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How fast is shipping?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">We pack and post from Australia within 5–7 business days. Delivery is a $4.95 flat rate Australia-wide. Prefer in person? Visit our 24/7 vending machine in Bankstown.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Where's the vending machine?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Our self-serve machine is in Bankstown, NSW — open 24/7 with tap and card payment. See the <a href="#find-us">Find Us</a> section above for the map and directions. More Sydney locations coming soon.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">What's your returns policy?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">For hygiene reasons we can't accept returns on opened products, but if your order arrives faulty or damaged we'll replace it or refund you. Just <a href="mailto:Lashcartel.co@outlook.com">email us</a> and we'll sort it out.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="/assets/logo.png" alt="Lash Cartel Cosmetics" style="height:84px;width:auto;display:block;" />
+        <div class="foot-social">
+          <a href="https://www.instagram.com/lashcartelcosmetics/" target="_blank" rel="noopener" aria-label="Lash Cartel on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+        <p>Lightweight cluster lashes, kits and mascara, designed in Australia. Beauty without compromise.</p>
+        <a class="foot-email" href="mailto:Lashcartel.co@outlook.com">Lashcartel.co@outlook.com</a>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <a href="#shop">Shop All</a>
+        <a href="#shop" onclick="setCategory('lashes')">Lashes</a>
+        <a href="/#how-to-apply">How to Apply</a>
+      </div>
+      <div class="foot-col">
+        <h5>Info</h5>
+        <a href="#about">About Us</a>
+        <a href="/#how-to-apply">How to Apply</a>
+        <a href="/#faq">FAQs</a>
+        <a href="/#find-us">Location</a>
+        <a href="/contact">Contact Us</a>
+      </div>
+      <div class="foot-col">
+        <h5>Policies</h5>
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Lash Cartel Cosmetics · Designed by <strong style="color:var(--rose-dark);font-weight:600;">AppSyntax</strong></span>
+      <span>Secure checkout via Stripe · All prices AUD</span>
+    </div>
+  </div>
+</footer>
+
+<div class="search-bg" id="searchBg" onclick="closeSearch()"></div>
+<div class="search-panel" id="searchPanel">
+  <div class="search-head">
+    <svg class="s-ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="searchInput" type="search" placeholder="Search products…" oninput="doSearch(this.value)" autocomplete="off" aria-label="Search products" />
+    <button class="s-close" onclick="closeSearch()" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Your Bag</h3>
+    <button class="close-x" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot" style="display:none;">
+    <div class="line"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+    <div class="line" id="discountLine" style="display:none;color:var(--rose-dark);"><span>Buy 2, Get 10% Off</span><span id="cartDiscount">−$0.00</span></div>
+    <div class="line"><span>Shipping</span><span id="cartShipping">FREE</span></div>
+    <div class="line total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <div class="ship-note" id="shipNote"></div>
+    <div class="gift-pick">
+      <div class="g-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v9h14v-9"/><path d="M12 8v13"/><path d="M12 8c-2 0-4.5-.6-4.5-2.8C7.5 3.6 9 3 10 3c2 0 2 3 2 5zm0 0c2 0 4.5-.6 4.5-2.8C16.5 3.6 15 3 14 3c-2 0-2 3-2 5z"/></svg>
+        Free gift with your order — pick one
+      </div>
+      <div class="gift-opts">
+        <button type="button" class="gift-opt" id="giftOpt1" onclick="pickGift('Tea Tree Mint Foot Mask')"><img src="/assets/gifts/gift-tea-tree.jpg" alt="Tea Tree Mint Exfoliating Foot Mask" loading="lazy" /><span>Tea Tree Mint<br>Foot Mask</span></button>
+        <button type="button" class="gift-opt" id="giftOpt2" onclick="pickGift('Coconut Repair Foot Mask')"><img src="/assets/gifts/gift-coconut.jpg" alt="Coconut Moisturizing &amp; Repair Foot Mask" loading="lazy" /><span>Coconut Repair<br>Foot Mask</span></button>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="stripeCheckout()">Secure Checkout</button>
+  </div>
+</aside>
+
+<div class="modal" id="checkoutModal">
+  <div class="modal-bg" onclick="closeCheckoutModal()"></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Checkout</h3>
+      <button class="close-x" onclick="closeCheckoutModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="checkoutBody">
+      <div class="checkout-loading">Preparing secure checkout…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STRIPE_PUBLISHABLE_KEY = 'pk_live_51Tjy6ORzyEd7RY87nZiDOVQweCWbaAqLWegnuyyj96Fd2GmCtalEzLBM9rruQDynJz1wsHq3qC34rz83QwrgzRE000lV00OYaN';
+  const DEMO_MODE = !STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY.indexOf('pk_') !== 0;
+
+  const BULK_DISCOUNT_RATE = 0.10;
+  const BULK_DISCOUNT_MIN_QTY = 2;
+  const SHIPPING_FLAT = 4.95;
+  const SOLD_OUT = ['Pretty Ambition'];
+  const GIFT_OPTIONS = ['Tea Tree Mint Foot Mask', 'Coconut Repair Foot Mask'];
+
+  function lashSVG() {
+    return `<svg class="lash" viewBox="0 0 200 120" fill="none" stroke="#2c2622" stroke-width="2.4" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 84 Q100 104 186 84"/>
+      ${Array.from({length:11}).map((_,i)=>{const x=24+i*15;const h=26+Math.sin(i/10*Math.PI)*40;return `<path d="M${x} 84 Q${x-5} ${84-h*0.7} ${x-12} ${84-h}"/>`}).join('')}
+    </svg>`;
+  }
+  function skinSVG() {
+    return `<svg class="lash" viewBox="0 0 160 160" fill="none" stroke="#2c2622" stroke-width="3" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="58" width="80" height="66" rx="14"/><path d="M58 58V46a22 22 0 0 1 44 0v12"/><path d="M62 86h36"/>
+    </svg>`;
+  }
+  function mascaraSVG() {
+    return `<svg class="lash" viewBox="0 0 160 160" fill="none" stroke="#2c2622" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+      <rect x="62" y="24" width="36" height="30" rx="6"/><path d="M80 54v18"/>
+      <path d="M80 72v60"/>
+      <g stroke-width="2.4"><path d="M80 80l-14-5M80 88l-16-4M80 96l-16-2M80 104l-16 0M80 112l-16 2M80 120l-14 4"/><path d="M80 80l14-5M80 88l16-4M80 96l16-2M80 104l16 0M80 112l16 2M80 120l14 4"/></g>
+    </svg>`;
+  }
+
+  const CATEGORIES = [
+    { id: 'all', label: 'Shop All' },
+    { id: 'lashes', label: 'Lashes' },
+    { id: 'skincare', label: 'Skin Care' },
+    { id: 'bundles', label: 'Bundles' },
+  ];
+
+  const PRODUCTS = [
+    { name: 'DIY Cluster Lash Kit — Volume', cat: 'lashes', kind: 'lash', tag: 'Complete DIY Set', price: 40.00, desc: 'The full-glam set — dense volume clusters in 8–16mm plus bond, seal, remover and applicator. For the baddies on the go.', badge: 'Bestseller', faith: false, tm: false, img: '/assets/products/cluster-lash-kit/Volume/volume_main.jpg', href: '/cluster-lash-kit?style=Volume' },
+    { name: 'DIY Cluster Lash Kit — Natural', cat: 'lashes', kind: 'lash', tag: 'Complete DIY Set', price: 40.00, desc: 'The everyday set — soft, wispy natural clusters in 8–16mm plus bond, seal, remover and applicator. Your lashes, but better.', badge: 'New', faith: false, tm: false, img: '/assets/products/cluster-lash-kit/Natural/Natural_Main.jpg', href: '/cluster-lash-kit?style=Natural' },
+    { name: 'Pretty Ambition', cat: 'lashes', kind: 'lash', tag: 'Pre-Glued Press-On', price: 40.00, soldOut: true, desc: 'Pre-glued press-on cluster lashes with a thin, invisible band — natural-looking, long-lasting, and no glue needed.', badge: 'Beginner-Friendly', faith: false, tm: true, img: '/assets/products/pretty-ambition/pa-result.jpg', href: '/pretty-ambition' },
+    { name: 'Ultra Fine Precision Mascara', cat: 'lashes', kind: 'mascara', tag: 'Lengthening & Curling', price: 21.00, desc: 'An ultra-fine precision brush for lengthening, curling and waterproof definition — clump-free, all-day hold.', badge: 'New', faith: false, tm: false, img: '/assets/products/mascara/mascara-promo.jpg', href: '/mascara' },
+  ];
+
+  function loadCart() {
+    try {
+      return (JSON.parse(localStorage.getItem('lc_cart')) || []).map(i => {
+        if (i.name === 'DIY Cluster Lash Kit') {
+          const style = i.variant && i.variant.indexOf('Natural') === 0 ? 'Natural' : 'Volume';
+          i = { ...i, name: 'DIY Cluster Lash Kit — ' + style, key: 'DIY Cluster Lash Kit — ' + style };
+        }
+        return { ...i, key: i.key || i.name };
+      }).filter(i => i.name !== 'Lash Cartel Gift Box' && SOLD_OUT.indexOf(i.name) === -1).reduce((acc, i) => {
+        const dup = acc.find(x => x.key === i.key);
+        if (dup) dup.qty += i.qty; else acc.push(i);
+        return acc;
+      }, []);
+    } catch (e) { return []; }
+  }
+  function saveCart() { try { localStorage.setItem('lc_cart', JSON.stringify(cart)); } catch (e) {} }
+  let cart = loadCart();
+  let activeCat = 'all';
+
+  function motif(p) {
+    if (p.kind === 'skin') return skinSVG();
+    if (p.kind === 'mascara') return mascaraSVG();
+    return lashSVG();
+  }
+
+  function renderCategoryTabs() {
+    const present = new Set(PRODUCTS.map(p => p.cat));
+    const tabs = CATEGORIES.filter(c => c.id === 'all' || present.has(c.id));
+    document.getElementById('catTabs').innerHTML = tabs.map(c => `
+      <button class="cat-tab ${c.id === activeCat ? 'active' : ''}" onclick="setCategory('${c.id}')">${c.label}</button>
+    `).join('');
+  }
+
+  function setCategory(id) {
+    activeCat = id;
+    renderCategoryTabs();
+    renderProducts();
+  }
+
+  function renderProducts() {
+    const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
+    document.getElementById('productGrid').innerHTML = list.map(p => {
+      const imgInner = p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : motif(p);
+      const titleHTML = `${p.name}${p.tm ? '<span style="font-size:13px;vertical-align:super;">™</span>' : ''}`;
+      const badgeText = p.soldOut ? 'Sold Out' : p.badge;
+      const badgeCls = p.soldOut ? 'sold' : (p.faith ? 'faith' : '');
+      const badgeTag = badgeText ? `<span class="badge ${badgeCls}">${badgeText}</span>` : '';
+      const imgBlock = p.hideImg
+        ? ''
+        : p.href
+        ? `<a href="${p.href}" class="card-img${p.soldOut ? ' is-sold' : ''}" aria-label="${p.name}">${badgeTag}${imgInner}</a>`
+        : `<div class="card-img${p.soldOut ? ' is-sold' : ''}">${badgeTag}${imgInner}</div>`;
+      const badgePill = p.hideImg && badgeText ? `<span class="card-badge-inline ${badgeCls}">${badgeText}</span>` : '';
+      const titleBlock = p.href ? `<a href="${p.href}"><h3>${titleHTML}</h3></a>` : `<h3>${titleHTML}</h3>`;
+      const cta = p.soldOut
+        ? `<button class="add-btn is-sold-out" disabled aria-disabled="true">Sold Out</button>`
+        : p.href
+        ? `<a class="add-btn" href="${p.href}" style="text-align:center;text-decoration:none;">View Product</a>`
+        : `<button class="add-btn" onclick="addToCart('${p.name}')">Add to Bag</button>`;
+      return `
+      <div class="card reveal">
+        ${imgBlock}
+        <div class="card-body">
+          ${badgePill}
+          <span class="cat-label">${p.tag}</span>
+          ${titleBlock}
+          <p class="desc">${p.desc}</p>
+          <span class="price">$${p.price.toFixed(2)}${p.was ? `<span class="was">$${p.was.toFixed(2)}</span>` : ''}</span>
+          ${cta}
+        </div>
+      </div>`;
+    }).join('');
+    observeReveals();
+  }
+
+  function addToCart(name) {
+    const p = PRODUCTS.find(x => x.name === name);
+    const existing = cart.find(x => x.key === name);
+    if (existing) existing.qty++;
+    else cart.push({ key: p.name, name: p.name, tag: p.tag, price: p.price, qty: 1, kind: p.kind, img: p.img });
+    renderCart();
+    openCart();
+  }
+  function changeQty(key, d) {
+    const item = cart.find(x => x.key === key);
+    if (!item) return;
+    item.qty += d;
+    if (item.qty < 1) cart = cart.filter(x => x.key !== key);
+    renderCart();
+  }
+  function removeItem(key) { cart = cart.filter(x => x.key !== key); renderCart(); }
+
+  function cartSubtotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+  function cartQty() { return cart.reduce((s, i) => s + i.qty, 0); }
+  function cartDiscount() { return cartQty() >= BULK_DISCOUNT_MIN_QTY ? Math.round(cartSubtotal() * 100 * BULK_DISCOUNT_RATE) / 100 : 0; }
+  function cartShipping() { return cart.length ? SHIPPING_FLAT : 0; }
+
+  function loadGift() { try { const g = localStorage.getItem('lc_gift'); return GIFT_OPTIONS.includes(g) ? g : GIFT_OPTIONS[0]; } catch (e) { return GIFT_OPTIONS[0]; } }
+  let selectedGift = loadGift();
+  function pickGift(g) {
+    if (!GIFT_OPTIONS.includes(g)) return;
+    selectedGift = g;
+    try { localStorage.setItem('lc_gift', g); } catch (e) {}
+    renderGiftPicker();
+  }
+  function renderGiftPicker() {
+    document.getElementById('giftOpt1').classList.toggle('sel', selectedGift === GIFT_OPTIONS[0]);
+    document.getElementById('giftOpt2').classList.toggle('sel', selectedGift === GIFT_OPTIONS[1]);
+  }
+
+  function renderCart() {
+    saveCart();
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    const cc = document.getElementById('cartCount');
+    cc.textContent = count; cc.style.display = count ? 'grid' : 'none';
+
+    const body = document.getElementById('cartBody');
+    const foot = document.getElementById('cartFoot');
+    if (cart.length === 0) {
+      body.innerHTML = '<div class="cart-empty">Your bag is empty.<br />Time to treat yourself.</div>';
+      foot.style.display = 'none';
+      return;
+    }
+    body.innerHTML = cart.map(i => {
+      const live = PRODUCTS.find(x => x.name === i.name);
+      const img = (live && live.img) || i.img;
+      return `
+      <div class="cart-row">
+        <div class="thumb" style="${img ? 'overflow:hidden;' : ''}">${img ? `<img src="${img}" alt="" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" />` : (i.kind === 'skin' ? skinSVG() : lashSVG())}</div>
+        <div class="info">
+          <span class="cat-label">${i.tag}</span>
+          <h4>${i.name}</h4>
+          ${i.variant ? `<span class="cat-label" style="color:var(--ink-soft);letter-spacing:.4px;text-transform:none;">${i.variant}</span>` : ''}
+          <div class="qty">
+            <button onclick="changeQty('${i.key}',-1)">−</button>
+            <span>${i.qty}</span>
+            <button onclick="changeQty('${i.key}',1)">+</button>
+          </div>
+        </div>
+        <div class="right">
+          <div class="p">$${(i.price * i.qty).toFixed(2)}</div>
+          <button class="rm" onclick="removeItem('${i.key}')">Remove</button>
+        </div>
+      </div>
+    `;}).join('');
+    foot.style.display = 'block';
+
+    const sub = cartSubtotal(), disc = cartDiscount(), ship = cartShipping();
+    document.getElementById('cartSubtotal').textContent = '$' + sub.toFixed(2);
+    document.getElementById('cartDiscount').textContent = '−$' + disc.toFixed(2);
+    document.getElementById('discountLine').style.display = disc > 0 ? 'flex' : 'none';
+    document.getElementById('cartShipping').textContent = '$' + ship.toFixed(2);
+    document.getElementById('cartTotal').textContent = '$' + (sub - disc + ship).toFixed(2);
+    const note = document.getElementById('shipNote');
+    if (disc > 0) {
+      note.textContent = '10% off applied · $4.95 delivery · Free gift included';
+    } else {
+      note.textContent = 'Add 1 more item to get 10% off your order';
+    }
+    renderGiftPicker();
+  }
+
+  function openCart() { document.getElementById('drawer').classList.add('show'); document.getElementById('overlay').classList.add('show'); }
+  function closeCart() { document.getElementById('drawer').classList.remove('show'); document.getElementById('overlay').classList.remove('show'); }
+
+  function openSearch() {
+    document.getElementById('searchPanel').classList.add('show');
+    document.getElementById('searchBg').classList.add('show');
+    const inp = document.getElementById('searchInput');
+    inp.value = ''; doSearch('');
+    setTimeout(() => inp.focus(), 120);
+  }
+  function closeSearch() {
+    document.getElementById('searchPanel').classList.remove('show');
+    document.getElementById('searchBg').classList.remove('show');
+  }
+  function searchRow(p) {
+    const link = p.href || '#shop';
+    const thumb = p.img ? `<img src="${p.img}" alt="${p.name}" />` : `<span class="s-noimg"></span>`;
+    return `<a class="s-result" href="${link}">
+      ${thumb}
+      <div class="s-info"><div class="s-tag">${p.tag}</div><div class="s-name">${p.name}${p.tm ? '™' : ''}</div></div>
+      <div class="s-price">$${p.price.toFixed(2)}</div>
+    </a>`;
+  }
+  function doSearch(q) {
+    q = (q || '').trim().toLowerCase();
+    const results = document.getElementById('searchResults');
+    const list = q
+      ? PRODUCTS.filter(p => (p.name + ' ' + p.tag + ' ' + p.desc).toLowerCase().includes(q))
+      : PRODUCTS;
+    results.innerHTML = list.length
+      ? list.map(searchRow).join('')
+      : `<div class="s-empty">No products match “${q}”.</div>`;
+  }
+
+  let stripeInstance = null, elementsInstance = null;
+  function openCheckoutModal() { document.getElementById('checkoutModal').classList.add('show'); }
+  function closeCheckoutModal() {
+    document.getElementById('checkoutModal').classList.remove('show');
+    document.getElementById('checkoutBody').innerHTML = '<div class="checkout-loading">Preparing secure checkout…</div>';
+    elementsInstance = null;
+  }
+
+  const APPEARANCE = {
+    theme: 'flat',
+    variables: { colorPrimary: '#d98f86', colorBackground: '#ffffff', colorText: '#2c2622', borderRadius: '10px', fontFamily: 'Poppins, sans-serif' },
+  };
+
+  async function stripeCheckout() {
+    if (cart.length === 0) { alert('Your bag is empty.'); return; }
+    const sub = cartSubtotal(), disc = cartDiscount(), ship = cartShipping(), total = sub - disc + ship;
+
+    openCheckoutModal();
+    const body = document.getElementById('checkoutBody');
+
+    const summaryHTML = `
+      <div class="checkout-summary">
+        <div class="row"><span>Subtotal</span><span>$${sub.toFixed(2)} AUD</span></div>
+        ${disc > 0 ? `<div class="row" style="color:var(--rose-dark);"><span>Buy 2, Get 10% Off</span><span>−$${disc.toFixed(2)} AUD</span></div>` : ''}
+        <div class="row"><span>Shipping</span><span>$${ship.toFixed(2)} AUD</span></div>
+        <div class="row"><span>Free gift</span><span>${selectedGift}</span></div>
+        <div class="row total"><span>Total</span><span>$${total.toFixed(2)} AUD</span></div>
+      </div>`;
+
+    if (DEMO_MODE) {
+      body.innerHTML = summaryHTML + `
+        <div class="demo-note">
+          <b>Prototype preview.</b> This is a fully working store — live card checkout switches on the moment
+          your Stripe account is connected. Orders are then charged in AUD straight to your Stripe dashboard,
+          with payouts to your bank. No monthly fees.
+        </div>
+        <button class="pay-btn" onclick="closeCheckoutModal()" style="margin-top:18px;">Got it</button>`;
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cart.map(i => ({ name: i.name, quantity: i.qty })), freeGift: selectedGift })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Could not start checkout.');
+
+      body.innerHTML = `
+        ${summaryHTML}
+        <div class="checkout-section-label">Email</div>
+        <input id="checkoutEmail" type="email" inputmode="email" autocomplete="email" required placeholder="you@email.com"
+          style="width:100%;padding:12px 14px;border:1px solid #e6dcd8;border-radius:10px;background:#fff;font-family:Poppins,sans-serif;font-size:15px;color:#2c2622;outline:none;"
+          onfocus="this.style.borderColor='#d98f86'" onblur="this.style.borderColor='#e6dcd8'" />
+        <div style="font-size:12px;color:#8a7f7a;margin:6px 2px 0;">Your order confirmation and receipt will be sent here.</div>
+        <div class="checkout-section-label">Shipping address</div>
+        <div id="address-element"></div>
+        <div class="checkout-section-label">Payment</div>
+        <div id="payment-element"></div>
+        <div class="checkout-error" id="checkoutError"></div>
+        <button class="pay-btn" id="payBtn" type="button" onclick="confirmPay()">Pay $${(data.amount/100).toFixed(2)} AUD</button>`;
+
+      if (!stripeInstance) stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
+      elementsInstance = stripeInstance.elements({ clientSecret: data.clientSecret, appearance: APPEARANCE });
+      elementsInstance.create('address', { mode: 'shipping', allowedCountries: ['AU', 'NZ'], fields: { phone: 'auto' } }).mount('#address-element');
+      elementsInstance.create('payment', { layout: { type: 'tabs' }, wallets: { applePay: 'auto', googlePay: 'auto' } }).mount('#payment-element');
+    } catch (err) {
+      console.error(err);
+      body.innerHTML = '<div class="checkout-loading" style="color:var(--rose-dark);">Checkout failed: ' + (err.message || 'unknown error') + '</div>';
+    }
+  }
+
+  async function confirmPay() {
+    if (!elementsInstance || !stripeInstance) return;
+    const btn = document.getElementById('payBtn');
+    const errorEl = document.getElementById('checkoutError');
+    const emailInput = document.getElementById('checkoutEmail');
+    const email = (emailInput.value || '').trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      errorEl.textContent = 'Please enter your email address so we can send your order confirmation.';
+      errorEl.classList.add('show');
+      emailInput.focus();
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Processing…';
+    errorEl.classList.remove('show');
+    const { error } = await stripeInstance.confirmPayment({
+      elements: elementsInstance,
+      confirmParams: { return_url: window.location.origin + '/success.html', receipt_email: email },
+    });
+    if (error) {
+      errorEl.textContent = error.message || 'Payment failed. Check your details and try again.';
+      errorEl.classList.add('show');
+      btn.disabled = false; btn.textContent = 'Try again';
+    }
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const ans = item.querySelector('.faq-a');
+    const isOpen = item.classList.toggle('open');
+    ans.style.maxHeight = isOpen ? ans.scrollHeight + 'px' : null;
+  }
+
+  let io;
+  function observeReveals() {
+    if (!io) io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  }
+
+  renderCategoryTabs();
+  renderProducts();
+  renderCart();
+  observeReveals();
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); closeCheckoutModal(); closeSearch(); } });
+  if (/[?&]bag=1/.test(window.location.search) && cart.length) { openCart(); }
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
