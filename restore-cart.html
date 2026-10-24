@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Restore Your Cart | Lash Cartel</title></head><body style="background:#fffaf8;color:#2c2622;font:16px Arial,sans-serif;text-align:center;padding:12vh 20px"><img src="/assets/logo.png" alt="Lash Cartel" width="140"><h1>Your lash look is waiting</h1><p id="status">Restoring your bag...</p><script src="/assets/catalog.js"></script><script>
+const meta={
+'DIY Cluster Lash Kit — Volume':['Complete DIY Set','lash','/assets/products/cluster-lash-kit/Volume/volume_main.jpg','Volume Set'],
+'DIY Cluster Lash Kit — Natural':['Complete DIY Set','lash','/assets/products/cluster-lash-kit/Natural/Natural_Main.jpg','Natural Set'],
+'Pretty Ambition':['Pre-Glued Press-On','lash','/assets/products/pretty-ambition/pa-result.jpg',''],
+'Ultra Fine Precision Mascara':['Lengthening & Curling','mascara','/assets/products/mascara/mascara-promo.jpg','']};
+fetch('/api/cart-restore'+location.search).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.error);return d}).then(d=>{const cart=d.items.filter(i=>meta[i.name]&&LC_CATALOG[i.name]).map(i=>({key:i.name,name:i.name,qty:i.quantity,price:LC_CATALOG[i.name],tag:meta[i.name][0],kind:meta[i.name][1],img:meta[i.name][2],variant:meta[i.name][3]}));localStorage.setItem('lc_cart',JSON.stringify(cart));location.replace('/?bag=1')}).catch(e=>{document.getElementById('status').textContent=e.message||'Could not restore your bag.'});
+</script></body></html>

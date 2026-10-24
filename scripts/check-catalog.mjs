@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { CATALOG, quote } from '../lib/catalog.js';
+import { CATALOG, ADDONS, quote } from '../lib/catalog.js';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 
@@ -12,4 +12,11 @@ assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }]).t
 assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 2 }]).total, 9306);
 assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }, { name: 'Ultra Fine Precision Mascara', quantity: 1 }]).total, 6790);
 assert.throws(() => quote([{ name: 'Pretty Ambition', quantity: 1 }]), /sold out/);
+assert.throws(() => quote([{ name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]), /not available/);
+assert.throws(() => quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }, { name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]), /not available/);
+ADDONS['Ultra Fine Precision Mascara'].addonPriceCents = 1500;
+assert.throws(() => quote([{ name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]), /require another product/);
+assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }, { name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]).total, 6890);
+assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 2 }, { name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]).total, 10806);
+ADDONS['Ultra Fine Precision Mascara'].addonPriceCents = null;
 console.log('Catalogue parity and checkout totals passed.');

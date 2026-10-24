@@ -170,9 +170,16 @@
       <p class="lede">Effortless, salon-level glam at home. Soft, wispy pre-glued clusters lift, define and open the eye — no strip lash, no gluey mess. A thin, seamless band sits close to your lash line for a natural, long-lasting finish.</p>
 
       <div class="buy-row">
-        <button class="add-bag is-sold-out" disabled aria-disabled="true">Sold Out</button>
+        <button class="add-bag is-sold-out" id="addBtn" onclick="addProduct()" disabled aria-disabled="true">Sold Out</button>
       </div>
-      <p class="sold-note">Out of stock — the next batch is on its way. Check back soon.</p>
+      <p class="sold-note" id="soldNote">Out of stock — the next batch is on its way.</p>
+      <form id="stockForm" style="margin:16px 0;display:grid;gap:8px;max-width:360px;">
+        <label for="stockEmail">Notify Me When Back in Stock</label>
+        <input id="stockEmail" type="email" autocomplete="email" required placeholder="Email address" style="padding:12px;border:1px solid #e8b5ae;border-radius:8px;" />
+        <p style="font-size:12px;">We’ll only email you about this restock.</p>
+        <button class="add-bag" type="submit">Notify me</button>
+        <p id="stockStatus" role="status"></p>
+      </form>
 
       <div class="reassure">
         <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Wudu-friendly &amp; water-permeable</span>
@@ -281,7 +288,7 @@
   }
 
   function addProduct() {
-    return; // Pretty Ambition is sold out
+    if (soldOut) return;
 
     const cart = loadCart();
     const key = PRODUCT.name;
@@ -299,6 +306,26 @@
 
   renderThumbs();
   updateBagCount();
+  let soldOut = true;
+  fetch('/api/stock').then(r => r.ok ? r.json() : null).then(stock => {
+    if (!stock) return;
+    soldOut = !stock['pretty-ambition'];
+    const button = document.getElementById('addBtn');
+    button.disabled = soldOut;
+    button.setAttribute('aria-disabled', String(soldOut));
+    button.textContent = soldOut ? 'Sold Out' : `Add to Bag · $${PRODUCT.price.toFixed(2)}`;
+    document.getElementById('soldNote').style.display = soldOut ? '' : 'none';
+    document.getElementById('stockForm').style.display = soldOut ? 'grid' : 'none';
+  }).catch(() => {});
+  document.getElementById('stockForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    const status = document.getElementById('stockStatus');
+    try {
+      const response = await fetch('/api/stock-subscribe', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ product: 'Pretty Ambition', email: document.getElementById('stockEmail').value }) });
+      if (!response.ok) throw new Error('Could not subscribe. Please try again.');
+      status.textContent = 'You’re on the list, Baddie. We’ll email you when she’s back.';
+    } catch (error) { status.textContent = error.message; }
+  });
   document.querySelectorAll('.acc-item.open .acc-a').forEach(a => { a.style.maxHeight = a.scrollHeight + 'px'; });
 </script>
 <script defer src="/_vercel/insights/script.js"></script>

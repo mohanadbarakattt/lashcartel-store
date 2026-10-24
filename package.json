@@ -7,9 +7,10 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
     "stripe": "^17.4.0"
   },
   "scripts": {
-    "test": "node scripts/check-catalog.mjs"
+    "test": "node scripts/check-catalog.mjs && node scripts/check-quiz.mjs && node scripts/check-faq.mjs && node scripts/check-cart-schedule.mjs"
   }
 }

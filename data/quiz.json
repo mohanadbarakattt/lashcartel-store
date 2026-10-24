@@ -1,0 +1,16 @@
+{
+  "title": "Find Your Perfect Lash Match",
+  "introduction": "Not sure which lashes are right for you? Let us find your perfect match! Answer five quick questions and discover your ideal Lash Cartel lashes.",
+  "questions": [
+    { "text": "What’s the occasion?", "options": ["Everyday wear", "Dinner or date night", "Wedding or special event", "Night out", "Just want to look fabulous!"] },
+    { "text": "What’s your preferred lash look?", "options": ["Natural and subtle", "Soft and wispy", "Full and fluffy", "Bold and dramatic", "I’m not sure!"] },
+    { "text": "How experienced are you with lashes?", "options": ["Complete beginner", "I’ve worn lashes a few times", "I’m experienced with applying lashes."] },
+    { "text": "What matters most to you?", "options": ["Quick and easy application", "Long-lasting wear", "Natural-looking results", "Maximum volume and glamour"] },
+    { "text": "What type of lash application do you prefer?", "options": ["Pre-glued lashes for easy application", "DIY lash kits with bond and seal", "I’m not sure, help me choose!"] }
+  ],
+  "results": {
+    "Pretty Ambition": { "explanation": "Quick, convenient and beginner friendly. Your lashes come pre-glued, so there is no separate bond or sealer to buy.", "image": "/assets/products/pretty-ambition/pa-result.jpg", "url": "/pretty-ambition", "soldOut": true },
+    "DIY Cluster Lash Kit — Natural": { "explanation": "A natural, subtle everyday look with a DIY kit that includes everything you need to apply them yourself.", "image": "/assets/products/cluster-lash-kit/Natural/Natural_Main.jpg", "url": "/cluster-lash-kit?style=Natural" },
+    "DIY Cluster Lash Kit — Volume": { "explanation": "Fuller, fluffier and bold with a DIY kit that includes everything you need to apply them yourself.", "image": "/assets/products/cluster-lash-kit/Volume/volume_main.jpg", "url": "/cluster-lash-kit?style=Volume" }
+  }
+}
