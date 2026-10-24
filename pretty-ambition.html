@@ -32,8 +32,8 @@
     "@type": "Offer",
     "url": "https://www.lashcartelcosmetics.com/pretty-ambition",
     "priceCurrency": "AUD",
-    "price": "42.00",
-    "availability": "https://schema.org/InStock",
+    "price": "51.99",
+    "availability": "https://schema.org/OutOfStock",
     "itemCondition": "https://schema.org/NewCondition"
   }
 }
@@ -165,7 +165,7 @@
     <div class="info">
       <span class="cat-label">Pre-Glued Press-On</span>
       <h1>Pretty Ambition<sup>™</sup></h1>
-      <div class="price">$40.00 AUD</div>
+      <div class="price">$51.99 AUD</div>
       <p class="tax-note">Tax included. $4.95 flat-rate delivery Australia-wide.</p>
       <p class="lede">Effortless, salon-level glam at home. Soft, wispy pre-glued clusters lift, define and open the eye — no strip lash, no gluey mess. A thin, seamless band sits close to your lash line for a natural, long-lasting finish.</p>
 
@@ -240,6 +240,7 @@
   </div>
 </footer>
 
+<script src="/assets/catalog.js"></script>
 <script>
   const GALLERY = [
     '/assets/products/pretty-ambition/pa-result.jpg',
@@ -247,7 +248,7 @@
     '/assets/products/pretty-ambition/pa-precision.jpg',
     '/assets/products/pretty-ambition/pa-tray.jpg',
   ];
-  const PRODUCT = { name: 'Pretty Ambition', tag: 'Pre-Glued Press-On', price: 40.00, kind: 'lash', img: '/assets/products/pretty-ambition/pa-result.jpg' };
+  const PRODUCT = { name: 'Pretty Ambition', tag: 'Pre-Glued Press-On', price: LC_CATALOG['Pretty Ambition'], kind: 'lash', img: '/assets/products/pretty-ambition/pa-result.jpg' };
 
   let qty = 1;
 

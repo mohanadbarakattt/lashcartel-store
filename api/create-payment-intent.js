@@ -1,22 +1,9 @@
 import Stripe from 'stripe';
+import { quote, GIFT_OPTIONS } from '../lib/catalog.js';
 
 const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
-
-const CATALOGUE = {
-  'DIY Cluster Lash Kit — Volume': 40.00,
-  'DIY Cluster Lash Kit — Natural': 40.00,
-  'DIY Cluster Lash Kit': 40.00, // legacy name from pre-split carts
-  'Pretty Ambition': 40.00,
-  'Ultra Fine Precision Mascara': 21.00,
-};
-
-const BULK_DISCOUNT_RATE = 0.10;
-const BULK_DISCOUNT_MIN_QTY = 2;
-const SHIPPING_FLAT_CENTS = 495;
-const SOLD_OUT = ['Pretty Ambition'];
-const GIFT_OPTIONS = ['Tea Tree Mint Foot Mask', 'Coconut Repair Foot Mask'];
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -28,40 +15,18 @@ export default async function handler(req, res) {
       error: 'Stripe is not configured. Set STRIPE_SECRET_KEY in Vercel environment variables.'
     });
   }
+  if (process.env.VERCEL_ENV !== 'production' && !process.env.STRIPE_SECRET_KEY.startsWith('sk_test_')) {
+    return res.status(503).json({ error: 'Preview checkout requires Stripe test keys.' });
+  }
 
   try {
     const { items, customerEmail, freeGift } = req.body || {};
 
-    if (!Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ error: 'Cart is empty.' });
-    }
-
-    let subtotalCents = 0;
-    let totalQty = 0;
-    const summary = [];
-
-    for (const item of items) {
-      if (SOLD_OUT.includes(item.name)) {
-        return res.status(400).json({ error: `${item.name} is sold out.` });
-      }
-      const expected = CATALOGUE[item.name];
-      if (expected === undefined) {
-        return res.status(400).json({ error: `Unknown product: ${item.name}` });
-      }
-      const qty = Number(item.quantity) || 1;
-      if (qty < 1 || qty > 50) {
-        return res.status(400).json({ error: `Invalid quantity for ${item.name}` });
-      }
-      subtotalCents += Math.round(expected * 100) * qty;
-      totalQty += qty;
-      summary.push(`${item.name} x${qty}`);
-    }
-
-    const discountCents = totalQty >= BULK_DISCOUNT_MIN_QTY
-      ? Math.round(subtotalCents * BULK_DISCOUNT_RATE)
-      : 0;
-    const shippingCents = SHIPPING_FLAT_CENTS;
-    const totalCents = subtotalCents - discountCents + shippingCents;
+    let pricing;
+    try { pricing = quote(items); }
+    catch (error) { return res.status(400).json({ error: error.message }); }
+    const { subtotal: subtotalCents, discount: discountCents, shipping: shippingCents, total: totalCents } = pricing;
+    const summary = pricing.lines.map(line => `${line.name} x${line.quantity}`);
 
     const gift = GIFT_OPTIONS.includes(freeGift) ? freeGift : GIFT_OPTIONS[0];
 
@@ -81,6 +46,7 @@ export default async function handler(req, res) {
         shipping: '$4.95 flat',
         discount: discountCents > 0 ? `10% buy-2+ (-$${(discountCents / 100).toFixed(2)})` : 'none',
         free_gift: gift,
+        order_items: JSON.stringify(pricing.lines).slice(0, 500),
       },
     });
 

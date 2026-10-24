@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "stripe": "^17.4.0"
+  },
+  "scripts": {
+    "test": "node scripts/check-catalog.mjs"
   }
 }
