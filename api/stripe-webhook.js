@@ -36,7 +36,14 @@ export default async function handler(req, res) {
       await sql`UPDATE orders SET status = 'failed' WHERE payment_intent_id = ${event.data.object.id} AND status = 'pending'`;
     } else if (event.type === 'charge.refunded') {
       const intentId = event.data.object.payment_intent;
-      if (intentId) await sql`UPDATE orders SET status = 'refunded' WHERE payment_intent_id = ${intentId} AND status IN ('paid','dispatched')`;
+      if (intentId) {
+        const refunded = await sql`UPDATE orders SET status = 'refunded' WHERE payment_intent_id = ${intentId} AND status IN ('paid','dispatched') RETURNING *`;
+        for (const order of refunded) {
+          if (process.env.CARTEL_CASH_ENABLED !== 'true') continue;
+          const earn = await sql`SELECT member_id,points FROM points_ledger WHERE event_key = ${`order:${order.id}:earn`}`;
+          if (earn.length) await sql`INSERT INTO points_ledger(member_id,points,reason,event_key) VALUES (${earn[0].member_id},${-earn[0].points},${`Refund ${order.order_number}`},${`order:${order.id}:refund`}) ON CONFLICT(event_key) DO NOTHING`;
+        }
+      }
     }
     return res.status(200).json({ received: true });
   } catch (error) {
