@@ -80,6 +80,16 @@ form.addEventListener('submit', async event => {
   try {
     const response = await fetch('/api/partner-enquiry', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
     const result = await response.json();
+    if (response.status === 503) {
+      const subject = `Lash Cartel ${body.kind} enquiry from ${body.business}`;
+      const message = [body.name, body.business, body.email, body.phone, body.location,
+        body.rentalPeriod, body.intendedPlacement, body.message].filter(Boolean).join('\n\n');
+      const link = document.createElement('a');
+      link.href = `mailto:Lashcartel.co@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      link.textContent = 'Open your email app to send this enquiry';
+      status.replaceChildren(link);
+      return;
+    }
     if (!response.ok) throw new Error(result.error || 'Could not send your enquiry.');
     form.reset(); toggleRental(); status.textContent = 'Thanks, your enquiry has been received.';
   } catch (error) { status.textContent = error.message; }

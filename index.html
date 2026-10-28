@@ -695,7 +695,6 @@
     </div>
     <label for="cartEmail" style="display:block;font-size:13px;font-weight:600;margin-top:12px;">Email for your order</label>
     <input id="cartEmail" type="email" autocomplete="email" required placeholder="you@email.com" style="width:100%;padding:11px;border:1px solid var(--blush-deep);border-radius:8px;margin:6px 0;" />
-    <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;margin:8px 0;"><input id="cartReminderConsent" type="checkbox" /> Email me reminders about items I leave in my cart.</label>
     <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="stripeCheckout()">Secure Checkout</button>
   </div>
 </aside>
@@ -1017,7 +1016,6 @@
     const cartEmail = document.getElementById('cartEmail');
     if (!cartEmail.checkValidity()) { cartEmail.reportValidity(); cartEmail.focus(); return; }
     const customerEmail = cartEmail.value.trim();
-    const reminderConsent = document.getElementById('cartReminderConsent').checked;
     const sub = cartSubtotal(), disc = cartDiscount(), ship = cartShipping(), total = sub - disc + ship;
 
     openCheckoutModal();
@@ -1033,7 +1031,6 @@
       </div>`;
 
     try {
-      await fetch('/api/cart-snapshot', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ email: customerEmail, consent: reminderConsent, items: cart.map(i => ({ name: i.name, quantity: i.qty, addon: !!i.addon })) }) });
       const configResponse = await fetch('/api/public-config', { cache: 'no-store' });
       const config = await configResponse.json();
       STRIPE_PUBLISHABLE_KEY = config.stripePublishableKey || '';
@@ -1062,7 +1059,7 @@
         <input id="checkoutEmail" type="email" inputmode="email" autocomplete="email" required readonly placeholder="you@email.com"
           style="width:100%;padding:12px 14px;border:1px solid #e6dcd8;border-radius:10px;background:#fff;font-family:Poppins,sans-serif;font-size:15px;color:#2c2622;outline:none;"
           onfocus="this.style.borderColor='#d98f86'" onblur="this.style.borderColor='#e6dcd8'" />
-        <div style="font-size:12px;color:#8a7f7a;margin:6px 2px 0;">Your order confirmation and receipt will be sent here.</div>
+        <div style="font-size:12px;color:#8a7f7a;margin:6px 2px 0;">We use this email for your payment receipt.</div>
         <div class="checkout-section-label">Shipping address</div>
         <div id="address-element"></div>
         <div class="checkout-section-label">Payment</div>
@@ -1088,7 +1085,7 @@
     const emailInput = document.getElementById('checkoutEmail');
     const email = (emailInput.value || '').trim();
     if (!/^\S+@\S+\.\S+$/.test(email)) {
-      errorEl.textContent = 'Please enter your email address so we can send your order confirmation.';
+      errorEl.textContent = 'Please enter your email address for your payment receipt.';
       errorEl.classList.add('show');
       emailInput.focus();
       return;

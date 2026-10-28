@@ -20,7 +20,6 @@ export default async function handler(req, res) {
   if (process.env.VERCEL_ENV !== 'production' && !process.env.STRIPE_SECRET_KEY.startsWith('sk_test_')) {
     return res.status(503).json({ error: 'Preview checkout requires Stripe test keys.' });
   }
-  if (!process.env.DATABASE_URL) return res.status(503).json({ error: 'Preview orders require a configured database.' });
 
   try {
     const { items, customerEmail, freeGift } = req.body || {};
@@ -36,11 +35,17 @@ export default async function handler(req, res) {
 
     const gift = GIFT_OPTIONS.includes(freeGift) ? freeGift : GIFT_OPTIONS[0];
 
-    const sql = db();
-    const saved = await sql`INSERT INTO orders (customer_email,items,subtotal_cents,discount_cents,shipping_cents,total_cents,free_gift)
-      VALUES (${customerEmail.toLowerCase()},${JSON.stringify(pricing.lines)}::jsonb,${subtotalCents},${discountCents},${shippingCents},${totalCents},${gift}) RETURNING id`;
-    const orderId = saved[0].id;
-    const orderNumber = `LC-${String(10000 + Number(orderId)).padStart(5, '0')}`;
+    // Keep the existing Stripe checkout available while order storage is being configured.
+    const sql = process.env.DATABASE_URL ? db() : null;
+    let orderId = null;
+    let orderNumber = 'LC-' + Date.now().toString(36).toUpperCase().slice(-5) +
+      Math.random().toString(36).toUpperCase().slice(2, 5);
+    if (sql) {
+      const saved = await sql`INSERT INTO orders (customer_email,items,subtotal_cents,discount_cents,shipping_cents,total_cents,free_gift)
+        VALUES (${customerEmail.toLowerCase()},${JSON.stringify(pricing.lines)}::jsonb,${subtotalCents},${discountCents},${shippingCents},${totalCents},${gift}) RETURNING id`;
+      orderId = saved[0].id;
+      orderNumber = `LC-${String(10000 + Number(orderId)).padStart(5, '0')}`;
+    }
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,
@@ -55,10 +60,10 @@ export default async function handler(req, res) {
         shipping: '$4.95 flat',
         discount: discountCents > 0 ? `10% buy-2+ (-$${(discountCents / 100).toFixed(2)})` : 'none',
         free_gift: gift,
-        order_id: String(orderId),
+        ...(orderId ? { order_id: String(orderId) } : {}),
       },
     });
-    await sql`UPDATE orders SET order_number = ${orderNumber}, payment_intent_id = ${paymentIntent.id} WHERE id = ${orderId}`;
+    if (sql) await sql`UPDATE orders SET order_number = ${orderNumber}, payment_intent_id = ${paymentIntent.id} WHERE id = ${orderId}`;
 
     return res.status(200).json({
       clientSecret: paymentIntent.client_secret,

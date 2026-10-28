@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 250 || !product) {
     return res.status(400).json({ error: 'Enter a valid email and product.' });
   }
-  if (!process.env.DATABASE_URL) return res.status(503).json({ error: 'Restock alerts are not configured.' });
+  if (!process.env.DATABASE_URL || process.env.RESTOCK_ALERTS_ENABLED !== 'true') return res.status(503).json({ error: 'Restock alerts are not configured.' });
   try {
     const stock = await getStock();
     if (stock[product.stockKey]) return res.status(400).json({ error: 'This product is in stock.' });

@@ -1,12 +1,12 @@
-# Lash Cartel review branch setup
+# Lash Cartel website setup
 
-This repository contains the website at its root. The branch `codex/website-upgrades` is for review. Do not merge or point the live domain to it until Fats approves the prices, wording, and service setup.
+This repository contains the website at its root. The owner approved the new retail prices and asked to publish the available upgrades. Existing Stripe checkout works without a database; database-backed features remain pending service setup.
 
 ## Preview services
 
 Create a separate preview Postgres database and run the SQL files in `db/migrations` in numeric order. Set `DATABASE_URL` in the Vercel preview environment. Never place the URL in Git.
 
-Configure Stripe **test** `STRIPE_SECRET_KEY` and `STRIPE_PUBLISHABLE_KEY` for Preview only. Create a Stripe test webhook pointing to `https://<preview-domain>/api/stripe-webhook` and add its `STRIPE_WEBHOOK_SECRET`. The handler accepts `payment_intent.succeeded`, `payment_intent.payment_failed`, and `charge.refunded`. Do not use live keys for this review branch.
+Configure Stripe **test** `STRIPE_SECRET_KEY` and `STRIPE_PUBLISHABLE_KEY` for Preview only. Create a Stripe test webhook pointing to `https://<preview-domain>/api/stripe-webhook` and add its `STRIPE_WEBHOOK_SECRET`. The handler accepts `payment_intent.succeeded`, `payment_intent.payment_failed`, and `charge.refunded`. Production checkout uses the existing live Stripe credentials.
 
 Set `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `MEMBER_SESSION_SECRET`, `LINK_SIGNING_SECRET`, `ENQUIRY_RATE_SALT`, and `CRON_SECRET` to distinct strong random values. The admin page is `/admin`. The password is a single shared admin credential. After signing in, staff can toggle stock and mark paid orders dispatched. Enter an Australia Post tracking number to send a tracking email. No email is sent when marking an order dispatched without tracking.
 
@@ -16,7 +16,7 @@ Set `PUBLIC_SITE_URL` to the exact preview URL so email links point to the previ
 
 ## Scheduled work
 
-The protected routes `/api/cron/cart` and `/api/cron/restock` need scheduled GET requests with `Authorization: Bearer <CRON_SECRET>`. They are inactive until a scheduler is attached. Cart reminders are due at 2, 24, and 72 hours and require an unticked checkbox to be checked. Restock alerts only target subscribers to the matching product. Vercel Cron runs on production deployments, not previews; the preview routes can be exercised manually with the secret. On Hobby plans, Vercel Cron cannot run every 15 minutes. Choose an appropriate scheduler or plan before launch.
+The protected routes `/api/cron/cart` and `/api/cron/restock` need scheduled GET requests with `Authorization: Bearer <CRON_SECRET>`. They are inactive until a scheduler is attached. Cart reminders are due at 2, 24, and 72 hours. The cart reminder checkbox stays hidden until the full flow is configured. Set `RESTOCK_ALERTS_ENABLED=true` only after the database, email sender, and restock scheduler are working; until then the product page offers direct email contact. Restock alerts only target subscribers to the matching product. Vercel Cron runs on production deployments, not previews; the preview routes can be exercised manually with the secret. On Hobby plans, Vercel Cron cannot run every 15 minutes. Choose an appropriate scheduler or plan before launch.
 
 ## Editable content
 

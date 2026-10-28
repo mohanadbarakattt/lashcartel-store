@@ -317,11 +317,18 @@
     document.getElementById('soldNote').style.display = soldOut ? '' : 'none';
     document.getElementById('stockForm').style.display = soldOut ? 'grid' : 'none';
   }).catch(() => {});
+  fetch('/api/public-config', { cache: 'no-store' }).then(response => response.json()).then(config => {
+    if (!config.restockAlertsEnabled) {
+      const form = document.getElementById('stockForm');
+      form.innerHTML = '<a href="mailto:Lashcartel.co@outlook.com?subject=Pretty%20Ambition%20restock">Ask us about the Pretty Ambition restock</a>';
+    }
+  }).catch(() => {});
   document.getElementById('stockForm').addEventListener('submit', async event => {
     event.preventDefault();
     const status = document.getElementById('stockStatus');
     try {
       const response = await fetch('/api/stock-subscribe', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ product: 'Pretty Ambition', email: document.getElementById('stockEmail').value }) });
+      if (response.status === 503) throw new Error('Restock alerts are being set up. Please email Lashcartel.co@outlook.com.');
       if (!response.ok) throw new Error('Could not subscribe. Please try again.');
       status.textContent = 'You’re on the list, Baddie. We’ll email you when she’s back.';
     } catch (error) { status.textContent = error.message; }
