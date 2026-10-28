@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Cartel Cash | Lash Cartel</title><link rel="stylesheet" href="/legal.css"><link rel="stylesheet" href="/assets/upgrades.css"></head>
+<body><header class="legal-header"><a href="/">LASH CARTEL</a></header><main class="legal-main" style="max-width:760px;margin:auto;padding:32px 20px;"><h1>Cartel Cash</h1><p id="notice" role="status"></p>
+<section id="join"><p>Sign in with your email to see your points. Joining does not sign you up for promotional emails.</p><form id="member-form"><label for="member-email">Email</label><input id="member-email" type="email" required autocomplete="email" style="display:block;width:100%;padding:12px;margin:8px 0 14px"><label style="display:flex;gap:8px;align-items:center"><input id="member-marketing" type="checkbox"> Send me Lash Cartel offers and updates (optional)</label><button type="submit" style="margin-top:18px;padding:12px 20px">Send sign-in link</button></form></section>
+<section id="dashboard" hidden><h2>Your points</h2><p id="balance" style="font-size:28px"></p><p id="rewards"></p><p id="expiry"></p><h2>Points history</h2><ul id="history"></ul><button id="logout" type="button">Sign out</button></section>
+<p><a href="/cartel-cash-terms.html">Read draft Cartel Cash terms</a></p></main>
+<script>
+const notice=document.getElementById('notice');
+const money=n=>'$'+(n/100).toFixed(2);
+async function load(){
+  const response=await fetch('/api/member-data',{cache:'no-store'});
+  if(response.status===404){notice.textContent='Cartel Cash is not available yet.';document.getElementById('join').hidden=true;return;}
+  if(!response.ok)return;
+  const data=await response.json();document.getElementById('join').hidden=true;document.getElementById('dashboard').hidden=false;
+  document.getElementById('balance').textContent=`${data.balance} points`;
+  const step=data.reward.redemption_step_points, cents=data.reward.redemption_step_cents;
+  document.getElementById('rewards').textContent=`${step} points = ${money(cents)} off an eligible purchase. Minimum redemption: ${data.reward.minimum_redemption_points} points.`;
+  document.getElementById('expiry').textContent=data.reward.expiry_days===null?'Points currently do not expire.':`Points expire after ${data.reward.expiry_days} days.`;
+  document.getElementById('history').replaceChildren(...data.history.map(row=>{const li=document.createElement('li');li.textContent=`${row.points>0?'+':''}${row.points} · ${row.reason} · ${new Date(row.created_at).toLocaleDateString('en-AU')}`;return li;}));
+}
+document.getElementById('member-form').addEventListener('submit',async e=>{e.preventDefault();const response=await fetch('/api/member-start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('member-email').value,marketingConsent:document.getElementById('member-marketing').checked})});const data=await response.json();notice.textContent=data.message||data.error||'Please try again.';});
+document.getElementById('logout').addEventListener('click',async()=>{await fetch('/api/member-logout',{method:'POST'});location.reload();});
+const token=new URLSearchParams(location.search).get('token');
+if(token){history.replaceState(null,'','/account.html');fetch('/api/member-verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})}).then(async r=>{const data=await r.json();notice.textContent=r.ok?'Welcome to Cartel Cash.':data.error||'Sign-in failed.';if(r.ok)load();}).catch(()=>notice.textContent='Sign-in is unavailable.');}else load();
+</script></body></html>

@@ -32,7 +32,7 @@
     "@type": "Offer",
     "url": "https://www.lashcartelcosmetics.com/cluster-lash-kit",
     "priceCurrency": "AUD",
-    "price": "40.00",
+    "price": "48.95",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
   }
@@ -174,7 +174,7 @@
     <div class="info">
       <span class="cat-label">Complete DIY Set</span>
       <h1>DIY Cluster Lash Kit</h1>
-      <div class="price">$40.00 AUD</div>
+      <div class="price">$48.95 AUD</div>
       <p class="tax-note">Tax included. $4.95 flat-rate delivery Australia-wide.</p>
       <p class="kit-includes"><strong>Inside every kit:</strong> lash clusters, bond, sealer, remover and applicator tweezers.</p>
 
@@ -194,7 +194,7 @@
           <span id="qtyVal">1</span>
           <button onclick="changeQty(1)" aria-label="Increase quantity">+</button>
         </div>
-        <button class="add-bag" id="addBtn" onclick="addProduct()">Add to Bag · $40.00</button>
+        <button class="add-bag" id="addBtn" onclick="addProduct()">Add to Bag · $48.95</button>
       </div>
       <p class="sold-note" id="soldNote" style="display:none;">This style is out of stock — the next batch is on its way. Natural is available now.</p>
 
@@ -255,11 +255,12 @@
   </div>
 </footer>
 
+<script src="/assets/catalog.js"></script>
 <script>
   const SOLD_OUT_VARIANTS = [];
   const isSoldOut = v => SOLD_OUT_VARIANTS.indexOf(v) !== -1;
   let variant = isSoldOut('Volume') ? 'Natural' : 'Volume';
-  const PRODUCT = { name: 'DIY Cluster Lash Kit', tag: 'DIY Lash Kit', price: 40.00, kind: 'lash' };
+  const PRODUCT = { name: 'DIY Cluster Lash Kit', tag: 'DIY Lash Kit', price: LC_CATALOG['DIY Cluster Lash Kit'], kind: 'lash' };
 
   const SHARED = [
     '/assets/products/cluster-lash-kit/Cluster%20Kit/items.jpg',
@@ -308,7 +309,7 @@
     btn.disabled = out;
     btn.classList.toggle('is-sold-out', out);
     btn.setAttribute('aria-disabled', out ? 'true' : 'false');
-    btn.textContent = out ? 'Sold Out' : 'Add to Bag · $40.00';
+    btn.textContent = out ? 'Sold Out' : `Add to Bag · $${PRODUCT.price.toFixed(2)}`;
     if (qtyBox) qtyBox.style.display = out ? 'none' : '';
     if (note) note.style.display = out ? 'block' : 'none';
     document.querySelectorAll('.variant-opt').forEach(b => {

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Partner With Us | Lash Cartel Cosmetics</title>
+<meta name="description" content="Enquire about stocking Lash Cartel or a vending machine partnership." />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root { --blush:#f5d6d2; --blush-soft:#fbe9e6; --blush-deep:#e8b5ae; --rose:#d98f86; --rose-dark:#9a5149; --ink:#2c2622; --ink-soft:#6b615b; --gold:#c9a24b; --cream:#fffaf8; --radius:16px; }
+* { box-sizing:border-box; } body { margin:0; background:var(--cream); color:var(--ink); font:15px/1.6 Poppins,sans-serif; } a { color:inherit; } img { max-width:100%; }
+header { background:var(--blush); padding:14px 24px; } header .wrap { max-width:1100px; margin:auto; display:flex; justify-content:space-between; align-items:center; gap:20px; }
+header img { width:120px; } header nav { display:flex; gap:22px; } header nav a { text-decoration:none; font-size:13px; font-weight:600; }
+main { max-width:1100px; margin:0 auto; padding:50px 24px 90px; } h1,h2 { font-family:'Cormorant Garamond',serif; line-height:1.08; margin:0; } h1 { font-size:clamp(44px,7vw,72px); } h2 { font-size:34px; }
+.intro { max-width:700px; margin:12px 0 36px; color:var(--ink-soft); } .eyebrow { color:var(--rose-dark); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; } .card { background:white; border-radius:var(--radius); padding:32px; box-shadow:0 15px 45px rgba(178,118,108,.13); }
+.card p { color:var(--ink-soft); } .choice { display:grid; gap:10px; margin:26px 0; } .choice label { padding:12px; border:1px solid var(--blush-deep); border-radius:10px; cursor:pointer; }
+.fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; } .field { display:grid; gap:5px; } .field.full { grid-column:1/-1; } .field label { font-size:12px; font-weight:600; } .field input,.field textarea { width:100%; padding:11px 12px; border:1px solid var(--blush-deep); border-radius:9px; background:var(--cream); color:var(--ink); font:inherit; } .field textarea { min-height:110px; resize:vertical; }
+.field[hidden] { display:none; }
+button { border:0; border-radius:30px; background:var(--ink); color:white; padding:13px 26px; font:600 13px Poppins,sans-serif; cursor:pointer; } button:hover { background:var(--rose-dark); } :focus-visible { outline:3px solid var(--rose-dark); outline-offset:3px; }
+.note { background:var(--blush-soft); border-radius:12px; padding:15px; font-size:13px; } .status { min-height:26px; font-weight:600; } .hp { position:absolute; left:-10000px; }
+footer { padding:28px 24px; text-align:center; background:var(--blush); font-size:12px; } @media(max-width:750px){ .grid,.fields{grid-template-columns:1fr;} header nav{gap:10px;} .card{padding:24px;} }
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="/" aria-label="Lash Cartel home"><img src="/assets/logo.png" alt="Lash Cartel Cosmetics" /></a><nav><a href="/">Home</a><a href="/#shop">Shop</a><a href="/contact">Contact</a></nav></div></header>
+<main>
+  <div class="eyebrow">Lash Cartel Cosmetics</div>
+  <h1>Partner With Us</h1>
+  <p class="intro">Interested in bringing Lash Cartel to your store or venue? Tell us about your business and the partnership you have in mind.</p>
+  <div class="grid">
+    <div class="card">
+      <h2>Choose your partnership</h2>
+      <p>Become a Stockist is for retailers interested in stocking Lash Cartel products wholesale. Vending Machines is for venue hosts and rental enquiries.</p>
+      <img src="/assets/vending-machine-real.jpg" alt="Lash Cartel vending machine in Bankstown" loading="lazy" style="border-radius:12px;width:100%;margin:12px 0;" />
+      <p class="note">Thanks for your interest. Availability and pricing are confirmed by our team after we review your enquiry.</p>
+    </div>
+    <div class="card">
+      <h2>Send an enquiry</h2>
+      <form id="partner-form">
+        <fieldset class="choice" style="border:0;padding:0;"><legend class="field" style="font-size:12px;font-weight:600;">Enquiry type</legend>
+          <label><input type="radio" name="kind" value="stockist" required checked /> Become a Stockist</label>
+          <label><input type="radio" name="kind" value="host" /> Host a Lash Cartel vending machine at your venue</label>
+          <label><input type="radio" name="kind" value="rental" /> Enquire about renting a Lash Cartel vending machine to place at a location</label>
+        </fieldset>
+        <div class="fields">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="120" /></div>
+          <div class="field"><label for="business">Business or venue</label><input id="business" name="business" autocomplete="organization" required maxlength="160" /></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="250" /></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required maxlength="80" /></div>
+          <div class="field full"><label for="location">Proposed location or address</label><input id="location" name="location" required maxlength="300" /></div>
+          <div class="field full rental" hidden><label for="rentalPeriod">Preferred rental period</label><input id="rentalPeriod" name="rentalPeriod" maxlength="120" /></div>
+          <div class="field full rental" hidden><label for="intendedPlacement">Intended placement</label><input id="intendedPlacement" name="intendedPlacement" maxlength="300" /></div>
+          <div class="field full"><label for="message">Message</label><textarea id="message" name="message" required maxlength="3000"></textarea></div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+        <p><button type="submit">Send enquiry</button></p>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</main>
+<footer>Lash Cartel Cosmetics · <a href="mailto:Lashcartel.co@outlook.com">Lashcartel.co@outlook.com</a></footer>
+<script>
+const form = document.getElementById('partner-form');
+function toggleRental() {
+  const rental = form.elements.kind.value === 'rental';
+  document.querySelectorAll('.rental').forEach(row => { row.hidden = !rental; row.querySelector('input').required = rental; });
+}
+form.addEventListener('change', toggleRental); toggleRental();
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  const status = document.getElementById('status');
+  const button = form.querySelector('[type="submit"]');
+  button.disabled = true; status.textContent = 'Sending...';
+  const body = Object.fromEntries(new FormData(form).entries());
+  try {
+    const response = await fetch('/api/partner-enquiry', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+    const result = await response.json();
+    if (response.status === 503) {
+      const subject = `Lash Cartel ${body.kind} enquiry from ${body.business}`;
+      const message = [body.name, body.business, body.email, body.phone, body.location,
+        body.rentalPeriod, body.intendedPlacement, body.message].filter(Boolean).join('\n\n');
+      const link = document.createElement('a');
+      link.href = `mailto:Lashcartel.co@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      link.textContent = 'Open your email app to send this enquiry';
+      status.replaceChildren(link);
+      return;
+    }
+    if (!response.ok) throw new Error(result.error || 'Could not send your enquiry.');
+    form.reset(); toggleRental(); status.textContent = 'Thanks, your enquiry has been received.';
+  } catch (error) { status.textContent = error.message; }
+  finally { button.disabled = false; }
+});
+</script>
+</body>
+</html>
