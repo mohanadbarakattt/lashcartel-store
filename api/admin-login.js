@@ -1,17 +1,23 @@
 import { db } from '../lib/db.js';
 import { adminCookie, ipHash, passwordMatches, sameOrigin } from '../lib/admin-auth.js';
 
+const attempts = new Map();
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   if (!sameOrigin(req)) return res.status(403).json({ error: 'Invalid request origin.' });
-  if (!process.env.DATABASE_URL || !process.env.ADMIN_PASSWORD || !process.env.ADMIN_SESSION_SECRET) return res.status(503).json({ error: 'Admin is not configured.' });
+  if (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_SESSION_SECRET) return res.status(503).json({ error: 'Admin is not configured.' });
   try {
-    const sql = db();
     const hash = ipHash(req);
-    const recent = await sql`SELECT count(*)::int AS count FROM admin_login_attempts WHERE ip_hash = ${hash} AND created_at > now() - interval '15 minutes'`;
-    if (recent[0].count >= 5) return res.status(429).json({ error: 'Try again later.' });
+    // Rate limit: database-backed when available, otherwise best-effort per server instance.
+    const sql = process.env.DATABASE_URL ? db() : null;
+    let count;
+    if (sql) count = (await sql`SELECT count(*)::int AS count FROM admin_login_attempts WHERE ip_hash = ${hash} AND created_at > now() - interval '15 minutes'`)[0].count;
+    else { const cutoff = Date.now() - 15 * 60 * 1000; attempts.set(hash, (attempts.get(hash) || []).filter(t => t > cutoff)); count = attempts.get(hash).length; }
+    if (count >= 5) return res.status(429).json({ error: 'Try again later.' });
     if (!passwordMatches(req.body?.password)) {
-      await sql`INSERT INTO admin_login_attempts (ip_hash) VALUES (${hash})`;
+      if (sql) await sql`INSERT INTO admin_login_attempts (ip_hash) VALUES (${hash})`;
+      else attempts.get(hash).push(Date.now());
       return res.status(401).json({ error: 'Incorrect password.' });
     }
     res.setHeader('Set-Cookie', adminCookie());

@@ -693,6 +693,14 @@
         <button type="button" class="gift-opt" id="giftOpt2" onclick="pickGift('Coconut Repair Foot Mask')"><img src="/assets/gifts/gift-coconut.jpg" alt="Coconut Moisturizing &amp; Repair Foot Mask" loading="lazy" /><span>Coconut Repair<br>Foot Mask</span></button>
       </div>
     </div>
+    <div class="ref-box" style="margin-top:12px;">
+      <label for="cartRefCode" style="display:block;font-size:13px;font-weight:600;">Referral code (optional)</label>
+      <div style="display:flex;gap:8px;margin-top:6px;">
+        <input id="cartRefCode" type="text" autocomplete="off" autocapitalize="characters" maxlength="24" placeholder="e.g. SARAH10" style="flex:1;padding:11px;border:1px solid var(--blush-deep);border-radius:8px;text-transform:uppercase;" />
+        <button type="button" class="btn" style="padding:10px 14px;" onclick="applyReferral()">Apply</button>
+      </div>
+      <div id="refStatus" role="status" style="font-size:12px;margin-top:4px;color:var(--rose-dark);"></div>
+    </div>
     <label for="cartEmail" style="display:block;font-size:13px;font-weight:600;margin-top:12px;">Email for your order</label>
     <input id="cartEmail" type="email" autocomplete="email" required placeholder="you@email.com" style="width:100%;padding:11px;border:1px solid var(--blush-deep);border-radius:8px;margin:6px 0;" />
     <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="stripeCheckout()">Secure Checkout</button>
@@ -1011,12 +1019,40 @@
     variables: { colorPrimary: '#d98f86', colorBackground: '#ffffff', colorText: '#2c2622', borderRadius: '10px', fontFamily: 'Poppins, sans-serif' },
   };
 
+  let appliedReferral = null; // { code, discountPercent }
+  function referralCents(sub, disc) { return appliedReferral ? Math.round((sub - disc) * appliedReferral.discountPercent) / 100 : 0; }
+  async function applyReferral(silent) {
+    const input = document.getElementById('cartRefCode');
+    const status = document.getElementById('refStatus');
+    const code = (input.value || '').trim().toUpperCase();
+    if (!code) { appliedReferral = null; status.textContent = ''; window.LC_REFERRAL && LC_REFERRAL.clear(); return; }
+    try {
+      const r = await fetch('/api/referral?code=' + encodeURIComponent(code), { cache: 'no-store' });
+      const data = await r.json();
+      if (!r.ok || !data.valid) throw new Error(data.error || 'That code is not valid.');
+      appliedReferral = { code: data.code, discountPercent: data.discountPercent };
+      input.value = data.code;
+      window.LC_REFERRAL && LC_REFERRAL.set(data.code);
+      status.textContent = data.discountPercent > 0 ? `Code ${data.code} applied: ${data.discountPercent}% off at checkout` : `Code ${data.code} applied`;
+    } catch (e) {
+      appliedReferral = null;
+      if (!silent) status.textContent = e.message;
+    }
+  }
+  window.addEventListener('load', () => {
+    const saved = window.LC_REFERRAL && LC_REFERRAL.get();
+    if (saved) { document.getElementById('cartRefCode').value = saved; applyReferral(true); }
+  });
+
   async function stripeCheckout() {
     if (cart.length === 0) { alert('Your bag is empty.'); return; }
     const cartEmail = document.getElementById('cartEmail');
     if (!cartEmail.checkValidity()) { cartEmail.reportValidity(); cartEmail.focus(); return; }
     const customerEmail = cartEmail.value.trim();
-    const sub = cartSubtotal(), disc = cartDiscount(), ship = cartShipping(), total = sub - disc + ship;
+    const typedRef = (document.getElementById('cartRefCode').value || '').trim().toUpperCase();
+    if (typedRef && (!appliedReferral || appliedReferral.code !== typedRef)) await applyReferral();
+    if (typedRef && !appliedReferral) { document.getElementById('cartRefCode').focus(); return; }
+    const sub = cartSubtotal(), disc = cartDiscount(), ship = cartShipping(), refDisc = referralCents(sub, disc), total = sub - disc - refDisc + ship;
 
     openCheckoutModal();
     const body = document.getElementById('checkoutBody');
@@ -1025,6 +1061,7 @@
       <div class="checkout-summary">
         <div class="row"><span>Subtotal</span><span>$${sub.toFixed(2)} AUD</span></div>
         ${disc > 0 ? `<div class="row" style="color:var(--rose-dark);"><span>Buy 2, Get 10% Off</span><span>−$${disc.toFixed(2)} AUD</span></div>` : ''}
+        ${refDisc > 0 ? `<div class="row" style="color:var(--rose-dark);"><span>Code ${appliedReferral.code} (${appliedReferral.discountPercent}% off)</span><span>−$${refDisc.toFixed(2)} AUD</span></div>` : ''}
         <div class="row"><span>Shipping</span><span>$${ship.toFixed(2)} AUD</span></div>
         <div class="row"><span>Free gift</span><span>${selectedGift}</span></div>
         <div class="row total"><span>Total</span><span>$${total.toFixed(2)} AUD</span></div>
@@ -1048,7 +1085,7 @@
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: cart.map(i => ({ name: i.name, quantity: i.qty, addon: !!i.addon })), freeGift: selectedGift, customerEmail })
+        body: JSON.stringify({ items: cart.map(i => ({ name: i.name, quantity: i.qty, addon: !!i.addon })), freeGift: selectedGift, customerEmail, referralCode: appliedReferral ? appliedReferral.code : undefined, referralTyped: !!appliedReferral })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Could not start checkout.');
@@ -1144,6 +1181,7 @@ document.getElementById('chat-launcher').addEventListener('click', async () => {
   chat.openChat();
 });
 </script>
+<script src="/assets/referral.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

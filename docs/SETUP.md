@@ -30,3 +30,7 @@ The protected routes `/api/cron/cart` and `/api/cron/restock` need scheduled GET
 ## Verification
 
 Run `npm install` and `npm test`. Product pages and the checkout must also be checked in a preview browser. The test suite covers catalogue parity and totals, quiz choices, FAQ matching, and cart scheduling. Before launch, test the Stripe webhook, real email delivery, mobile layout, and accessibility with configured preview services.
+
+## Influencer referral program
+
+Open `/admin`, sign in, and use **Influencer referral codes** to create a code per influencer (name, code, optional customer discount %, commission %). Each code has a shareable link `https://www.lashcartelcosmetics.com/?ref=CODE`; customers can also type the code in the bag. The code is remembered for 30 days. Codes are stored as Stripe Products tagged `lc_referral=true` (not sellable) and paid orders are attributed through PaymentIntent metadata `referral_code`, so the program only needs `STRIPE_SECRET_KEY`, `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET`; no database is required. The dashboard shows link clicks (one per browser), paid orders, product revenue after refunds, and commission owed. Disabling a code stops new use immediately and keeps its history. Run `npm test` to exercise the flow against a fake Stripe.

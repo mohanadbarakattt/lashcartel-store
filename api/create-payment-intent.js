@@ -2,6 +2,7 @@ import Stripe from 'stripe';
 import { quote, GIFT_OPTIONS } from '../lib/catalog.js';
 import { getStock } from '../lib/stock.js';
 import { db } from '../lib/db.js';
+import { findCode, referralDiscountCents } from '../lib/referrals.js';
 
 const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { items, customerEmail, freeGift } = req.body || {};
+    const { items, customerEmail, freeGift, referralCode } = req.body || {};
     if (typeof customerEmail !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail) || customerEmail.length > 250) {
       return res.status(400).json({ error: 'Enter a valid email address.' });
     }
@@ -30,7 +31,17 @@ export default async function handler(req, res) {
     let pricing;
     try { pricing = quote(items, await getStock()); }
     catch (error) { return res.status(400).json({ error: error.message }); }
-    const { subtotal: subtotalCents, discount: discountCents, shipping: shippingCents, total: totalCents } = pricing;
+    let referral = null;
+    if (referralCode) {
+      try { referral = await findCode(referralCode); }
+      catch (error) { console.error('Referral lookup failed:', error.message); }
+      if (!referral && req.body?.referralTyped) return res.status(400).json({ error: 'That referral code is not valid.' });
+    }
+    const bulkDiscountCents = pricing.discount;
+    const referralCents = referral ? referralDiscountCents(pricing.subtotal - bulkDiscountCents, referral.discountPercent) : 0;
+    const subtotalCents = pricing.subtotal, shippingCents = pricing.shipping;
+    const discountCents = bulkDiscountCents + referralCents;
+    const totalCents = pricing.total - referralCents;
     const summary = pricing.lines.map(line => `${line.name} x${line.quantity}`);
 
     const gift = GIFT_OPTIONS.includes(freeGift) ? freeGift : GIFT_OPTIONS[0];
@@ -58,7 +69,14 @@ export default async function handler(req, res) {
         order_number: orderNumber,
         items: summary.join(' | '),
         shipping: '$4.95 flat',
-        discount: discountCents > 0 ? `10% buy-2+ (-$${(discountCents / 100).toFixed(2)})` : 'none',
+        discount: bulkDiscountCents > 0 ? `10% buy-2+ (-$${(bulkDiscountCents / 100).toFixed(2)})` : 'none',
+        shipping_cents: String(shippingCents),
+        ...(referral ? {
+          lc_referred: 'true',
+          referral_code: referral.code,
+          referral_influencer: referral.influencer.slice(0, 450),
+          referral_discount: `${referral.discountPercent}% (-$${(referralCents / 100).toFixed(2)})`,
+        } : {}),
         free_gift: gift,
         ...(orderId ? { order_id: String(orderId) } : {}),
       },
@@ -71,6 +89,8 @@ export default async function handler(req, res) {
       subtotal: subtotalCents,
       discount: discountCents,
       shipping: shippingCents,
+      referralCode: referral?.code || null,
+      referralDiscount: referralCents,
       currency: 'aud',
     });
   } catch (err) {
