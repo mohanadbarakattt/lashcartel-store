@@ -212,6 +212,10 @@
   .review .who { display: flex; align-items: center; gap: 12px; }
   .review .ava { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--blush-deep); color: #fff; font-weight: 600; font-size: 15px; }
   .review .who .n { font-weight: 500; font-size: 14px; }
+  .review.testimonial { margin: 0; position: relative; }
+  .review.testimonial blockquote { margin: 0; flex: 1; }
+  .review.testimonial .t-mark { font-family: 'Cormorant Garamond', serif; font-size: 64px; line-height: .6; color: var(--rose); height: 26px; }
+  .review.testimonial .ava { background: var(--rose); }
   .review .who .v { color: var(--rose-dark); font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
 
   /* find us / vending — photo + map + address unified in one card */
@@ -371,7 +375,7 @@
 </head>
 <body>
 
-<div class="announce2"><b>Buy 2, Get 10% Off</b> &nbsp;·&nbsp; Free Gift With Every Purchase</div>
+<div class="announce2"><b>Buy 2 Kits, Get Free Delivery</b> &nbsp;·&nbsp; $4.95 flat-rate delivery Australia-wide &nbsp;·&nbsp; Free Gift With Every Purchase</div>
 
 <header>
   <div class="wrap nav">
@@ -382,7 +386,7 @@
       <a href="#shop">Shop All</a>
       <a href="#shop" onclick="setCategory('lashes')">Lashes</a>
       <a href="#about">About</a>
-      <a href="#faq">FAQs</a>
+      <a href="/faq">FAQs</a>
       <a href="/partner-with-us">Partner With Us</a>
     </nav>
     <div class="nav-right">
@@ -505,6 +509,41 @@
       <p>Real words from the baddies who wear them.</p>
     </div>
     <div class="reviews">
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>Honestly they are the best lashes I've ever used, they're so light and flexible. I love to give my eyelashes a really light but voluminous look and they do exactly that for me 😍😍</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>Girl can I say I'm obsesseddd. I've used so many types of lashes and none come close to how easy and comfortable yours are. I usually hate lashes but I have not taken them off, I've been going back and forth to Bankstown just for them lol</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>Honestly have never worn lashes this good IN MY WHOLE LIFE!!! 🫶</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>I've never worn my own lashes before, I wouldn't even know how to. It took me 30 seconds each eye.</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>The glue is the best I have ever used on lashes, I wouldn't recommend anywhere else, thanks baddieeeee! 👑😍</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>Babe your lashes are amazing!! 🫶🏻</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
+      <figure class="review testimonial reveal">
+        <div class="t-mark" aria-hidden="true">“</div>
+        <blockquote><p>Thank you so much girl, I ordered two lots!</p></blockquote>
+        <figcaption class="who"><div class="ava" aria-hidden="true">♥</div><div><div class="n">Verified customer</div></div></figcaption>
+      </figure>
       <div class="review reveal">
         <div class="stars">★★★★★</div>
         <p>"As soon as I gave them to my 18 yr old she went nuts — she said they are the perfect sizes, your prices are bloody awesome ❤️"</p>
@@ -600,11 +639,15 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">How long do they last?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Up to 7 days of continuous wear per application, and they're reusable with proper care. Gently store them after each wear to keep them looking new.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Pretty Ambition Pre-Glued Lashes last approximately 5–7 days and our DIY kits approximately 7–10 days, depending on application, aftercare and individual wear. For the best hygiene and hold, we recommend applying a fresh set after removing your previous one.</div></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">How fast is shipping?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">We pack and post from Australia within 5–7 business days. Delivery is a $4.95 flat rate Australia-wide. Prefer in person? Visit our 24/7 vending machine in Bankstown.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">We pack and post from Australia within 5–7 business days. Delivery is a <b>$4.95 flat rate</b> Australia-wide, and <b>FREE when you buy 2 or more kits</b> (mascara and add-ons don't count toward the 2). Prefer in person? Visit our 24/7 vending machine in Bankstown.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How does Buy 2 Kits, Get Free Delivery work?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Add any 2 or more lash kits to your bag (DIY Cluster Lash Kit in Volume or Natural, or Pretty Ambition) and delivery is free, applied automatically in your bag and at checkout. Otherwise delivery is a $4.95 flat rate. Got a referral code? It still works with free delivery.</div></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">Where's the vending machine?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -615,6 +658,7 @@
         <div class="faq-a"><div class="faq-a-inner">For hygiene reasons we can't accept returns on opened products, but if your order arrives faulty or damaged we'll replace it or refund you. Just <a href="mailto:Lashcartel.co@outlook.com">email us</a> and we'll sort it out.</div></div>
       </div>
     </div>
+    <p class="reveal" style="text-align:center;margin-top:26px;"><a href="/faq" class="btn btn-primary">See all FAQs</a></p>
   </div>
 </section>
 
@@ -641,7 +685,7 @@
         <h5>Info</h5>
         <a href="#about">About Us</a>
         <a href="/#how-to-apply">How to Apply</a>
-        <a href="/#faq">FAQs</a>
+        <a href="/faq">FAQs</a>
         <a href="/#find-us">Location</a>
         <a href="/contact">Contact Us</a>
         <a href="/partner-with-us">Partner With Us</a>
@@ -679,8 +723,7 @@
   <div class="drawer-foot" id="cartFoot" style="display:none;">
     <div id="cartAddons" hidden></div>
     <div class="line"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
-    <div class="line" id="discountLine" style="display:none;color:var(--rose-dark);"><span>Buy 2, Get 10% Off</span><span id="cartDiscount">−$0.00</span></div>
-    <div class="line"><span>Shipping</span><span id="cartShipping">FREE</span></div>
+    <div class="line"><span>Delivery</span><span id="cartShipping">$4.95</span></div>
     <div class="line total"><span>Total</span><span id="cartTotal">$0.00</span></div>
     <div class="ship-note" id="shipNote"></div>
     <div class="gift-pick">
@@ -737,8 +780,8 @@
 <script>
   let STRIPE_PUBLISHABLE_KEY = '';
 
-  const BULK_DISCOUNT_RATE = 0.10;
-  const BULK_DISCOUNT_MIN_QTY = 2;
+  // Buy 2 Kits, Get Free Delivery (mirrors lib/catalog.js; the server sets the real amount).
+  const FREE_DELIVERY_MIN_KITS = 2;
   const SHIPPING_FLAT = 4.95;
   const SOLD_OUT = ['Pretty Ambition'];
   const GIFT_OPTIONS = ['Tea Tree Mint Foot Mask', 'Coconut Repair Foot Mask'];
@@ -883,8 +926,9 @@
 
   function cartSubtotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
   function cartQty() { return cart.reduce((s, i) => s + (i.addon ? 0 : i.qty), 0); }
-  function cartDiscount() { return cartQty() >= BULK_DISCOUNT_MIN_QTY ? Math.round(cart.reduce((s, i) => s + (i.addon ? 0 : i.price * i.qty), 0) * 100 * BULK_DISCOUNT_RATE) / 100 : 0; }
-  function cartShipping() { return cart.length ? SHIPPING_FLAT : 0; }
+  function cartKits() { return cart.reduce((s, i) => s + (!i.addon && i.kind === 'lash' ? i.qty : 0), 0); }
+  function cartDiscount() { return 0; }
+  function cartShipping() { return !cart.length || cartKits() >= FREE_DELIVERY_MIN_KITS ? 0 : SHIPPING_FLAT; }
   function toggleAddon(name) {
     const offer = ADDON_OFFERS[name];
     if (!offer || !Number.isInteger(offer.addonPriceCents) || offer.addonPriceCents < 1 || !cart.some(i => !i.addon)) return;
@@ -959,15 +1003,14 @@
 
     const sub = cartSubtotal(), disc = cartDiscount(), ship = cartShipping();
     document.getElementById('cartSubtotal').textContent = '$' + sub.toFixed(2);
-    document.getElementById('cartDiscount').textContent = '−$' + disc.toFixed(2);
-    document.getElementById('discountLine').style.display = disc > 0 ? 'flex' : 'none';
-    document.getElementById('cartShipping').textContent = '$' + ship.toFixed(2);
+    document.getElementById('cartShipping').textContent = ship === 0 ? 'FREE' : '$' + ship.toFixed(2);
     document.getElementById('cartTotal').textContent = '$' + (sub - disc + ship).toFixed(2);
     const note = document.getElementById('shipNote');
-    if (disc > 0) {
-      note.textContent = '10% off applied · $4.95 delivery · Free gift included';
+    const kitsNeeded = FREE_DELIVERY_MIN_KITS - cartKits();
+    if (kitsNeeded <= 0) {
+      note.textContent = 'Buy 2 Kits, Get Free Delivery applied · Free gift included';
     } else {
-      note.textContent = 'Add 1 more item to get 10% off your order';
+      note.textContent = `$4.95 flat-rate delivery · Add ${kitsNeeded} more kit${kitsNeeded > 1 ? 's' : ''} for FREE delivery`;
     }
     renderGiftPicker();
   }
@@ -1060,9 +1103,8 @@
     const summaryHTML = `
       <div class="checkout-summary">
         <div class="row"><span>Subtotal</span><span>$${sub.toFixed(2)} AUD</span></div>
-        ${disc > 0 ? `<div class="row" style="color:var(--rose-dark);"><span>Buy 2, Get 10% Off</span><span>−$${disc.toFixed(2)} AUD</span></div>` : ''}
         ${refDisc > 0 ? `<div class="row" style="color:var(--rose-dark);"><span>Code ${appliedReferral.code} (${appliedReferral.discountPercent}% off)</span><span>−$${refDisc.toFixed(2)} AUD</span></div>` : ''}
-        <div class="row"><span>Shipping</span><span>$${ship.toFixed(2)} AUD</span></div>
+        <div class="row"><span>Delivery</span><span>${ship === 0 ? 'FREE (Buy 2 Kits, Get Free Delivery)' : '$' + ship.toFixed(2) + ' AUD flat rate'}</span></div>
         <div class="row"><span>Free gift</span><span>${selectedGift}</span></div>
         <div class="row total"><span>Total</span><span>$${total.toFixed(2)} AUD</span></div>
       </div>`;

@@ -6,7 +6,7 @@ import { normalizeCode, referralDiscountCents, commissionCents } from '../lib/re
 
 assert.equal(normalizeCode(' sarah10 '), 'SARAH10');
 assert.equal(normalizeCode('a b'), null);
-assert.equal(referralDiscountCents(8811, 10), 881);
+assert.equal(referralDiscountCents(9790, 10), 979);
 assert.equal(referralDiscountCents(1000, 90), 500); // capped at 50%
 assert.equal(commissionCents(10000, 15), 1500);
 
@@ -49,14 +49,16 @@ assert.equal((await call(referral, { method: 'POST', body: { code: 'sarah10' } }
 assert.equal((await call(referral, { method: 'POST', body: { code: 'NOPE1' } })).status, 404);
 assert.equal((await call(referral, { method: 'GET', query: { code: 'SARAH10' } })).body.discountPercent, 10);
 
-// Checkout with code: 2 kits = 9790 - 979 bulk = 8811, -10% = 881, +495 shipping
+// Checkout with code: 2 kits = 9790, -10% referral = 979, free delivery (2 kits)
 const items = [{ name: 'DIY Cluster Lash Kit — Volume', quantity: 2 }];
 r = await call(checkout, { method: 'POST', body: { items, customerEmail: 'a@b.co', referralCode: 'sarah10', referralTyped: true } });
-assert.equal(r.status, 200); assert.equal(r.body.amount, 8811 - 881 + 495); assert.equal(r.body.referralCode, 'SARAH10');
+assert.equal(r.status, 200); assert.equal(r.body.amount, 9790 - 979); assert.equal(r.body.shipping, 0); assert.equal(r.body.referralCode, 'SARAH10');
 assert.equal(intents[0].metadata.referral_code, 'SARAH10'); assert.equal(intents[0].metadata.lc_referred, 'true');
 // Without code: unchanged price, no attribution
 r = await call(checkout, { method: 'POST', body: { items, customerEmail: 'a@b.co' } });
-assert.equal(r.body.amount, 9306); assert.equal(intents[1].metadata.referral_code, undefined);
+assert.equal(r.body.amount, 9790);
+r = await call(checkout, { method: 'POST', body: { items: [items[0] && { ...items[0], quantity: 1 }], customerEmail: 'a@b.co', referralCode: 'SARAH10', referralTyped: true } });
+assert.equal(r.body.amount, 4895 - 490 + 495, 'one kit pays $4.95 delivery, referral still applies'); intents.pop(); assert.equal(intents[1].metadata.referral_code, undefined);
 // Invalid typed code is rejected; disabled code stops working
 assert.equal((await call(checkout, { method: 'POST', body: { items, customerEmail: 'a@b.co', referralCode: 'BAD99', referralTyped: true } })).status, 400);
 
@@ -65,7 +67,7 @@ Object.assign(intents[0], { status: 'succeeded', amount_received: intents[0].amo
 r = await call(admin, { method: 'GET', headers: adminHeaders });
 const s = r.body.referrals[0];
 assert.equal(s.clicks, 1); assert.equal(s.orders, 1);
-assert.equal(s.revenueCents, 8811 - 881); assert.equal(s.commissionCents, Math.round((8811 - 881) * 0.15));
+assert.equal(s.revenueCents, 9790 - 979, 'free-delivery order: revenue excludes zero shipping'); assert.equal(s.commissionCents, Math.round((9790 - 979) * 0.15));
 
 await call(admin, { method: 'POST', headers: adminHeaders, body: { action: 'toggle', code: 'SARAH10', active: false } });
 assert.equal((await call(referral, { method: 'GET', query: { code: 'SARAH10' } })).status, 404, 'disabled code invalid');

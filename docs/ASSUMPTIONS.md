@@ -8,5 +8,5 @@
 - The existing homepage reviews and FAQ are unchanged. Testimonials carousel is on hold pending permission-cleared screenshots.
 - Until the database and email service are configured, partner enquiries open a prefilled email to the business. Vending rental availability and pricing are never promised.
 - Add-on prices are unknown, so add-ons remain hidden until the owner supplies them.
-- Add-ons are excluded from the Buy 2 Get 10% Off threshold and discount. An add-on-only bag is rejected.
+- Add-ons and mascara do not count toward the Buy 2 Kits, Get Free Delivery threshold. Delivery is $4.95 flat, free with 2 or more lash kits. An add-on-only bag is rejected.
 - Cartel Cash and review incentives need terms and privacy approval before launch. No example five-star review is treated as real.

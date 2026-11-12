@@ -37,10 +37,9 @@ export default async function handler(req, res) {
       catch (error) { console.error('Referral lookup failed:', error.message); }
       if (!referral && req.body?.referralTyped) return res.status(400).json({ error: 'That referral code is not valid.' });
     }
-    const bulkDiscountCents = pricing.discount;
-    const referralCents = referral ? referralDiscountCents(pricing.subtotal - bulkDiscountCents, referral.discountPercent) : 0;
+    const referralCents = referral ? referralDiscountCents(pricing.subtotal, referral.discountPercent) : 0;
     const subtotalCents = pricing.subtotal, shippingCents = pricing.shipping;
-    const discountCents = bulkDiscountCents + referralCents;
+    const discountCents = referralCents;
     const totalCents = pricing.total - referralCents;
     const summary = pricing.lines.map(line => `${line.name} x${line.quantity}`);
 
@@ -68,8 +67,7 @@ export default async function handler(req, res) {
         source: 'lash-cartel-site',
         order_number: orderNumber,
         items: summary.join(' | '),
-        shipping: '$4.95 flat',
-        discount: bulkDiscountCents > 0 ? `10% buy-2+ (-$${(bulkDiscountCents / 100).toFixed(2)})` : 'none',
+        shipping: pricing.freeDelivery ? 'FREE (Buy 2 Kits, Get Free Delivery)' : '$4.95 flat',
         shipping_cents: String(shippingCents),
         ...(referral ? {
           lc_referred: 'true',

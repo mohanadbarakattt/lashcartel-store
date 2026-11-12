@@ -23,7 +23,7 @@ The protected routes `/api/cron/cart` and `/api/cron/restock` need scheduled GET
 - Retail prices: `lib/catalog.js`, with `assets/catalog.js` checked for parity by `npm test`.
 - FAQ answers: `data/faq.json`.
 - Quiz wording and answers: `data/quiz.json`.
-- Add-ons: `data/addons.json`. An offer with `addonPriceCents: null` stays hidden. Mascara is dormant now. An add-on requires at least one regular product and does not count toward Buy 2 Get 10% Off.
+- Add-ons: `data/addons.json`. An offer with `addonPriceCents: null` stays hidden. Mascara is dormant now. An add-on requires at least one regular product and does not count toward Buy 2 Kits, Get Free Delivery.
 - Stock: `/admin` after database setup.
 - Testimonials: `data/testimonials.json` is empty and unlinked until consented customer material arrives.
 
