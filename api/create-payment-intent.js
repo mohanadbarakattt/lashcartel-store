@@ -67,7 +67,7 @@ export default async function handler(req, res) {
         source: 'lash-cartel-site',
         order_number: orderNumber,
         items: summary.join(' | '),
-        shipping: pricing.freeDelivery ? 'FREE (Buy 2 Kits, Get Free Delivery)' : '$4.95 flat',
+        shipping: pricing.freeDelivery ? 'FREE (Buy 2 Kits, Get Free Delivery)' : '$4.95 flat (AU & NZ)',
         shipping_cents: String(shippingCents),
         ...(referral ? {
           lc_referred: 'true',

@@ -34,3 +34,7 @@ Run `npm install` and `npm test`. Product pages and the checkout must also be ch
 ## Influencer referral program
 
 Open `/admin`, sign in, and use **Influencer referral codes** to create a code per influencer (name, code, optional customer discount %, commission %). Each code has a shareable link `https://www.lashcartelcosmetics.com/?ref=CODE`; customers can also type the code in the bag. The code is remembered for 30 days. Codes are stored as Stripe Products tagged `lc_referral=true` (not sellable) and paid orders are attributed through PaymentIntent metadata `referral_code`, so the program only needs `STRIPE_SECRET_KEY`, `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET`; no database is required. The dashboard shows link clicks (one per browser), paid orders, product revenue after refunds, and commission owed. Disabling a code stops new use immediately and keeps its history. Run `npm test` to exercise the flow against a fake Stripe.
+
+## Raffle
+
+Every paid online order is 1 raffle entry; there is no raffle product or ticket. Set the prize, draw date, entry dates and winner notification in `data/raffle.json` (leave `null` to show "Prize revealed soon" / "Draw date announced soon"; set `enabled` to `false` to hide it). Entrants are read live from succeeded Stripe payments made through the site checkout; download them from `/admin` → **Raffle entrants** → **Download entrants CSV** (`/api/admin-raffle?format=csv`). Terms are at `/raffle-terms`. Check NSW/Australian trade promotion permit requirements before announcing a prize.

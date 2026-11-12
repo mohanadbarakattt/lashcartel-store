@@ -1,0 +1,10 @@
+{
+  "_readme": "Lash Cartel raffle settings. Fill in prize, drawDate and winnerNotification when the owner confirms them; until then the site shows 'Prize revealed soon' and 'Draw date announced soon'. Dates use YYYY-MM-DD (Sydney time). Set enabled to false to hide the raffle everywhere.",
+  "enabled": true,
+  "name": "Lash Cartel Raffle",
+  "prize": null,
+  "drawDate": null,
+  "entriesOpen": "2026-11-12",
+  "entriesClose": null,
+  "winnerNotification": null
+}
