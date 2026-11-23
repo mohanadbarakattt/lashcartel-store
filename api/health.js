@@ -1,5 +1,6 @@
 // Setup check: can the site reach the database, and which tables exist? Shows no secrets or data.
 import { db } from '../lib/db.js';
+import { setupStatements } from '../lib/setup-db.js';
 
 const TABLES = ['enquiries', 'stock_status', 'orders', 'email_log', 'admin_login_attempts', 'carts', 'members', 'points_ledger', 'giveaway_tickets', 'giveaway_draw'];
 
@@ -10,6 +11,7 @@ export default async function handler(req, res) {
     settings: { DATABASE_URL: env('DATABASE_URL'), ADMIN_PASSWORD: env('ADMIN_PASSWORD'), ADMIN_SESSION_SECRET: env('ADMIN_SESSION_SECRET'),
       STRIPE_SECRET_KEY: env('STRIPE_SECRET_KEY'), STRIPE_WEBHOOK_SECRET: env('STRIPE_WEBHOOK_SECRET'), RESEND_API_KEY: env('RESEND_API_KEY') },
   };
+  try { out.setupFileStatements = setupStatements().length; } catch { out.setupFileStatements = 0; }
   if (out.settings.DATABASE_URL) {
     try {
       const sql = db();
