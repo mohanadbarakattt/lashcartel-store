@@ -104,7 +104,8 @@
   .shelves button small { display: block; font-weight: 400; font-size: 10.5px; }
   .shelves button.on { color: #fff; border-color: var(--pink); background: rgba(255,92,154,.12); }
   .glass { border-radius: 16px; padding: 12px; border: 1px solid rgba(255,255,255,.09); background: linear-gradient(125deg, rgba(255,255,255,.07), rgba(255,255,255,0) 38%), #0e0a0b; }
-  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(6, 1fr); } }
   .t { position: relative; overflow: hidden; aspect-ratio: 1/.92; border-radius: 9px; border: 1px solid rgba(255,143,184,.55); background: rgba(255,92,154,.05); color: #fff; padding-bottom: 14px;
     font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: transform .12s, box-shadow .12s; font-variant-numeric: tabular-nums; }
   .t small { position: absolute; left: 0; right: 0; bottom: 0; padding: 2px 0; font: 600 9px Poppins, sans-serif; letter-spacing: 1px; background: rgba(255,143,184,.16); color: var(--pink-soft); }
