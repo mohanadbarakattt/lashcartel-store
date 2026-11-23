@@ -72,6 +72,7 @@
   .gallery { position: sticky; top: 108px; }
   .gallery-main { border-radius: var(--radius); overflow: hidden; background: var(--blush-soft); box-shadow: var(--shadow); aspect-ratio: 1/1; }
   .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-main img[src*="before-after"], .thumb img[src*="before-after"] { object-fit: contain; }
   .thumbs { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
   .thumb { width: 78px; height: 78px; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid transparent; background: var(--blush-soft); transition: border-color .2s; }
   .thumb.active { border-color: var(--rose); }
@@ -273,6 +274,8 @@
     ],
     Natural: [
       '/assets/products/cluster-lash-kit/Natural/Natural_Main.jpg',
+      '/assets/before-after/classic-both-eyes.jpg',
+      '/assets/before-after/classic-single-eye.jpg',
       ...SHARED,
     ],
   };

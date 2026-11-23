@@ -176,12 +176,7 @@
   .card-body .desc { color: var(--ink-soft); font-size: 13px; flex: 1; margin: 4px 0; }
   .price { font-size: 18px; font-weight: 600; font-family: 'Cormorant Garamond', serif; margin-top: 4px; }
   .price .was { color: var(--ink-soft); font-weight: 400; text-decoration: line-through; font-size: 15px; margin-left: 8px; }
-  .price-reveal { align-self: flex-start; border: 1px solid var(--rose-dark); border-radius: 20px; padding: 5px 10px; color: var(--ink); background: var(--blush-soft); font: 600 11px Poppins, sans-serif; cursor: pointer; }
-  .card .price, .s-result .s-price { opacity: 0; transition: opacity .15s ease; }
-  .card:hover .price, .card:focus-within .price, .card.price-open .price,
-  .s-result:hover .s-price, .s-result:focus-within .s-price, .s-result.price-open .s-price { opacity: 1; }
-  .price-reveal:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) { .card .price, .s-result .s-price { transition: none; } }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .add-btn { background: var(--ink); border: none; color: #fff; font-size: 11.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 500; padding: 12px; border-radius: 40px; cursor: pointer; transition: all .2s; margin-top: 12px; }
   .add-btn:hover { background: var(--rose-dark); }
 
@@ -189,6 +184,8 @@
   .split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 56px; }
   .split .visual { aspect-ratio: 4/3.4; border-radius: var(--radius); background: linear-gradient(150deg, var(--blush), var(--blush-deep)); box-shadow: var(--shadow); display: grid; place-items: center; position: relative; overflow: hidden; }
   .split .visual img { width: 100%; height: 100%; object-fit: cover; }
+  .split .visual.duo { aspect-ratio: auto; display: flex; flex-direction: column; gap: 10px; background: none; box-shadow: none; }
+  .split .visual.duo img { height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
   .split .visual .photo-tag { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: rgba(44,38,34,0.5); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
   .split h2 { font-size: clamp(32px, 4.5vw, 50px); line-height: 1.05; margin-bottom: 8px; }
   .split .script { color: var(--rose-dark); }
@@ -342,7 +339,6 @@
   .s-result .s-tag { color: var(--rose-dark); font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
   .s-result .s-price { font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
   .s-result > a { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
-  .s-result .price-reveal { flex-shrink: 0; }
   @media (max-width: 480px) { .s-result { flex-wrap: wrap; } .s-result > a { flex-basis: 100%; } }
   .s-empty { padding: 36px 0; color: var(--ink-soft); text-align: center; }
 
@@ -522,8 +518,9 @@
 
 <section class="section" id="about" style="background:var(--blush-soft);">
   <div class="wrap split">
-    <div class="visual reveal">
-      <img src="/assets/lifestyle-lashes.jpg" alt="Lash Cartel lashes — before and after" />
+    <div class="visual duo reveal">
+      <img src="/assets/before-after/before-after-face.jpg" alt="Before and after wearing Lash Cartel cluster lashes" loading="lazy" decoding="async" />
+      <img src="/assets/before-after/classic-single-eye.jpg" alt="Before and after: DIY Classic Cluster Set on one eye" loading="lazy" decoding="async" />
     </div>
     <div class="reveal">
       <div class="sec-head" style="text-align:left;margin-bottom:0;">
@@ -960,7 +957,6 @@
           <span class="cat-label">${p.tag}</span>
           ${titleBlock}
           <p class="desc">${p.desc}</p>
-          <button type="button" class="price-reveal" aria-expanded="false" onclick="showPrice(this, '${p.href || '#shop'}')">View price</button>
           <span class="price">$${p.price.toFixed(2)}${p.was ? `<span class="was">$${p.was.toFixed(2)}</span>` : ''}</span>
           ${cta}
         </div>
@@ -1012,13 +1008,6 @@
     else cart.push({ key: p.name, name: p.name, tag: p.tag, price: p.price, qty: 1, kind: p.kind, img: p.img });
     renderCart();
     openCart();
-  }
-  function showPrice(button, href) {
-    const row = button.closest('.card, .s-result');
-    if (row.classList.contains('price-open')) { window.location.href = href; return; }
-    row.classList.add('price-open');
-    button.setAttribute('aria-expanded', 'true');
-    button.textContent = 'Shop product';
   }
   function changeQty(key, d) {
     const item = cart.find(x => x.key === key);
@@ -1139,7 +1128,6 @@
     const thumb = p.img ? `<img src="${p.img}" alt="${p.name}" />` : `<span class="s-noimg"></span>`;
     return `<div class="s-result">
       <a href="${link}">${thumb}<div class="s-info"><div class="s-tag">${p.tag}</div><div class="s-name">${p.name}${p.tm ? '™' : ''}</div></div></a>
-      <button type="button" class="price-reveal" aria-expanded="false" onclick="showPrice(this, '${link}')">View price</button>
       <div class="s-price">$${p.price.toFixed(2)}</div>
     </div>`;
   }
