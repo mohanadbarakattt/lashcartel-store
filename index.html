@@ -184,6 +184,8 @@
   .split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 56px; }
   .split .visual { aspect-ratio: 4/3.4; border-radius: var(--radius); background: linear-gradient(150deg, var(--blush), var(--blush-deep)); box-shadow: var(--shadow); display: grid; place-items: center; position: relative; overflow: hidden; }
   .split .visual img { width: 100%; height: 100%; object-fit: cover; }
+  .split .visual.duo { aspect-ratio: auto; display: flex; flex-direction: column; gap: 10px; background: none; box-shadow: none; }
+  .split .visual.duo img { height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
   .split .visual .photo-tag { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: rgba(44,38,34,0.5); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
   .split h2 { font-size: clamp(32px, 4.5vw, 50px); line-height: 1.05; margin-bottom: 8px; }
   .split .script { color: var(--rose-dark); }
@@ -460,8 +462,9 @@
 
 <section class="section" id="about" style="background:var(--blush-soft);">
   <div class="wrap split">
-    <div class="visual reveal">
-      <img src="/assets/lifestyle-lashes.jpg" alt="Lash Cartel lashes — before and after" />
+    <div class="visual duo reveal">
+      <img src="/assets/before-after/before-after-face.jpg" alt="Before and after wearing Lash Cartel cluster lashes" loading="lazy" decoding="async" />
+      <img src="/assets/before-after/classic-single-eye.jpg" alt="Before and after: DIY Classic Cluster Set on one eye" loading="lazy" decoding="async" />
     </div>
     <div class="reveal">
       <div class="sec-head" style="text-align:left;margin-bottom:0;">
