@@ -566,7 +566,7 @@
     if (t < opens) { state = 'before'; target = opens; label = 'Tickets open in'; sub = 'Tickets open Thursday 26 November · close Sunday 6:00 pm'; }
     else if (t < closes && taken.size < G.total) { state = 'open'; target = closes; label = 'Tickets close in'; sub = 'Sunday 29 November 2026, 6:00 pm Sydney time'; }
     else { state = 'closed'; label = taken.size >= G.total && t < closes ? 'Sold out!' : 'Tickets are closed'; sub = 'Winners are revealed live at 7pm Sunday. Stay on this page to watch.'; }
-    if (unavailable) { label = 'Tickets unavailable'; sub = 'Ticket sales are not available right now. Please check back soon.'; }
+    if (unavailable && state === 'open') { label = 'Tickets unavailable'; sub = 'Ticket sales are not available right now. Please check back soon.'; }
     $('clockLabel').textContent = label;
     $('clockSub').textContent = sub;
     $('units').style.display = target ? '' : 'none';
@@ -578,7 +578,7 @@
       $('cd-s').textContent = pad(s % 60);
     }
     $('board').classList.toggle('locked', !canPick() && !hold);
-    $('lockedNote').textContent = unavailable ? 'Ticket sales are not available right now.' : state === 'before' ? 'Ticket sales open soon. Have a look around and pick your favourites.' : 'Ticket sales have closed.';
+    $('lockedNote').textContent = unavailable && state === 'open' ? 'Ticket sales are not available right now.' : state === 'before' ? 'Ticket sales open soon. Have a look around and pick your favourites.' : 'Ticket sales have closed.';
     $('heroCta').textContent = state === 'open' ? 'Pick your numbers' : 'See the tickets';
     $('continueBtn').disabled = !selected.size || !canPick();
     maybeDraw();
