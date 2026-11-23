@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beauty Draw — Lash Cartel Cosmetics</title>
+<meta name="description" content="Lash Cartel Beauty Draw. Pick your lucky number from 1 to 120. $5 for 1 ticket or $10 for 3. Three prizes." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+<style>
+  :root {
+    --bg: #0d0a0b; --panel: #171214; --panel-2: #1f181b; --line: rgba(255,182,206,.18);
+    --pink: #ff8fb8; --pink-hot: #ff5c9a; --pink-soft: #ffd3e2; --rose: #d98f86;
+    --text: #fbeff3; --muted: #bfa8b1; --sold: #2a2427; --sold-text: #6f6267; --gold: #c9a24b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Poppins', system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--pink); }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  /* sample banner */
+  .sample-bar { background: #ffe08a; color: #2c2622; font-size: 12.5px; text-align: center; padding: 8px 16px; font-weight: 500; }
+  .sample-bar button { margin-left: 6px; border: 1px solid #2c2622; background: transparent; border-radius: 20px; padding: 2px 10px; font: inherit; font-size: 11.5px; cursor: pointer; }
+  .sample-bar button.on { background: #2c2622; color: #ffe08a; }
+  .tbc { background: #ffe08a; color: #2c2622; font-size: 10px; font-weight: 600; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; text-transform: uppercase; vertical-align: middle; white-space: nowrap; }
+
+  header { border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .nav img { height: 52px; border-radius: 50%; background: #fff; }
+  .nav a.back { color: var(--muted); font-size: 13px; text-decoration: none; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; text-align: center; padding: 64px 0 40px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,92,154,.22), transparent 60%), radial-gradient(ellipse at 0% 100%, rgba(217,143,134,.18), transparent 50%); }
+  .brand-mark { font-family: 'Cormorant Garamond', serif; letter-spacing: 6px; font-size: 18px; color: var(--pink-soft); }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(48px, 9vw, 96px); line-height: 1; letter-spacing: 2px; color: var(--pink-soft);
+    text-shadow: 0 0 18px rgba(255,92,154,.65), 0 0 42px rgba(255,92,154,.35); margin-top: 10px; }
+  .hero .script { font-family: 'Great Vibes', cursive; font-size: clamp(34px, 6vw, 58px); color: var(--pink); text-shadow: 0 0 14px rgba(255,92,154,.7); margin-top: -4px; }
+  .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; margin: 30px auto 0; max-width: 860px; border: 1px solid var(--line); border-radius: 16px; background: rgba(23,18,20,.7); }
+  .fact { flex: 1 1 160px; padding: 14px 16px; border-right: 1px solid var(--line); }
+  .fact:last-child { border-right: 0; }
+  .fact b { display: block; font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #fff; line-height: 1.1; }
+  .fact span { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+
+  /* countdown */
+  .clock { margin: 34px auto 0; max-width: 640px; padding: 22px 20px; border-radius: 18px; border: 1px solid rgba(255,143,184,.45);
+    background: linear-gradient(180deg, rgba(255,92,154,.12), rgba(255,92,154,.03)); box-shadow: 0 0 30px rgba(255,92,154,.15) inset; }
+  .clock .label { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--pink); font-weight: 600; }
+  .units { display: flex; justify-content: center; gap: 12px; margin: 12px 0 8px; }
+  .unit { min-width: 76px; padding: 10px 6px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
+  .unit b { display: block; font-family: 'Cormorant Garamond', serif; font-size: 40px; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+  .unit span { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .clock .sub { font-size: 13px; color: var(--muted); }
+  .clock .now { font-size: 12px; color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #39d98a; margin-right: 6px; box-shadow: 0 0 8px #39d98a; animation: pulse 1.6s infinite; vertical-align: 1px; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  .cta { display: inline-block; margin-top: 26px; padding: 15px 34px; border-radius: 40px; background: linear-gradient(180deg, #ff8fb8, #e8508c); color: #fff; text-decoration: none; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: 13px; box-shadow: 0 6px 24px rgba(255,92,154,.4); border: 0; cursor: pointer; }
+
+  section { padding: 64px 0; }
+  .eyebrow { font-size: 11.5px; letter-spacing: 3px; text-transform: uppercase; color: var(--pink); font-weight: 600; text-align: center; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 5vw, 48px); text-align: center; font-weight: 600; margin: 6px 0 10px; color: #fff; }
+  h2 em { font-family: 'Great Vibes', cursive; font-style: normal; color: var(--pink); font-weight: 400; }
+  .lead { text-align: center; color: var(--muted); max-width: 620px; margin: 0 auto; }
+
+  /* prizes */
+  .prizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+  .prize { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; position: relative; }
+  .prize img { aspect-ratio: 1/1; object-fit: cover; width: 100%; }
+  .prize .place { position: absolute; top: 14px; left: 14px; background: rgba(13,10,11,.85); border: 1px solid rgba(255,143,184,.6); color: var(--pink-soft); font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 18px; padding: 4px 14px; border-radius: 30px; }
+  .prize .body { padding: 18px 20px 22px; }
+  .prize h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #fff; line-height: 1.15; }
+  .prize p { color: var(--muted); font-size: 13.5px; margin-top: 6px; }
+  .prize.first { border-color: rgba(255,143,184,.55); box-shadow: 0 0 34px rgba(255,92,154,.18); }
+
+  /* how it works */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; counter-reset: s; }
+  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px 18px; }
+  .step::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--pink); color: var(--pink); font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+  .step h3 { font-size: 15px; font-weight: 600; color: #fff; }
+  .step p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .pricing { display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; }
+  .price-card { min-width: 200px; text-align: center; padding: 18px 26px; border-radius: 16px; border: 1px solid var(--line); background: var(--panel-2); }
+  .price-card b { font-family: 'Cormorant Garamond', serif; font-size: 40px; color: #fff; line-height: 1; display: block; }
+  .price-card span { font-size: 12.5px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .price-card.best { border-color: var(--pink); box-shadow: 0 0 24px rgba(255,92,154,.2); position: relative; }
+  .price-card.best::after { content: 'Best value'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--pink-hot); color: #fff; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .price-card.kit b { font-size: 26px; padding: 7px 0; }
+
+  /* ticket board */
+  .board { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 26px; margin-top: 32px; }
+  .board-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+  .counts { font-size: 14px; color: var(--muted); }
+  .counts b { color: #fff; }
+  .bar { height: 6px; border-radius: 6px; background: var(--sold); overflow: hidden; margin-top: 8px; width: 260px; max-width: 100%; }
+  .bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff8fb8, #e8508c); }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--pink); }
+  .legend .l-sel { background: var(--pink-hot); border-color: var(--pink-hot); }
+  .legend .l-sold { background: var(--sold); border-color: #3a3236; }
+  .filters { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .filters button { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 20px; padding: 5px 14px; font: 500 12px Poppins, sans-serif; cursor: pointer; }
+  .filters button.on { color: #fff; border-color: var(--pink); }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
+  .t { position: relative; aspect-ratio: 1.45/1; border-radius: 9px; border: 1px solid rgba(255,143,184,.55); background: rgba(255,92,154,.04); color: #fff;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 22px; cursor: pointer; display: grid; place-items: center; line-height: 1; transition: transform .12s, background .12s, box-shadow .12s; font-variant-numeric: tabular-nums; }
+  .t:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 14px rgba(255,92,154,.35); }
+  .t small { display: block; font-family: 'Poppins', sans-serif; font-size: 8.5px; letter-spacing: 1px; font-weight: 600; margin-top: 2px; }
+  .t.sel { background: linear-gradient(180deg, #ff7aaa, #e2477f); border-color: #ff9cc0; box-shadow: 0 0 16px rgba(255,92,154,.55); }
+  .t.sel::after { content: '✓'; position: absolute; top: -7px; right: -7px; width: 18px; height: 18px; border-radius: 50%; background: #fff; color: #e2477f; font: 700 11px/18px Poppins, sans-serif; text-align: center; }
+  .t:disabled { background: var(--sold); border-color: #3a3236; color: var(--sold-text); cursor: not-allowed; }
+  .t[hidden] { display: none; }
+  .board.locked .t:not(:disabled) { cursor: not-allowed; opacity: .55; }
+  .locked-note { display: none; text-align: center; color: var(--pink-soft); font-size: 14px; margin-bottom: 14px; }
+  .board.locked .locked-note { display: block; }
+
+  /* selection summary */
+  .summary { display: grid; grid-template-columns: 1.6fr 1fr 1fr; margin-top: 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel-2); }
+  .summary > div { padding: 14px 18px; border-right: 1px solid var(--line); }
+  .summary > div:last-child { border-right: 0; text-align: right; }
+  .summary .k { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .summary .v { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: #fff; line-height: 1.1; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; min-height: 30px; }
+  .chip { border: 1px solid var(--pink); color: var(--pink-soft); border-radius: 7px; padding: 2px 9px; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 17px; }
+  .empty { color: var(--muted); font-size: 13px; }
+  .nudge { margin-top: 12px; text-align: center; font-size: 13.5px; color: var(--pink-soft); min-height: 21px; }
+
+  /* checkout */
+  .checkout { display: none; margin-top: 22px; border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--panel-2); }
+  .checkout.show { display: block; }
+  .checkout h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #fff; }
+  .checkout .hint { color: var(--muted); font-size: 13px; margin: 2px 0 14px; }
+  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  label { font-size: 12px; color: var(--muted); letter-spacing: .5px; }
+  input { width: 100%; margin-top: 4px; background: var(--bg); border: 1px solid var(--line); color: #fff; border-radius: 10px; padding: 11px 12px; font: 400 14px Poppins, sans-serif; }
+  input:focus { outline: 2px solid var(--pink); border-color: transparent; }
+  .agree { display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; font-size: 12.5px; color: var(--muted); }
+  .agree input { width: auto; margin-top: 3px; }
+  .pay-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 12px; flex-wrap: wrap; }
+  .pay-row .cta { margin-top: 0; }
+  .pay-row .cta:disabled { opacity: .5; cursor: not-allowed; }
+  .add-wrap { text-align: center; margin-top: 18px; }
+
+  /* confirmation preview */
+  .confirm { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; margin-top: 36px; }
+  .msg { background: #fff; color: #2c2622; border-radius: 16px; padding: 22px; font-size: 13.5px; }
+  .msg .from { font-size: 11.5px; color: #8a7f79; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px; }
+  .msg h4 { font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 6px; }
+  .msg .tix { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+  .msg .tix span { border: 1px solid #d98f86; color: #c2766c; border-radius: 6px; padding: 2px 9px; font-weight: 600; }
+  .sms { background: #1c1c1e; border-radius: 16px; padding: 22px; }
+  .sms .from { font-size: 11.5px; color: #8e8e93; margin-bottom: 12px; }
+  .bubble { background: #3a3a3c; color: #fff; border-radius: 18px 18px 18px 4px; padding: 12px 14px; font-size: 13.5px; }
+
+  /* faq */
+  .faq { max-width: 760px; margin: 30px auto 0; }
+  details { border-bottom: 1px solid var(--line); padding: 16px 4px; }
+  summary { cursor: pointer; font-weight: 500; color: #fff; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::after { content: '+'; color: var(--pink); font-size: 20px; line-height: 1; }
+  details[open] summary::after { content: '–'; }
+  details p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0; font-size: 12.5px; color: var(--muted); text-align: center; }
+  footer a { margin: 0 8px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .prizes, .confirm { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .grid { grid-template-columns: repeat(6, 1fr); }
+    .fields { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .steps { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: repeat(5, 1fr); gap: 7px; }
+    .t { font-size: 20px; }
+    .unit { min-width: 64px; } .unit b { font-size: 32px; }
+    .summary { grid-template-columns: 1fr 1fr; }
+    .summary > div:first-child { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
+    .board { padding: 16px; }
+    .fact { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="sample-bar">
+  SAMPLE FOR REVIEW — not live, ticket data is made up. Preview state:
+  <button type="button" data-state="before">Before open</button>
+  <button type="button" data-state="open" class="on">Open</button>
+  <button type="button" data-state="closed">Closed</button>
+</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="/"><img src="/assets/logo.png" alt="Lash Cartel Cosmetics" /></a>
+    <a href="/" class="back">← Back to store</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="brand-mark">LASH CARTEL™</div>
+    <h1>BEAUTY DRAW</h1>
+    <div class="script">Pick Your Lucky Number</div>
+
+    <div class="facts">
+      <div class="fact"><b>120</b><span>Tickets only</span></div>
+      <div class="fact"><b>3</b><span>Prizes</span></div>
+      <div class="fact"><b>$5</b><span>1 ticket · 3 for $10</span></div>
+      <div class="fact"><b>Sun 6pm</b><span>Tickets close (AEDT)</span></div>
+    </div>
+
+    <div class="clock" id="clock" aria-live="polite">
+      <div class="label" id="clockLabel">Tickets close in</div>
+      <div class="units" id="units">
+        <div class="unit"><b id="cd-d">0</b><span>Days</span></div>
+        <div class="unit"><b id="cd-h">00</b><span>Hours</span></div>
+        <div class="unit"><b id="cd-m">00</b><span>Mins</span></div>
+        <div class="unit"><b id="cd-s">00</b><span>Secs</span></div>
+      </div>
+      <div class="sub" id="clockSub">Sunday 29 November 2026, 6:00 pm Sydney time</div>
+      <div class="now"><span class="live-dot"></span>Sydney time now: <span id="nowClock">--</span></div>
+    </div>
+
+    <a href="#tickets" class="cta" id="heroCta">Pick your numbers</a>
+  </div>
+</div>
+
+<section id="prizes">
+  <div class="wrap">
+    <div class="eyebrow">What you can win</div>
+    <h2>Three <em>prizes</em></h2>
+    <p class="lead">Three winners drawn at random from all 120 ticket numbers. <span class="tbc">Prizes to confirm</span></p>
+    <div class="prizes">
+      <div class="prize first">
+        <span class="place">1st</span>
+        <img src="/assets/products/gift-box/gift-box-hero.jpg" alt="First prize" />
+        <div class="body"><h3>First prize <span class="tbc">TBC</span></h3><p>Owner to confirm the prize and its value. Sample photo: Lash Cartel gift box.</p></div>
+      </div>
+      <div class="prize">
+        <span class="place">2nd</span>
+        <img src="/assets/products/cluster-lash-kit/Volume/volume_main.jpg" alt="Second prize" />
+        <div class="body"><h3>Second prize <span class="tbc">TBC</span></h3><p>Owner to confirm. Sample photo: DIY Cluster Lash Kit.</p></div>
+      </div>
+      <div class="prize">
+        <span class="place">3rd</span>
+        <img src="/assets/products/mascara/mascara-promo.jpg" alt="Third prize" />
+        <div class="body"><h3>Third prize <span class="tbc">TBC</span></h3><p>Owner to confirm. Sample photo: Ultra Fine Precision Mascara.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:linear-gradient(180deg,transparent,rgba(255,92,154,.05),transparent)">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>Simple as <em>1, 2, 3</em></h2>
+    <div class="steps">
+      <div class="step"><h3>Pick your numbers</h3><p>Choose any available numbers from 1 to 120. Grey numbers are already taken.</p></div>
+      <div class="step"><h3>Pay securely</h3><p>$5 for 1 ticket or $10 for 3. Enter your name, email and mobile so we can reach you.</p></div>
+      <div class="step"><h3>Get your tickets</h3><p>Your ticket numbers arrive straight away by email and SMS.</p></div>
+      <div class="step"><h3>Winners drawn</h3><p>Tickets close Sunday 6pm. Three winners are drawn and contacted by phone call.</p></div>
+    </div>
+    <div class="pricing">
+      <div class="price-card"><b>$5</b><span>1 ticket</span></div>
+      <div class="price-card best"><b>$10</b><span>3 tickets</span></div>
+      <div class="price-card kit"><b>Free ticket</b><span>with every DIY lash kit</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="tickets">
+  <div class="wrap">
+    <div class="eyebrow">Select your ticket(s) below</div>
+    <h2>Pick your <em>lucky number</em></h2>
+
+    <div class="board" id="board">
+      <div class="locked-note" id="lockedNote">Ticket sales open soon. Have a look around and pick your favourites.</div>
+      <div class="board-head">
+        <div class="counts">
+          <b id="availCount">0</b> available · <b id="soldCount">0</b> sold of 120
+          <div class="bar"><i id="soldBar" style="width:0"></i></div>
+        </div>
+        <div class="legend"><span><i class="l-sel"></i>Selected</span><span><i></i>Available</span><span><i class="l-sold"></i>Sold</span></div>
+      </div>
+      <div class="filters" role="group" aria-label="Show tickets">
+        <button type="button" class="on" data-filter="all">All</button>
+        <button type="button" data-filter="available">Available</button>
+        <button type="button" data-filter="sold">Sold</button>
+      </div>
+      <div class="grid" id="grid" aria-label="Ticket numbers 1 to 120"></div>
+
+      <div class="summary">
+        <div><div class="k">Your selection</div><div class="chips" id="chips"><span class="empty">Tap numbers above to choose</span></div></div>
+        <div><div class="k">Total tickets</div><div class="v" id="totTickets">0</div></div>
+        <div><div class="k">Total</div><div class="v" id="totPrice">$0.00</div></div>
+      </div>
+      <div class="nudge" id="nudge"></div>
+      <div class="add-wrap"><button type="button" class="cta" id="continueBtn" disabled>Continue to checkout</button></div>
+
+      <div class="checkout" id="checkout">
+        <h3>Your details</h3>
+        <p class="hint">Winners are contacted by phone call, so please use a number you answer.</p>
+        <div class="fields">
+          <div><label for="fName">Full name</label><input id="fName" autocomplete="name" /></div>
+          <div><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="email" /></div>
+          <div><label for="fPhone">Mobile number</label><input id="fPhone" type="tel" autocomplete="tel" placeholder="04xx xxx xxx" /></div>
+        </div>
+        <label class="agree"><input type="checkbox" id="fAgree" /> I am 18 or over and agree to the <a href="#faq">Beauty Draw terms</a>.</label>
+        <div class="pay-row">
+          <div class="counts">Paying for <b id="payTickets">0</b> tickets</div>
+          <button type="button" class="cta" id="payBtn" disabled>Pay $0.00</button>
+        </div>
+        <p class="hint" style="margin-top:10px">Sample only: payment connects to the store's Stripe checkout once approved. Numbers are held for 10 minutes while you pay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="confirmation">
+  <div class="wrap">
+    <div class="eyebrow">After you pay</div>
+    <h2>Instant <em>confirmation</em></h2>
+    <p class="lead">Every buyer gets their ticket numbers by email, plus an SMS.</p>
+    <div class="confirm">
+      <div class="msg">
+        <div class="from">From: Lash Cartel Cosmetics · Subject: Your Beauty Draw tickets 🎟️</div>
+        <h4>You're in, Jess!</h4>
+        <p>Thanks for entering the Lash Cartel Beauty Draw. Your ticket numbers:</p>
+        <div class="tix"><span>13</span><span>27</span><span>88</span></div>
+        <p>Tickets close <b>Sunday 29 November, 6:00 pm (Sydney time)</b>. Three winners will be drawn and <b>contacted by phone call</b> on the number you gave us.</p>
+        <p style="margin-top:8px;color:#8a7f79;font-size:12px">Order LC-1042 · 3 tickets · $10.00</p>
+      </div>
+      <div class="sms">
+        <div class="from">SMS from LashCartel</div>
+        <div class="bubble">Lash Cartel Beauty Draw: you're in! Your tickets: 13, 27, 88. Tickets close Sun 29 Nov 6pm. Winners are contacted by phone. Good luck! 💖</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Good to know</div>
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>How much are tickets?</summary><p>$5 for 1 ticket or $10 for 3 tickets. Each ticket is one number from 1 to 120.</p></details>
+      <details><summary>Do I get a ticket when I buy lashes?</summary><p>Yes. Every DIY lash kit bought during the draw comes with 1 free ticket. We assign you an available number and email it to you. <span class="tbc">Confirm: kits only, or every product?</span></p></details>
+      <details><summary>When do tickets close?</summary><p>Sunday 29 November 2026 at 6:00 pm Sydney time, or earlier if all 120 tickets sell out.</p></details>
+      <details><summary>How are winners picked and contacted?</summary><p>Three winning numbers are drawn at random from all sold tickets. Winners are contacted by phone call on the number given at checkout. <span class="tbc">Confirm draw date and whether it's drawn live on Instagram</span></p></details>
+      <details><summary>Can I choose my own numbers?</summary><p>Yes. Pick any number that isn't greyed out. Once you pay, that number is yours.</p></details>
+      <details><summary>Who can enter?</summary><p>Anyone 18 or over with a delivery address in Australia or New Zealand. <span class="tbc">Confirm</span></p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Lash Cartel Cosmetics · <a href="/faq">FAQs</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a></div>
+</footer>
+
+<script>
+(function () {
+  // ---- Settings (Sydney time). In the live version these come from the server. ----
+  const TOTAL = 120;
+  const CLOSES = new Date('2026-11-29T18:00:00+11:00');
+  let OPENS = new Date('2026-11-24T10:00:00+11:00'); // TBC: when ticket sales open
+  // Sample-only: made-up sold numbers
+  const SOLD = new Set([3, 7, 12, 13, 22, 27, 34, 41, 45, 50, 58, 66, 67, 71, 77, 80, 88, 93, 99, 101, 107, 111, 118, 120]);
+
+  let state = 'open';
+  let selected = new Set();
+  let filter = 'all';
+
+  const $ = id => document.getElementById(id);
+  const grid = $('grid');
+  const pad = n => String(n).padStart(2, '0');
+
+  // Price: every 3 tickets = $10, leftovers $5 each
+  const priceFor = n => Math.floor(n / 3) * 10 + (n % 3) * 5;
+
+  function renderGrid() {
+    grid.innerHTML = '';
+    for (let n = 1; n <= TOTAL; n++) {
+      const sold = SOLD.has(n);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 't' + (selected.has(n) ? ' sel' : '');
+      b.disabled = sold;
+      b.innerHTML = sold ? `${pad(n)}<small>SOLD</small>` : pad(n);
+      b.setAttribute('aria-label', `Ticket ${n}${sold ? ', sold' : selected.has(n) ? ', selected' : ', available'}`);
+      b.setAttribute('aria-pressed', selected.has(n));
+      b.hidden = (filter === 'available' && sold) || (filter === 'sold' && !sold);
+      b.addEventListener('click', () => toggle(n));
+      grid.appendChild(b);
+    }
+    const soldN = SOLD.size;
+    $('soldCount').textContent = soldN;
+    $('availCount').textContent = TOTAL - soldN;
+    $('soldBar').style.width = (soldN / TOTAL * 100) + '%';
+  }
+
+  function toggle(n) {
+    if (state !== 'open' || SOLD.has(n)) return;
+    selected.has(n) ? selected.delete(n) : selected.add(n);
+    renderGrid(); renderSummary();
+  }
+
+  function renderSummary() {
+    const nums = [...selected].sort((a, b) => a - b);
+    $('chips').innerHTML = nums.length ? nums.map(n => `<span class="chip">${pad(n)}</span>`).join('') : '<span class="empty">Tap numbers above to choose</span>';
+    const total = priceFor(nums.length);
+    $('totTickets').textContent = nums.length;
+    $('totPrice').textContent = '$' + total.toFixed(2);
+    $('payTickets').textContent = nums.length;
+    $('payBtn').textContent = 'Pay $' + total.toFixed(2);
+    const r = nums.length % 3;
+    $('nudge').textContent = r === 2 ? 'Pick 1 more number — your 3rd ticket is free!' : r === 1 && nums.length > 1 ? 'Pick 2 more to make it 3 for $10 again.' : '';
+    $('continueBtn').disabled = !nums.length || state !== 'open';
+    if (!nums.length) $('checkout').classList.remove('show');
+    validate();
+  }
+
+  function validate() {
+    const ok = selected.size && $('fName').value.trim().length > 1 && /^\S+@\S+\.\S+$/.test($('fEmail').value) && $('fPhone').value.replace(/\D/g, '').length >= 9 && $('fAgree').checked;
+    $('payBtn').disabled = !ok;
+  }
+  ['fName', 'fEmail', 'fPhone', 'fAgree'].forEach(id => $(id).addEventListener('input', validate));
+  $('fAgree').addEventListener('change', validate);
+  $('continueBtn').addEventListener('click', () => { $('checkout').classList.add('show'); $('fName').focus(); });
+  $('payBtn').addEventListener('click', () => alert('Sample only — this would open the secure Stripe payment.'));
+
+  document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
+    filter = b.dataset.filter;
+    document.querySelectorAll('.filters button').forEach(x => x.classList.toggle('on', x === b));
+    renderGrid();
+  }));
+
+  // ---- Countdown + live clock ----
+  const sydney = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Sydney', weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', second: '2-digit' });
+  let offset = 0; // sample: shifts "now" to preview each state
+
+  function tick() {
+    const now = new Date(Date.now() + offset);
+    $('nowClock').textContent = sydney.format(now);
+    let target, label, sub;
+    if (now < OPENS) { state = 'before'; target = OPENS; label = 'Tickets open in'; sub = 'Opening ' + sydney.format(OPENS).replace(/:\d\d(?= )/, '') + ' · closes Sunday 6:00 pm'; }
+    else if (now < CLOSES && SOLD.size < TOTAL) { state = 'open'; target = CLOSES; label = 'Tickets close in'; sub = 'Sunday 29 November 2026, 6:00 pm Sydney time'; }
+    else { state = 'closed'; target = null; label = 'Tickets are closed'; sub = 'Thanks for playing! Winners are being contacted by phone.'; }
+    $('clockLabel').textContent = label;
+    $('clockSub').textContent = sub;
+    $('units').style.display = target ? '' : 'none';
+    if (target) {
+      let s = Math.max(0, Math.floor((target - now) / 1000));
+      $('cd-d').textContent = Math.floor(s / 86400); s %= 86400;
+      $('cd-h').textContent = pad(Math.floor(s / 3600)); s %= 3600;
+      $('cd-m').textContent = pad(Math.floor(s / 60));
+      $('cd-s').textContent = pad(s % 60);
+    }
+    $('board').classList.toggle('locked', state !== 'open');
+    $('lockedNote').textContent = state === 'before' ? 'Ticket sales open soon. Have a look around and pick your favourites.' : 'Ticket sales have closed.';
+    $('heroCta').textContent = state === 'open' ? 'Pick your numbers' : 'See the tickets';
+    $('continueBtn').disabled = !selected.size || state !== 'open';
+  }
+
+  // Sample-only: pretend "now" is a moment in each state. Remove for the live version.
+  const H = 3600e3;
+  const FAKE_NOW = { before: OPENS - (51 * H), open: CLOSES - (53 * H), closed: CLOSES + 60e3 };
+  function preview(s) {
+    offset = FAKE_NOW[s] - Date.now();
+    if (s !== 'open') selected.clear();
+    document.querySelectorAll('.sample-bar button').forEach(x => x.classList.toggle('on', x.dataset.state === s));
+    tick(); renderGrid(); renderSummary();
+  }
+  document.querySelectorAll('.sample-bar button').forEach(b => b.addEventListener('click', () => preview(b.dataset.state)));
+
+  preview('open');
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
