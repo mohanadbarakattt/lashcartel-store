@@ -379,8 +379,15 @@
   .slide-dots { position: absolute; bottom: 16px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; }
   .slide-dots button { width: 9px; height: 9px; border-radius: 9px; border: 0; padding: 0; background: rgba(150,120,120,.45); cursor: pointer; transition: width .3s, background .3s; }
   .slide-dots button.on { width: 28px; background: #e8508c; }
-  .raffle-card .card-img { padding: 0; }
-  .raffle-card .badge { z-index: 2; background: #e8508c; top: auto; bottom: 12px; }
+  .raffle-card .card-img { padding: 0; display: grid; place-items: center; }
+  .neon-sign { width: calc(100% - 32px); height: calc(100% - 32px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border: 2px solid #ff8fb8; border-radius: 22px;
+    box-shadow: 0 0 14px rgba(255,92,154,.8), inset 0 0 14px rgba(255,92,154,.5); animation: neon 2.4s ease-in-out infinite; }
+  .neon-sign .neon { font-size: clamp(34px, 4.2vw, 48px); animation: flicker 5s infinite; }
+  .neon-tag { font: 600 11px Poppins, sans-serif; letter-spacing: 3px; text-transform: uppercase; color: #ff8fb8; text-shadow: 0 0 8px rgba(255,92,154,.9); }
+  .neon-sub { font: 600 13px Poppins, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,.6); }
+  .neon-nums { font: 700 20px/1 'Cormorant Garamond', serif; letter-spacing: 3px; color: #7ff3ff; text-shadow: 0 0 10px rgba(80,230,255,.9); }
+  @keyframes flicker { 0%, 18%, 22%, 62%, 64%, 100% { opacity: 1; } 20%, 63% { opacity: .45; } }
+  @media (prefers-reduced-motion: reduce) { .neon-sign, .neon-sign .neon { animation: none; } }
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s, transform .7s; }
   .reveal.in { opacity: 1; transform: none; }
 
@@ -921,7 +928,7 @@
     const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
     const raffleCard = activeCat === 'all' ? `
       <a href="/raffle" class="card raffle-card reveal" data-draw>
-        <div class="card-img"><div data-draw-machine style="width:100%"></div><span class="badge">3 days only</span></div>
+        <div class="card-img"><div class="neon-sign"><span class="neon-tag">🎟 3 days only</span><span class="neon">Giveaway</span><span class="neon-sub">Win up to $350</span><span class="neon-nums">07 · 41 · 85</span></div></div>
         <div class="card-body">
           <span class="cat-label">November Giveaway · 120 tickets</span>
           <h3>Enter the Giveaway</h3>
