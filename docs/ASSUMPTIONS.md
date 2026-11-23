@@ -2,7 +2,7 @@
 
 - Owner-approved prices: DIY Natural and Volume $48.95, Pretty Ambition $51.99, mascara $21.00.
 - “DIY Classic” maps to the existing Natural variant name.
-- Product pages keep prices visible; shop and search cards reveal on hover, keyboard focus or the View price button.
+- Prices are visible everywhere: product pages, shop cards and search results (the hover/View price reveal was removed in November 2026 to cut friction before purchase).
 - The quiz occasion answer is collected but does not affect the result. Application preference has priority over desired style.
 - Pretty Ambition remains sold out until stock is changed by an administrator. The current product photo stays in place.
 - The existing homepage reviews and FAQ are unchanged. Testimonials carousel is on hold pending permission-cleared screenshots.

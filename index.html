@@ -107,7 +107,7 @@
 
   /* hero */
   .hero { background: linear-gradient(180deg, var(--blush) 0%, var(--blush-soft) 100%); position: relative; overflow: hidden; }
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 30px; min-height: 560px; padding: 40px 0; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 30px; min-height: 560px; padding-top: 40px; padding-bottom: 48px; }
   .hero-copy .eyebrow { color: var(--rose-dark); letter-spacing: 3px; text-transform: uppercase; font-size: 11.5px; font-weight: 600; margin-bottom: 14px; }
   .hero-copy h1 { font-size: clamp(46px, 7vw, 82px); line-height: 0.95; margin-bottom: 8px; }
   .hero-copy h1 .script { display: block; color: var(--rose-dark); font-size: clamp(58px, 9vw, 104px); line-height: 1; }
@@ -176,12 +176,7 @@
   .card-body .desc { color: var(--ink-soft); font-size: 13px; flex: 1; margin: 4px 0; }
   .price { font-size: 18px; font-weight: 600; font-family: 'Cormorant Garamond', serif; margin-top: 4px; }
   .price .was { color: var(--ink-soft); font-weight: 400; text-decoration: line-through; font-size: 15px; margin-left: 8px; }
-  .price-reveal { align-self: flex-start; border: 1px solid var(--rose-dark); border-radius: 20px; padding: 5px 10px; color: var(--ink); background: var(--blush-soft); font: 600 11px Poppins, sans-serif; cursor: pointer; }
-  .card .price, .s-result .s-price { opacity: 0; transition: opacity .15s ease; }
-  .card:hover .price, .card:focus-within .price, .card.price-open .price,
-  .s-result:hover .s-price, .s-result:focus-within .s-price, .s-result.price-open .s-price { opacity: 1; }
-  .price-reveal:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) { .card .price, .s-result .s-price { transition: none; } }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .add-btn { background: var(--ink); border: none; color: #fff; font-size: 11.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 500; padding: 12px; border-radius: 40px; cursor: pointer; transition: all .2s; margin-top: 12px; }
   .add-btn:hover { background: var(--rose-dark); }
 
@@ -189,6 +184,8 @@
   .split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 56px; }
   .split .visual { aspect-ratio: 4/3.4; border-radius: var(--radius); background: linear-gradient(150deg, var(--blush), var(--blush-deep)); box-shadow: var(--shadow); display: grid; place-items: center; position: relative; overflow: hidden; }
   .split .visual img { width: 100%; height: 100%; object-fit: cover; }
+  .split .visual.duo { aspect-ratio: auto; display: flex; flex-direction: column; gap: 10px; background: none; box-shadow: none; }
+  .split .visual.duo img { height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
   .split .visual .photo-tag { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: rgba(44,38,34,0.5); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
   .split h2 { font-size: clamp(32px, 4.5vw, 50px); line-height: 1.05; margin-bottom: 8px; }
   .split .script { color: var(--rose-dark); }
@@ -342,11 +339,48 @@
   .s-result .s-tag { color: var(--rose-dark); font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
   .s-result .s-price { font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
   .s-result > a { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
-  .s-result .price-reveal { flex-shrink: 0; }
   @media (max-width: 480px) { .s-result { flex-wrap: wrap; } .s-result > a { flex-basis: 100%; } }
   .s-empty { padding: 36px 0; color: var(--ink-soft); text-align: center; }
 
   /* reveal */
+  /* November Giveaway: neon nav button, product card, page transition */
+  .draw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 30px; background: #120d0f; color: #ffd3e2; border: 1px solid #ff8fb8; font: 600 11.5px Poppins, sans-serif; letter-spacing: 1.3px; text-transform: uppercase; white-space: nowrap;
+    box-shadow: 0 0 10px rgba(255,92,154,.55), inset 0 0 8px rgba(255,92,154,.35); text-shadow: 0 0 6px rgba(255,92,154,.9); animation: neon 2.4s ease-in-out infinite; }
+  .draw-btn:hover { color: #fff; }
+  @keyframes neon { 50% { box-shadow: 0 0 18px rgba(255,92,154,.85), inset 0 0 10px rgba(255,92,154,.45); } }
+  .raffle-card { text-decoration: none; color: inherit; background: #120d0f; }
+  .raffle-card .card-img { background: radial-gradient(ellipse at 50% 30%, rgba(255,92,154,.35), transparent 65%), #120d0f; text-align: center; }
+  .raffle-card .neon { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 34px; line-height: 1; letter-spacing: 1px; color: #ffd3e2; text-shadow: 0 0 12px rgba(255,92,154,.9), 0 0 28px rgba(255,92,154,.5); }
+  .raffle-card .neon small { display: block; font-size: 14px; letter-spacing: 4px; color: #ff8fb8; margin-bottom: 8px; }
+  .raffle-card .card-body h3, .raffle-card .price { color: #fff; opacity: 1; }
+  .raffle-card .card-body .desc { color: #bfa8b1; }
+  .raffle-card .add-btn { background: linear-gradient(180deg, #ff8fb8, #e8508c); text-align: center; }
+  .draw-curtain { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #3a1626, #0d0a0b 70%);
+    clip-path: circle(0 at var(--x, 50%) var(--y, 50%)); animation: curtain .65s cubic-bezier(.7,0,.3,1) forwards; }
+  .draw-curtain span { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(40px, 8vw, 80px); color: #ffd3e2; text-shadow: 0 0 18px rgba(255,92,154,.9); opacity: 0; animation: fadein .3s .35s forwards; }
+  @keyframes curtain { to { clip-path: circle(150% at var(--x, 50%) var(--y, 50%)); } }
+  @keyframes fadein { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .draw-btn { animation: none; } }
+  @media (max-width: 420px) { .draw-btn { padding: 7px 11px; font-size: 10.5px; letter-spacing: 1px; } }
+  /* hero slideshow */
+  .slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-behavior: smooth; }
+  .slides::-webkit-scrollbar { display: none; }
+  .slide { flex: 0 0 100%; scroll-snap-align: start; }
+  .slide-draw { background: radial-gradient(ellipse at 75% 45%, rgba(255,92,154,.28), transparent 55%), #120d0f; }
+  .slide-draw .eyebrow { color: #ff8fb8; }
+  .slide-draw h1 { color: #ffd3e2; text-shadow: 0 0 18px rgba(255,92,154,.55); }
+  .slide-draw h1 .script { color: #ff8fb8; }
+  .slide-draw p { color: #bfa8b1; }
+  .draw-frame { width: min(100%, 470px); border-radius: var(--radius); overflow: hidden; box-shadow: 0 0 44px rgba(255,92,154,.35); }
+  .draw-cta { background: linear-gradient(180deg, #ff8fb8, #e8508c); color: #fff; box-shadow: 0 6px 24px rgba(255,92,154,.45); }
+  .mini-cd { display: flex; gap: 8px; margin: -10px 0 26px; }
+  .mini-cd span { min-width: 58px; text-align: center; padding: 8px 4px; border-radius: 10px; background: #1f161a; border: 1px solid rgba(255,182,206,.2); font-size: 9.5px; letter-spacing: 1.2px; text-transform: uppercase; color: #bfa8b1; }
+  .mini-cd b { display: block; font: 700 26px/1 'Cormorant Garamond', serif; color: #fff; font-variant-numeric: tabular-nums; }
+  .slide-dots { position: absolute; bottom: 16px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; }
+  .slide-dots button { width: 9px; height: 9px; border-radius: 9px; border: 0; padding: 0; background: rgba(150,120,120,.45); cursor: pointer; transition: width .3s, background .3s; }
+  .slide-dots button.on { width: 28px; background: #e8508c; }
+  .raffle-card .card-img { padding: 0; }
+  .raffle-card .badge { z-index: 2; background: #e8508c; top: auto; bottom: 12px; }
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s, transform .7s; }
   .reveal.in { opacity: 1; transform: none; }
 
@@ -390,6 +424,7 @@
       <a href="/partner-with-us">Partner With Us</a>
     </nav>
     <div class="nav-right">
+      <a href="/raffle" class="draw-btn" data-draw>🎟 Enter Giveaway</a>
       <button class="icon-btn" onclick="openSearch()" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
       <button class="icon-btn" onclick="openCart()" aria-label="Open cart">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -399,22 +434,39 @@
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy reveal">
-      <h1>Beauty <span class="script">Without Compromise</span></h1>
-      <p>Lightweight cluster lashes with a thin, seamless band that disappears into your lash line — natural-looking, long-lasting wear that's easy enough for total beginners. For the baddies on the go.</p>
-      <div>
-        <a href="#shop" class="btn btn-primary">Shop Now</a>
-        <a href="#about" class="btn btn-ghost" style="margin-left:10px;">Our Story</a>
+<section class="hero" aria-roledescription="carousel" aria-label="Highlights">
+  <div class="slides" id="heroSlides">
+  <div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 2">
+    <div class="wrap hero-grid">
+      <div class="hero-copy reveal">
+        <h1>Beauty <span class="script">Without Compromise</span></h1>
+        <p>Lightweight cluster lashes with a thin, seamless band that disappears into your lash line — natural-looking, long-lasting wear that's easy enough for total beginners. For the baddies on the go.</p>
+        <div>
+          <a href="#shop" class="btn btn-primary">Shop Now</a>
+          <a href="#about" class="btn btn-ghost" style="margin-left:10px;">Our Story</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-visual reveal">
-      <div class="box" style="padding:0;">
-        <img src="/assets/hero.jpg" alt="Lash Cartel lashes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+      <div class="hero-visual reveal">
+        <div class="box" style="padding:0;">
+          <img src="/assets/hero.jpg" alt="Lash Cartel lashes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+        </div>
       </div>
     </div>
   </div>
+  <div class="slide slide-draw" role="group" aria-roledescription="slide" aria-label="2 of 2">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Lash Cartel November Giveaway · 3 days only</div>
+        <h1>Pick Your <span class="script">Lucky Number</span></h1>
+        <p>3 prizes worth $575, including a 3 Month Beauty Supply. 120 tickets at $5 for 1 or $10 for 3. Tickets open Thursday 26 November and close Sunday 29 November at 6pm.</p>
+        <div class="mini-cd" id="heroCd" aria-label="Time until tickets close"></div>
+        <a href="/raffle" class="btn draw-cta" data-draw>🎟 Enter Giveaway</a>
+      </div>
+      <div class="hero-visual"><div class="draw-frame" data-draw-machine></div></div>
+    </div>
+  </div>
+  </div>
+  <div class="slide-dots"><button type="button" class="on" aria-label="Show slide 1"></button><button type="button" aria-label="Show slide 2"></button></div>
 </section>
 
 <section id="lash-match" aria-labelledby="quiz-title">
@@ -466,8 +518,9 @@
 
 <section class="section" id="about" style="background:var(--blush-soft);">
   <div class="wrap split">
-    <div class="visual reveal">
-      <img src="/assets/lifestyle-lashes.jpg" alt="Lash Cartel lashes — before and after" />
+    <div class="visual duo reveal">
+      <img src="/assets/before-after/before-after-face.jpg" alt="Before and after wearing Lash Cartel cluster lashes" loading="lazy" decoding="async" />
+      <img src="/assets/before-after/classic-single-eye.jpg" alt="Before and after: DIY Classic Cluster Set on one eye" loading="lazy" decoding="async" />
     </div>
     <div class="reveal">
       <div class="sec-head" style="text-align:left;margin-bottom:0;">
@@ -777,6 +830,7 @@
 </div>
 
 <script src="/assets/catalog.js"></script>
+<script src="/assets/draw-machine.js?v=1"></script>
 <script>
   let STRIPE_PUBLISHABLE_KEY = '';
 
@@ -865,7 +919,19 @@
 
   function renderProducts() {
     const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
-    document.getElementById('productGrid').innerHTML = list.map(p => {
+    const raffleCard = activeCat === 'all' ? `
+      <a href="/raffle" class="card raffle-card reveal" data-draw>
+        <div class="card-img"><div data-draw-machine style="width:100%"></div><span class="badge">3 days only</span></div>
+        <div class="card-body">
+          <span class="cat-label">November Giveaway · 120 tickets</span>
+          <h3>Enter the Giveaway</h3>
+          <p class="desc">Pick your lucky number from 1–120 to win a 3 Month Beauty Supply, The Cartel Bag or The Cartel Classic.</p>
+          <span class="price">$5 · 3 for $10</span>
+          <span class="add-btn">Pick your number</span>
+        </div>
+      </a>` : '';
+    setTimeout(() => window.fillDrawMachines && fillDrawMachines());
+    document.getElementById('productGrid').innerHTML = raffleCard + list.map(p => {
       const imgInner = p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : motif(p);
       const titleHTML = `${p.name}${p.tm ? '<span style="font-size:13px;vertical-align:super;">™</span>' : ''}`;
       const badgeText = p.soldOut ? 'Sold Out' : p.badge;
@@ -891,7 +957,6 @@
           <span class="cat-label">${p.tag}</span>
           ${titleBlock}
           <p class="desc">${p.desc}</p>
-          <button type="button" class="price-reveal" aria-expanded="false" onclick="showPrice(this, '${p.href || '#shop'}')">View price</button>
           <span class="price">$${p.price.toFixed(2)}${p.was ? `<span class="was">$${p.was.toFixed(2)}</span>` : ''}</span>
           ${cta}
         </div>
@@ -900,6 +965,42 @@
     observeReveals();
   }
 
+  // Giveaway links: neon curtain wipes out from the click point, then opens the raffle page
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-draw]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return location.assign(a.href);
+    const c = document.createElement('div');
+    c.className = 'draw-curtain';
+    c.style.setProperty('--x', e.clientX + 'px'); c.style.setProperty('--y', e.clientY + 'px');
+    c.innerHTML = '<span>November Giveaway</span>';
+    document.body.appendChild(c);
+    setTimeout(() => location.assign(a.href), 700);
+  });
+  // Hero slideshow: swipe or dots; auto-advances every 7s, pauses while the pointer is over it
+  (function () {
+    const box = document.getElementById('heroSlides'), dots = [...document.querySelectorAll('.slide-dots button')];
+    const at = () => Math.round(box.scrollLeft / box.clientWidth);
+    const go = i => box.scrollTo({ left: i * box.clientWidth });
+    let timer;
+    const play = () => { clearInterval(timer); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(() => go((at() + 1) % dots.length), 7000); };
+    dots.forEach((d, i) => d.addEventListener('click', () => { go(i); play(); }));
+    box.addEventListener('scroll', () => dots.forEach((d, i) => d.classList.toggle('on', i === at())), { passive: true });
+    box.addEventListener('pointerenter', () => clearInterval(timer));
+    box.addEventListener('pointerleave', play);
+    play();
+    const closes = new Date('2026-11-29T18:00:00+11:00'), cd = document.getElementById('heroCd'); // TBC: from raffle settings
+    const tick = () => {
+      let t = Math.max(0, Math.floor((closes - Date.now()) / 1000));
+      const parts = [[Math.floor(t / 86400), 'Days'], [Math.floor(t % 86400 / 3600), 'Hrs'], [Math.floor(t % 3600 / 60), 'Mins'], [t % 60, 'Secs']];
+      cd.innerHTML = parts.map(([v, l]) => `<span><b>${String(v).padStart(2, '0')}</b>${l}</span>`).join('');
+    };
+    tick(); setInterval(tick, 1000);
+  })();
+
+  addEventListener('pageshow', e => { if (e.persisted) document.querySelectorAll('.draw-curtain').forEach(c => c.remove()); });
+
   function addToCart(name) {
     const p = PRODUCTS.find(x => x.name === name);
     const existing = cart.find(x => x.key === name);
@@ -907,13 +1008,6 @@
     else cart.push({ key: p.name, name: p.name, tag: p.tag, price: p.price, qty: 1, kind: p.kind, img: p.img });
     renderCart();
     openCart();
-  }
-  function showPrice(button, href) {
-    const row = button.closest('.card, .s-result');
-    if (row.classList.contains('price-open')) { window.location.href = href; return; }
-    row.classList.add('price-open');
-    button.setAttribute('aria-expanded', 'true');
-    button.textContent = 'Shop product';
   }
   function changeQty(key, d) {
     const item = cart.find(x => x.key === key);
@@ -1034,7 +1128,6 @@
     const thumb = p.img ? `<img src="${p.img}" alt="${p.name}" />` : `<span class="s-noimg"></span>`;
     return `<div class="s-result">
       <a href="${link}">${thumb}<div class="s-info"><div class="s-tag">${p.tag}</div><div class="s-name">${p.name}${p.tm ? '™' : ''}</div></div></a>
-      <button type="button" class="price-reveal" aria-expanded="false" onclick="showPrice(this, '${link}')">View price</button>
       <div class="s-price">$${p.price.toFixed(2)}</div>
     </div>`;
   }

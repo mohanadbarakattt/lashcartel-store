@@ -2,6 +2,7 @@ import Stripe from 'stripe';
 import { db } from '../lib/db.js';
 import { confirmationEmail } from '../lib/order-emails.js';
 import { sendEmail } from '../lib/email.js';
+import { confirmPayment, kitTickets, sendTickets, releasePayment } from '../lib/giveaway.js';
 
 export const config = { api: { bodyParser: false } };
 const rawBody = async req => { const chunks = []; for await (const chunk of req) chunks.push(chunk); return Buffer.concat(chunks); };
@@ -15,7 +16,13 @@ export default async function handler(req, res) {
   catch (_) { return res.status(400).json({ error: 'Invalid webhook signature.' }); }
   const sql = db();
   try {
-    if (event.type === 'payment_intent.succeeded') {
+    if (event.type === 'payment_intent.succeeded' && event.data.object.metadata?.source === 'lash-cartel-giveaway') {
+      const intent = event.data.object;
+      const result = await confirmPayment(sql, intent);
+      if (result) await sendTickets(sql, result, intent.id, 'paid');
+    } else if (event.type === 'payment_intent.canceled' && event.data.object.metadata?.source === 'lash-cartel-giveaway') {
+      await releasePayment(sql, event.data.object.id);
+    } else if (event.type === 'payment_intent.succeeded') {
       const intent = event.data.object;
       const address = intent.shipping?.address || null;
       const updated = await sql`UPDATE orders SET status = 'paid', shipping_address = ${JSON.stringify(address)}::jsonb
@@ -31,14 +38,21 @@ export default async function handler(req, res) {
         } catch (error) {
           await sql`INSERT INTO email_log (kind, reference_id, recipient, status, error) VALUES ('confirmation', ${String(order.id)}, ${order.customer_email}, 'failed', ${error.message}) ON CONFLICT (kind,reference_id) DO UPDATE SET status = 'failed', error = EXCLUDED.error`;
         }
+        // November Giveaway: 1 free ticket per DIY lash kit while tickets are on sale. Never blocks the order.
+        try {
+          const free = await kitTickets(sql, order, intent);
+          if (free) await sendTickets(sql, free, `order:${order.id}`, 'kit');
+        } catch (error) { console.error('Giveaway kit ticket failed:', error.message); }
       }
     } else if (event.type === 'payment_intent.payment_failed') {
       await sql`UPDATE orders SET status = 'failed' WHERE payment_intent_id = ${event.data.object.id} AND status = 'pending'`;
     } else if (event.type === 'charge.refunded') {
       const intentId = event.data.object.payment_intent;
       if (intentId) {
+        await sql`UPDATE giveaway_tickets SET status = 'refunded' WHERE payment_ref = ${intentId} AND status = 'sold'`;
         const refunded = await sql`UPDATE orders SET status = 'refunded' WHERE payment_intent_id = ${intentId} AND status IN ('paid','dispatched') RETURNING *`;
         for (const order of refunded) {
+          await sql`UPDATE giveaway_tickets SET status = 'refunded' WHERE payment_ref = ${`order:${order.id}`} AND status = 'sold'`;
           if (process.env.CARTEL_CASH_ENABLED !== 'true') continue;
           const earn = await sql`SELECT member_id,points FROM points_ledger WHERE event_key = ${`order:${order.id}:earn`}`;
           if (earn.length) await sql`INSERT INTO points_ledger(member_id,points,reason,event_key) VALUES (${earn[0].member_id},${-earn[0].points},${`Refund ${order.order_number}`},${`order:${order.id}:refund`}) ON CONFLICT(event_key) DO NOTHING`;

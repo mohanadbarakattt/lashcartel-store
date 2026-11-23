@@ -11,6 +11,6 @@
     "stripe": "^17.4.0"
   },
   "scripts": {
-    "test": "node scripts/check-catalog.mjs && node scripts/check-quiz.mjs && node scripts/check-faq.mjs && node scripts/check-cart-schedule.mjs && node scripts/check-rewards.mjs && node scripts/check-referrals.mjs"
+    "test": "node scripts/check-catalog.mjs && node scripts/check-quiz.mjs && node scripts/check-faq.mjs && node scripts/check-cart-schedule.mjs && node scripts/check-rewards.mjs && node scripts/check-referrals.mjs && node scripts/check-giveaway.mjs"
   }
 }
