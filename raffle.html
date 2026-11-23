@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>November Giveaway — Lash Cartel Cosmetics</title>
 <meta name="description" content="Lash Cartel November Giveaway. Pick your lucky number from 1 to 120. $5 for 1 ticket or $10 for 3. Three prizes worth $575." />
-<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+<link rel="canonical" href="https://www.lashcartelcosmetics.com/raffle" />
+<script src="https://js.stripe.com/v3/"></script>
 <style>
   :root {
     --bg: #0d0a0b; --panel: #171214; --panel-2: #1f181b; --line: rgba(255,182,206,.18);
@@ -23,10 +24,6 @@
   img { max-width: 100%; display: block; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-  /* sample banner */
-  .sample-bar { background: #ffe08a; color: #2c2622; font-size: 12.5px; text-align: center; padding: 8px 16px; font-weight: 500; }
-  .sample-bar button { margin-left: 6px; border: 1px solid #2c2622; background: transparent; border-radius: 20px; padding: 2px 10px; font: inherit; font-size: 11.5px; cursor: pointer; }
-  .sample-bar button.on { background: #2c2622; color: #ffe08a; }
   .tbc { background: #ffe08a; color: #2c2622; font-size: 10px; font-weight: 600; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; text-transform: uppercase; vertical-align: middle; white-space: nowrap; }
 
   header { border-bottom: 1px solid var(--line); }
@@ -160,6 +157,13 @@
   .nudge { margin-top: 12px; text-align: center; font-size: 13.5px; color: var(--pink-soft); min-height: 21px; }
 
   /* checkout */
+  .linkish { background: none; border: 0; color: var(--pink); text-decoration: underline; font: inherit; cursor: pointer; padding: 0; }
+  .pay-error { color: #ff9cb4; font-size: 13.5px; margin-top: 10px; min-height: 1em; }
+  #payment-element { margin: 10px 0 4px; }
+  .done { margin-top: 22px; text-align: center; border: 1px solid var(--pink); border-radius: 16px; padding: 26px 20px; background: rgba(255,92,154,.08); box-shadow: 0 0 30px rgba(255,92,154,.2); }
+  .done h3 { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: #fff; }
+  .done p { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .done .chips { justify-content: center; margin: 12px 0; }
   .checkout { display: none; margin-top: 22px; border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--panel-2); }
   .checkout.show { display: block; }
   .checkout h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #fff; }
@@ -217,14 +221,6 @@
 </style>
 </head>
 <body>
-
-<div class="sample-bar">
-  SAMPLE FOR REVIEW — not live, ticket data is made up. Preview state:
-  <button type="button" data-state="before">Before open</button>
-  <button type="button" data-state="open" class="on">Open</button>
-  <button type="button" data-state="closed">Closed</button>
-  <button type="button" data-state="draw">Owner: start live draw</button>
-</div>
 
 <header>
   <div class="wrap nav">
@@ -343,42 +339,29 @@
       <div class="add-wrap"><button type="button" class="cta" id="continueBtn" disabled>Continue to checkout</button></div>
 
       <div class="checkout" id="checkout">
-        <h3>Your details</h3>
-        <p class="hint">Winners are contacted by phone call, so please use a number you answer.</p>
-        <div class="fields">
-          <div><label for="fName">Full name</label><input id="fName" autocomplete="name" /></div>
-          <div><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="email" /></div>
-          <div><label for="fPhone">Mobile number</label><input id="fPhone" type="tel" autocomplete="tel" placeholder="04xx xxx xxx" /></div>
+        <div id="payStep">
+          <h3>Your details</h3>
+          <p class="hint">Winners are contacted by phone call, so please use a number you answer.</p>
+          <div class="fields">
+            <div><label for="fName">Full name</label><input id="fName" autocomplete="name" maxlength="80" /></div>
+            <div><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="email" maxlength="250" /></div>
+            <div><label for="fPhone">Mobile number</label><input id="fPhone" type="tel" autocomplete="tel" placeholder="04xx xxx xxx" maxlength="20" /></div>
+          </div>
+          <label class="agree"><input type="checkbox" id="fAgree" /> I agree to the <a href="#faq">giveaway terms</a>.</label>
+          <div class="pay-row">
+            <div class="counts">Paying for <b id="payTickets">0</b> tickets</div>
+            <button type="button" class="cta" id="payBtn" disabled>Continue to payment</button>
+          </div>
         </div>
-        <label class="agree"><input type="checkbox" id="fAgree" /> I agree to the <a href="#faq">giveaway terms</a>.</label>
-        <div class="pay-row">
-          <div class="counts">Paying for <b id="payTickets">0</b> tickets</div>
-          <button type="button" class="cta" id="payBtn" disabled>Pay $0.00</button>
+        <div id="stripeBox" hidden>
+          <h3>Payment</h3>
+          <p class="hint">Numbers <b id="heldList" style="color:#fff"></b> are held for you for <b id="holdLeft" style="color:#fff">10:00</b>. <button type="button" class="linkish" id="changeBtn">Change numbers</button></p>
+          <div id="payment-element"></div>
+          <div class="pay-row"><span class="hint">Secure payment by Stripe</span><button type="button" class="cta" id="confirmBtn">Pay</button></div>
         </div>
-        <p class="hint" style="margin-top:10px">Sample only: payment connects to the store's Stripe checkout once approved. Numbers are held for 10 minutes while you pay.</p>
+        <p class="pay-error" id="payError" role="alert"></p>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="confirmation">
-  <div class="wrap">
-    <div class="eyebrow">After you pay</div>
-    <h2>Instant <em>confirmation</em></h2>
-    <p class="lead">Every buyer gets their ticket numbers by email, plus an SMS.</p>
-    <div class="confirm">
-      <div class="msg">
-        <div class="from">From: Lash Cartel Cosmetics · Subject: Your November Giveaway tickets 🎟️</div>
-        <h4>You're in, Jess!</h4>
-        <p>Thanks for entering the Lash Cartel November Giveaway. Your ticket numbers:</p>
-        <div class="tix"><span>13</span><span>27</span><span>88</span></div>
-        <p>Tickets close <b>Sunday 29 November, 6:00 pm (Sydney time)</b>. Winners are announced at <b>7pm Sunday</b> and <b>contacted by phone call</b> on the number you gave us.</p>
-        <p style="margin-top:8px;color:#8a7f79;font-size:12px">Order LC-1042 · 3 tickets · $10.00</p>
-      </div>
-      <div class="sms">
-        <div class="from">SMS from LashCartel</div>
-        <div class="bubble">Lash Cartel November Giveaway: you're in! Your tickets: 13, 27, 88. Tickets close Sun 29 Nov 6pm, winners announced 7pm. Good luck! 💖</div>
-      </div>
+      <div class="done" id="done" hidden></div>
     </div>
   </div>
 </section>
@@ -404,29 +387,27 @@
 
 <script>
 (function () {
-  // ---- Settings (Sydney time). In the live version these come from the server. ----
-  const TOTAL = 120;
-  const CLOSES = new Date('2026-11-29T18:00:00+11:00');
-  let OPENS = new Date('2026-11-26T00:00:00+11:00'); // Thursday 26 Nov; opening time TBC
-  // Sample-only: made-up sold numbers
-  const SOLD = new Set([3, 7, 12, 13, 22, 27, 34, 41, 45, 50, 58, 66, 67, 71, 77, 80, 88, 93, 99, 101, 107, 111, 118, 120]);
-
-  let state = 'open';
-  let selected = new Set();
-  const PER = 30; // 4 shelves of 30
-  let shelf = 0;
-
   const $ = id => document.getElementById(id);
-  const grid = $('grid');
   const pad = n => String(n).padStart(2, '0');
+  const priceFor = n => Math.floor(n / 3) * 10 + (n % 3) * 5; // $5 each, every 3 = $10 (server re-checks)
+  const PER = 30; // 4 shelves of 30
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Price: every 3 tickets = $10, leftovers $5 each
-  const priceFor = n => Math.floor(n / 3) * 10 + (n % 3) * 5;
+  // Settings come from /api/giveaway; these defaults only show until it answers.
+  let G = { total: 120, opensAt: '2026-11-26T00:00:00+11:00', closesAt: '2026-11-29T18:00:00+11:00', maxPerOrder: 30 };
+  let taken = new Set(), selected = new Set(), mine = new Set(); // mine = numbers this buyer is holding mid-checkout
+  let shelf = 0, state = 'before', offset = 0, unavailable = false, draw = null, played = false;
+  let stripe = null, elements = null, hold = null, prevHold = null, holdTimer = null;
 
+  const now = () => Date.now() + offset;
+  const isTaken = n => taken.has(n) && !mine.has(n);
+
+  // ---- Ticket machine ----
   function renderGrid(popN) {
+    const grid = $('grid');
     grid.innerHTML = '';
     for (let n = shelf * PER + 1; n <= (shelf + 1) * PER; n++) {
-      const sold = SOLD.has(n), sel = selected.has(n);
+      const sold = isTaken(n), sel = selected.has(n);
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 't' + (sel ? ' sel' : '') + (n === popN ? ' pop' : '');
@@ -439,44 +420,45 @@
     }
     $('shelves').innerHTML = [0, 1, 2, 3].map(i => {
       let left = 0;
-      for (let n = i * PER + 1; n <= (i + 1) * PER; n++) if (!SOLD.has(n)) left++;
+      for (let n = i * PER + 1; n <= (i + 1) * PER; n++) if (!isTaken(n)) left++;
       return `<button type="button" role="tab" aria-selected="${i === shelf}" class="${i === shelf ? 'on' : ''}" data-shelf="${i}">${pad(i * PER + 1)}–${(i + 1) * PER}<small>${left} left</small></button>`;
     }).join('');
-    const soldN = SOLD.size;
+    const soldN = [...taken].filter(n => !mine.has(n)).length;
     $('soldCount').textContent = soldN;
-    $('availCount').textContent = TOTAL - soldN;
-    $('soldBar').style.width = (soldN / TOTAL * 100) + '%';
+    $('availCount').textContent = G.total - soldN;
+    $('soldBar').style.width = (soldN / G.total * 100) + '%';
   }
   $('shelves').addEventListener('click', e => {
     const b = e.target.closest('button');
     if (b) { shelf = +b.dataset.shelf; renderGrid(); }
   });
 
-  // Lucky dip: spin the reel, land on a random available number
+  const canPick = () => state === 'open' && !hold && !unavailable;
+  function toggle(n) {
+    if (!canPick() || isTaken(n)) return;
+    if (!selected.has(n) && selected.size >= G.maxPerOrder) return setErr(`You can pick up to ${G.maxPerOrder} numbers at a time.`);
+    selected.has(n) ? selected.delete(n) : selected.add(n);
+    renderGrid(); renderSummary();
+  }
+
   $('dipBtn').addEventListener('click', () => {
-    if (state !== 'open') return;
+    if (!canPick()) return;
     const pool = [];
-    for (let n = 1; n <= TOTAL; n++) if (!SOLD.has(n) && !selected.has(n)) pool.push(n);
-    if (!pool.length) return;
+    for (let n = 1; n <= G.total; n++) if (!isTaken(n) && !selected.has(n)) pool.push(n);
+    if (!pool.length || selected.size >= G.maxPerOrder) return;
     const pick = pool[Math.floor(Math.random() * pool.length)];
     const reel = $('reel'), digits = reel.children, btn = $('dipBtn');
     const show = v => String(v).padStart(3, '0').split('').forEach((d, i) => digits[i].textContent = d);
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     btn.disabled = true; reel.classList.add('spin');
     let spins = reduce ? 0 : 14;
     const timer = setInterval(() => {
       if (spins-- > 0) return show(Math.floor(Math.random() * 1000));
       clearInterval(timer); reel.classList.remove('spin'); show(pick); btn.disabled = false;
+      if (isTaken(pick)) return;
       selected.add(pick); shelf = Math.floor((pick - 1) / PER);
       renderGrid(pick); renderSummary();
     }, 70);
   });
-
-  function toggle(n) {
-    if (state !== 'open' || SOLD.has(n)) return;
-    selected.has(n) ? selected.delete(n) : selected.add(n);
-    renderGrid(); renderSummary();
-  }
 
   function renderSummary() {
     const nums = [...selected].sort((a, b) => a - b);
@@ -485,96 +467,168 @@
     $('totTickets').textContent = nums.length;
     $('totPrice').textContent = '$' + total.toFixed(2);
     $('payTickets').textContent = nums.length;
-    $('payBtn').textContent = 'Pay $' + total.toFixed(2);
     const r = nums.length % 3;
     $('nudge').textContent = r === 2 ? 'Pick 1 more number — your 3rd ticket is free!' : r === 1 && nums.length > 1 ? 'Pick 2 more to make it 3 for $10 again.' : '';
-    $('continueBtn').disabled = !nums.length || state !== 'open';
-    if (!nums.length) $('checkout').classList.remove('show');
+    $('continueBtn').disabled = !nums.length || !canPick();
+    if (!nums.length && !hold) $('checkout').classList.remove('show');
     validate();
   }
 
+  // ---- Checkout ----
+  const setErr = msg => { $('payError').textContent = msg || ''; };
+  const buyer = () => ({ name: $('fName').value.trim(), email: $('fEmail').value.trim(), phone: $('fPhone').value.trim() });
   function validate() {
-    const ok = selected.size && $('fName').value.trim().length > 1 && /^\S+@\S+\.\S+$/.test($('fEmail').value) && $('fPhone').value.replace(/\D/g, '').length >= 9 && $('fAgree').checked;
-    $('payBtn').disabled = !ok;
+    const b = buyer();
+    $('payBtn').disabled = !(selected.size && b.name.length > 1 && /^\S+@\S+\.\S+$/.test(b.email) && b.phone.replace(/\D/g, '').length >= 8 && $('fAgree').checked && state === 'open');
   }
-  ['fName', 'fEmail', 'fPhone', 'fAgree'].forEach(id => $(id).addEventListener('input', validate));
+  ['fName', 'fEmail', 'fPhone'].forEach(id => $(id).addEventListener('input', validate));
   $('fAgree').addEventListener('change', validate);
   $('continueBtn').addEventListener('click', () => { $('checkout').classList.add('show'); $('fName').focus(); });
-  $('payBtn').addEventListener('click', () => alert('Sample only — this would open the secure Stripe payment.'));
+
+  $('payBtn').addEventListener('click', async () => {
+    const btn = $('payBtn');
+    setErr(''); btn.disabled = true; btn.textContent = 'Holding your numbers…';
+    try {
+      let key = '';
+      try { key = (await (await fetch('/api/public-config', { cache: 'no-store' })).json()).stripePublishableKey || ''; } catch (_) {}
+      if (!key.startsWith('pk_') || typeof Stripe !== 'function') throw new Error('Payments are not available right now. Please try again soon.');
+      const r = await fetch('/api/giveaway', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ numbers: [...selected], ...buyer(), previousHold: prevHold }) });
+      const d = await r.json().catch(() => ({}));
+      prevHold = null;
+      if (!r.ok) {
+        if (d.taken) { d.taken.forEach(n => { selected.delete(n); taken.add(n); }); renderGrid(); renderSummary(); }
+        throw new Error(d.error || 'Could not start checkout.');
+      }
+      hold = { id: d.holdId, numbers: d.numbers, expires: Date.now() + d.holdMinutes * 60e3 };
+      mine = new Set(d.numbers);
+      stripe = stripe || Stripe(key);
+      elements = stripe.elements({ clientSecret: d.clientSecret, appearance: { theme: 'night', variables: { colorPrimary: '#ff5c9a', colorBackground: '#171214', borderRadius: '10px', fontFamily: 'Poppins, sans-serif' } } });
+      elements.create('payment', { layout: { type: 'tabs' }, wallets: { applePay: 'auto', googlePay: 'auto' } }).mount('#payment-element');
+      $('heldList').textContent = d.numbers.map(pad).join(', ');
+      $('confirmBtn').textContent = `Pay $${(d.amount / 100).toFixed(2)}`;
+      $('payStep').hidden = true; $('stripeBox').hidden = false;
+      clearInterval(holdTimer); holdTimer = setInterval(holdTick, 1000); holdTick();
+      renderGrid(); renderSummary();
+    } catch (error) {
+      setErr(error.message);
+    } finally {
+      btn.textContent = 'Continue to payment'; validate();
+    }
+  });
+
+  function endHold(keepId) {
+    clearInterval(holdTimer);
+    if (keepId && hold) prevHold = hold.id;
+    hold = null; mine = new Set(); elements = null;
+    $('payment-element').innerHTML = '';
+    $('stripeBox').hidden = true; $('payStep').hidden = false;
+  }
+  function holdTick() {
+    if (!hold) return;
+    const left = Math.max(0, Math.round((hold.expires - Date.now()) / 1000));
+    $('holdLeft').textContent = `${Math.floor(left / 60)}:${pad(left % 60)}`;
+    if (!left) { endHold(false); setErr('Your 10-minute hold ran out. Check your numbers are still free and try again.'); refresh(); }
+  }
+  $('changeBtn').addEventListener('click', () => { endHold(true); setErr(''); renderGrid(); renderSummary(); });
+
+  $('confirmBtn').addEventListener('click', async () => {
+    if (!stripe || !elements || !hold) return;
+    const btn = $('confirmBtn'), label = btn.textContent;
+    setErr(''); btn.disabled = true; btn.textContent = 'Processing…';
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements, redirect: 'if_required',
+      confirmParams: { return_url: location.origin + '/raffle?paid=1#tickets', receipt_email: buyer().email },
+    });
+    if (error) { setErr(error.message || 'Payment failed. Check your details and try again.'); btn.disabled = false; btn.textContent = label; return; }
+    if (paymentIntent && ['succeeded', 'processing'].includes(paymentIntent.status)) {
+      showDone(hold.numbers);
+      selected.clear(); endHold(false); renderGrid(); renderSummary(); refresh();
+    }
+    btn.disabled = false; btn.textContent = label;
+  });
+
+  function showDone(numbers) {
+    const box = $('done');
+    box.innerHTML = `<h3>You're in! 🎉</h3>${numbers ? `<div class="chips">${numbers.map(n => `<span class="chip">${pad(n)}</span>`).join('')}</div>` : ''}
+      <p>Payment received. Your ticket numbers are on their way by email and SMS.</p>
+      <p>Winners are revealed live at 7pm Sunday and called by phone. Good luck!</p>`;
+    box.hidden = false; $('checkout').classList.remove('show');
+    box.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  }
+  if (new URLSearchParams(location.search).get('paid') === '1') showDone(null);
 
   // ---- Countdown + live clock ----
   const sydney = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Sydney', weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', second: '2-digit' });
-  let offset = 0; // sample: shifts "now" to preview each state
-
   function tick() {
-    const now = new Date(Date.now() + offset);
-    $('nowClock').textContent = sydney.format(now);
-    let target, label, sub;
-    if (now < OPENS) { state = 'before'; target = OPENS; label = 'Tickets open in'; sub = 'Tickets open Thursday 26 November · close Sunday 6:00 pm'; }
-    else if (now < CLOSES && SOLD.size < TOTAL) { state = 'open'; target = CLOSES; label = 'Tickets close in'; sub = 'Sunday 29 November 2026, 6:00 pm Sydney time'; }
-    else { state = 'closed'; target = null; label = 'Tickets are closed'; sub = 'Thanks for playing! Winners are being contacted by phone.'; }
+    const t = now(), opens = Date.parse(G.opensAt), closes = Date.parse(G.closesAt);
+    $('nowClock').textContent = sydney.format(t);
+    let target = null, label, sub;
+    if (t < opens) { state = 'before'; target = opens; label = 'Tickets open in'; sub = 'Tickets open Thursday 26 November · close Sunday 6:00 pm'; }
+    else if (t < closes && taken.size < G.total) { state = 'open'; target = closes; label = 'Tickets close in'; sub = 'Sunday 29 November 2026, 6:00 pm Sydney time'; }
+    else { state = 'closed'; label = taken.size >= G.total && t < closes ? 'Sold out!' : 'Tickets are closed'; sub = 'Winners are revealed live at 7pm Sunday. Stay on this page to watch.'; }
+    if (unavailable) { label = 'Tickets unavailable'; sub = 'Ticket sales are not available right now. Please check back soon.'; }
     $('clockLabel').textContent = label;
     $('clockSub').textContent = sub;
     $('units').style.display = target ? '' : 'none';
     if (target) {
-      let s = Math.max(0, Math.floor((target - now) / 1000));
+      let s = Math.max(0, Math.floor((target - t) / 1000));
       $('cd-d').textContent = Math.floor(s / 86400); s %= 86400;
       $('cd-h').textContent = pad(Math.floor(s / 3600)); s %= 3600;
       $('cd-m').textContent = pad(Math.floor(s / 60));
       $('cd-s').textContent = pad(s % 60);
     }
-    $('board').classList.toggle('locked', state !== 'open');
-    $('lockedNote').textContent = state === 'before' ? 'Ticket sales open soon. Have a look around and pick your favourites.' : 'Ticket sales have closed.';
+    $('board').classList.toggle('locked', !canPick() && !hold);
+    $('lockedNote').textContent = unavailable ? 'Ticket sales are not available right now.' : state === 'before' ? 'Ticket sales open soon. Have a look around and pick your favourites.' : 'Ticket sales have closed.';
     $('heroCta').textContent = state === 'open' ? 'Pick your numbers' : 'See the tickets';
-    $('continueBtn').disabled = !selected.size || state !== 'open';
+    $('continueBtn').disabled = !selected.size || !canPick();
+    maybeDraw();
   }
 
-  // Sample-only: pretend "now" is a moment in each state. Remove for the live version.
-  const H = 3600e3;
-  const FAKE_NOW = { before: OPENS - (51 * H), open: CLOSES - (53 * H), closed: +CLOSES + 60e3, draw: +CLOSES + 60e3 };
-
-  // ---- Live draw reveal ----
-  // Live version: the owner presses "Start live draw" in /admin (owner login). The server picks the
-  // 3 winners from sold tickets and saves them with a start time; this page polls the draw status
-  // every few seconds and plays the same reveal for everyone watching. Visitors cannot trigger it.
-  let drawTimers = [];
-  function playDraw(winners) { // winners: [3rd, 2nd, 1st]
-    drawTimers.forEach(clearInterval); drawTimers = [];
+  // ---- Live draw ----
+  // The owner starts the draw in /admin. The server picks the winners and a start time;
+  // every open page plays the same reveal from that moment. Visitors cannot trigger it.
+  const STEP = 4000, SPIN = 2400;
+  function maybeDraw() {
+    if (!draw) return;
     $('clock').hidden = true; $('draw').hidden = false;
+    if (!draw.winners || played) return;
+    played = true;
+    playDraw(draw.winners, Math.max(0, now() - Date.parse(draw.startsAt)));
+  }
+  function playDraw(winners, elapsed) { // winners: [3rd, 2nd, 1st]
     const rows = document.querySelectorAll('.draw-row');
-    rows.forEach(r => { r.classList.remove('won'); r.querySelector('.who').textContent = 'Waiting…'; [...r.querySelectorAll('.reel span')].forEach(d => d.textContent = '0'); });
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     winners.forEach((n, i) => {
       const row = rows[i], reel = row.querySelector('.reel'), digits = reel.children;
       const show = v => String(v).padStart(3, '0').split('').forEach((d, k) => digits[k].textContent = d);
+      const land = () => { reel.classList.remove('spin'); show(n); row.classList.add('won'); row.querySelector('.who').textContent = `Ticket ${pad(n)} wins! 🎉`; };
+      const delay = i * STEP - elapsed;
+      if (reduce || delay + SPIN <= 0) return land(); // already revealed (late arrival)
       setTimeout(() => {
         row.querySelector('.who').textContent = 'Drawing…';
         reel.classList.add('spin');
-        let spins = reduce ? 0 : 40;
+        const spinUntil = Date.now() + Math.min(SPIN, SPIN + delay);
         const t = setInterval(() => {
-          if (spins-- > 0) return show(Math.floor(Math.random() * 1000));
-          clearInterval(t); reel.classList.remove('spin'); show(n);
-          row.classList.add('won'); row.querySelector('.who').textContent = `Ticket ${pad(n)} wins! 🎉`;
+          if (Date.now() < spinUntil) return show(Math.floor(Math.random() * 1000));
+          clearInterval(t); land();
         }, 60);
-        drawTimers.push(t);
-      }, i * 4000);
+      }, Math.max(0, delay));
     });
   }
 
-  function preview(s) {
-    offset = FAKE_NOW[s] - Date.now();
-    if (s !== 'open') selected.clear();
-    document.querySelectorAll('.sample-bar button').forEach(x => x.classList.toggle('on', x.dataset.state === s));
+  // ---- Live data ----
+  async function refresh() {
+    try {
+      const r = await fetch('/api/giveaway', { cache: 'no-store' });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error);
+      G = d; offset = Date.parse(d.now) - Date.now(); taken = new Set(d.taken); draw = d.draw; unavailable = false;
+      for (const n of [...selected]) if (isTaken(n)) selected.delete(n);
+    } catch (_) { unavailable = true; }
     tick(); renderGrid(); renderSummary();
-    $('clock').hidden = false; $('draw').hidden = true;
-    if (s === 'draw') { // sample: 3 random winners from the made-up sold numbers
-      const pool = [...SOLD];
-      playDraw([0, 1, 2].map(() => pool.splice(Math.floor(Math.random() * pool.length), 1)[0]));
-    }
   }
-  document.querySelectorAll('.sample-bar button').forEach(b => b.addEventListener('click', () => preview(b.dataset.state)));
-
-  preview('open');
+  // Poll faster around the draw so everyone sees it start together.
+  (function poll() { refresh().finally(() => setTimeout(poll, state === 'closed' && !(draw && draw.winners) ? 3000 : 10000)); })();
+  renderGrid(); renderSummary(); tick();
   setInterval(tick, 1000);
 })();
 </script>

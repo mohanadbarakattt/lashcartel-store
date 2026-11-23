@@ -1,0 +1,15 @@
+{
+  "_readme": "November Giveaway settings. Times are Sydney time (+11:00 in November). opensAt is TBC: the owner will confirm the Thursday opening time.",
+  "name": "November Giveaway",
+  "total": 120,
+  "opensAt": "2026-11-26T00:00:00+11:00",
+  "closesAt": "2026-11-29T18:00:00+11:00",
+  "announceAt": "2026-11-29T19:00:00+11:00",
+  "holdMinutes": 10,
+  "maxPerOrder": 30,
+  "prizes": [
+    { "place": "1st", "name": "3 Month Beauty Supply (skincare & lashes)", "value": 350 },
+    { "place": "2nd", "name": "The Cartel Bag", "value": 140 },
+    { "place": "3rd", "name": "The Cartel Classic", "value": 85 }
+  ]
+}
