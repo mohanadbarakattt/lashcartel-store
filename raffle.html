@@ -120,6 +120,20 @@
   .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; border: 1px solid var(--pink); }
   .legend .l-sel { background: var(--pink-hot); border-color: var(--pink-hot); }
   .legend .l-sold { background: var(--sold); border-color: #3a3236; }
+  /* live draw reveal */
+  .draw { margin: 34px auto 0; max-width: 640px; padding: 22px 20px; border-radius: 18px; border: 1px solid rgba(255,143,184,.6); background: linear-gradient(180deg, rgba(255,92,154,.16), rgba(255,92,154,.03)); box-shadow: 0 0 40px rgba(255,92,154,.25); }
+  .draw .label { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: #fff; font-weight: 600; }
+  .live-dot.red { background: #ff3b5c; box-shadow: 0 0 8px #ff3b5c; }
+  .draw-row { display: flex; align-items: center; gap: 14px; justify-content: space-between; padding: 12px 14px; margin-top: 10px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); text-align: left; transition: box-shadow .4s, border-color .4s; }
+  .draw-row .place { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #fff; min-width: 92px; }
+  .draw-row .who { flex: 1; text-align: right; font-size: 13px; color: var(--muted); }
+  .draw-row.won { border-color: var(--pink); box-shadow: 0 0 22px rgba(255,92,154,.4); }
+  .draw-row.won .who { color: var(--pink-soft); font-weight: 600; }
+  @media (max-width: 560px) { .draw-row { flex-wrap: wrap; } .draw-row .who { flex-basis: 100%; text-align: center; } }
+  .draw .sub { font-size: 13px; color: var(--muted); margin-top: 12px; }
+  body { animation: fadein .6s ease; }
+  @keyframes fadein { from { opacity: 0; } }
+
   /* lucky dip slot reel */
   .dip { display: flex; align-items: center; gap: 14px; margin-top: 12px; padding: 12px 14px; border-radius: 14px; background: #0e0a0b; border: 1px solid var(--line); flex-wrap: wrap; }
   .reel { display: flex; gap: 4px; padding: 5px; border-radius: 9px; background: linear-gradient(180deg, #c9a24b, #8a6a24); }
@@ -207,6 +221,7 @@
   <button type="button" data-state="before">Before open</button>
   <button type="button" data-state="open" class="on">Open</button>
   <button type="button" data-state="closed">Closed</button>
+  <button type="button" data-state="draw">Owner: start live draw</button>
 </div>
 
 <header>
@@ -239,6 +254,14 @@
       </div>
       <div class="sub" id="clockSub">Sunday 29 November 2026, 6:00 pm Sydney time</div>
       <div class="now"><span class="live-dot"></span>Sydney time now: <span id="nowClock">--</span></div>
+    </div>
+
+    <div class="draw" id="draw" hidden aria-live="polite">
+      <div class="label"><span class="live-dot red"></span>Live draw</div>
+      <div class="draw-row" data-i="0"><span class="place">3rd prize</span><div class="reel"><span>0</span><span>0</span><span>0</span></div><span class="who">Up first…</span></div>
+      <div class="draw-row" data-i="1"><span class="place">2nd prize</span><div class="reel"><span>0</span><span>0</span><span>0</span></div><span class="who">Waiting…</span></div>
+      <div class="draw-row" data-i="2"><span class="place">1st prize</span><div class="reel"><span>0</span><span>0</span><span>0</span></div><span class="who">Waiting…</span></div>
+      <p class="sub">Winners are contacted by phone call on the number they gave at checkout.</p>
     </div>
 
     <a href="#tickets" class="cta" id="heroCta">Pick your numbers</a>
@@ -505,12 +528,46 @@
 
   // Sample-only: pretend "now" is a moment in each state. Remove for the live version.
   const H = 3600e3;
-  const FAKE_NOW = { before: OPENS - (51 * H), open: CLOSES - (53 * H), closed: CLOSES + 60e3 };
+  const FAKE_NOW = { before: OPENS - (51 * H), open: CLOSES - (53 * H), closed: +CLOSES + 60e3, draw: +CLOSES + 60e3 };
+
+  // ---- Live draw reveal ----
+  // Live version: the owner presses "Start live draw" in /admin (owner login). The server picks the
+  // 3 winners from sold tickets and saves them with a start time; this page polls the draw status
+  // every few seconds and plays the same reveal for everyone watching. Visitors cannot trigger it.
+  let drawTimers = [];
+  function playDraw(winners) { // winners: [3rd, 2nd, 1st]
+    drawTimers.forEach(clearInterval); drawTimers = [];
+    $('clock').hidden = true; $('draw').hidden = false;
+    const rows = document.querySelectorAll('.draw-row');
+    rows.forEach(r => { r.classList.remove('won'); r.querySelector('.who').textContent = 'Waiting…'; [...r.querySelectorAll('.reel span')].forEach(d => d.textContent = '0'); });
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    winners.forEach((n, i) => {
+      const row = rows[i], reel = row.querySelector('.reel'), digits = reel.children;
+      const show = v => String(v).padStart(3, '0').split('').forEach((d, k) => digits[k].textContent = d);
+      setTimeout(() => {
+        row.querySelector('.who').textContent = 'Drawing…';
+        reel.classList.add('spin');
+        let spins = reduce ? 0 : 40;
+        const t = setInterval(() => {
+          if (spins-- > 0) return show(Math.floor(Math.random() * 1000));
+          clearInterval(t); reel.classList.remove('spin'); show(n);
+          row.classList.add('won'); row.querySelector('.who').textContent = `Ticket ${pad(n)} wins! 🎉`;
+        }, 60);
+        drawTimers.push(t);
+      }, i * 4000);
+    });
+  }
+
   function preview(s) {
     offset = FAKE_NOW[s] - Date.now();
     if (s !== 'open') selected.clear();
     document.querySelectorAll('.sample-bar button').forEach(x => x.classList.toggle('on', x.dataset.state === s));
     tick(); renderGrid(); renderSummary();
+    $('clock').hidden = false; $('draw').hidden = true;
+    if (s === 'draw') { // sample: 3 random winners from the made-up sold numbers
+      const pool = [...SOLD];
+      playDraw([0, 1, 2].map(() => pool.splice(Math.floor(Math.random() * pool.length), 1)[0]));
+    }
   }
   document.querySelectorAll('.sample-bar button').forEach(b => b.addEventListener('click', () => preview(b.dataset.state)));
 

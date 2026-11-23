@@ -347,6 +347,25 @@
   .s-empty { padding: 36px 0; color: var(--ink-soft); text-align: center; }
 
   /* reveal */
+  /* Beauty Draw: neon nav button, product card, page transition */
+  .draw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 30px; background: #120d0f; color: #ffd3e2; border: 1px solid #ff8fb8; font: 600 11.5px Poppins, sans-serif; letter-spacing: 1.3px; text-transform: uppercase; white-space: nowrap;
+    box-shadow: 0 0 10px rgba(255,92,154,.55), inset 0 0 8px rgba(255,92,154,.35); text-shadow: 0 0 6px rgba(255,92,154,.9); animation: neon 2.4s ease-in-out infinite; }
+  .draw-btn:hover { color: #fff; }
+  @keyframes neon { 50% { box-shadow: 0 0 18px rgba(255,92,154,.85), inset 0 0 10px rgba(255,92,154,.45); } }
+  .raffle-card { text-decoration: none; color: inherit; background: #120d0f; }
+  .raffle-card .card-img { background: radial-gradient(ellipse at 50% 30%, rgba(255,92,154,.35), transparent 65%), #120d0f; text-align: center; }
+  .raffle-card .neon { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 34px; line-height: 1; letter-spacing: 1px; color: #ffd3e2; text-shadow: 0 0 12px rgba(255,92,154,.9), 0 0 28px rgba(255,92,154,.5); }
+  .raffle-card .neon small { display: block; font-size: 14px; letter-spacing: 4px; color: #ff8fb8; margin-bottom: 8px; }
+  .raffle-card .card-body h3, .raffle-card .price { color: #fff; opacity: 1; }
+  .raffle-card .card-body .desc { color: #bfa8b1; }
+  .raffle-card .add-btn { background: linear-gradient(180deg, #ff8fb8, #e8508c); text-align: center; }
+  .draw-curtain { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #3a1626, #0d0a0b 70%);
+    clip-path: circle(0 at var(--x, 50%) var(--y, 50%)); animation: curtain .65s cubic-bezier(.7,0,.3,1) forwards; }
+  .draw-curtain span { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(40px, 8vw, 80px); color: #ffd3e2; text-shadow: 0 0 18px rgba(255,92,154,.9); opacity: 0; animation: fadein .3s .35s forwards; }
+  @keyframes curtain { to { clip-path: circle(150% at var(--x, 50%) var(--y, 50%)); } }
+  @keyframes fadein { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .draw-btn { animation: none; } }
+  @media (max-width: 420px) { .draw-btn { padding: 7px 11px; font-size: 10.5px; letter-spacing: 1px; } }
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s, transform .7s; }
   .reveal.in { opacity: 1; transform: none; }
 
@@ -390,6 +409,7 @@
       <a href="/partner-with-us">Partner With Us</a>
     </nav>
     <div class="nav-right">
+      <a href="/raffle" class="draw-btn" data-draw>🎟 Enter Raffle</a>
       <button class="icon-btn" onclick="openSearch()" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
       <button class="icon-btn" onclick="openCart()" aria-label="Open cart">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -865,7 +885,18 @@
 
   function renderProducts() {
     const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
-    document.getElementById('productGrid').innerHTML = list.map(p => {
+    const raffleCard = activeCat === 'all' ? `
+      <a href="/raffle" class="card raffle-card reveal" data-draw>
+        <div class="card-img"><span class="badge">Live now</span><div class="neon"><small>LASH CARTEL</small>Beauty<br>Draw</div></div>
+        <div class="card-body">
+          <span class="cat-label">Raffle · 120 tickets</span>
+          <h3>Enter the Raffle</h3>
+          <p class="desc">Pick your lucky number from 1–120 for a chance to win one of 3 prizes.</p>
+          <span class="price">$5 · 3 for $10</span>
+          <span class="add-btn">Pick your number</span>
+        </div>
+      </a>` : '';
+    document.getElementById('productGrid').innerHTML = raffleCard + list.map(p => {
       const imgInner = p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : motif(p);
       const titleHTML = `${p.name}${p.tm ? '<span style="font-size:13px;vertical-align:super;">™</span>' : ''}`;
       const badgeText = p.soldOut ? 'Sold Out' : p.badge;
@@ -899,6 +930,21 @@
     }).join('');
     observeReveals();
   }
+
+  // Beauty Draw links: neon curtain wipes out from the click point, then opens the raffle page
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-draw]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return location.assign(a.href);
+    const c = document.createElement('div');
+    c.className = 'draw-curtain';
+    c.style.setProperty('--x', e.clientX + 'px'); c.style.setProperty('--y', e.clientY + 'px');
+    c.innerHTML = '<span>Beauty Draw</span>';
+    document.body.appendChild(c);
+    setTimeout(() => location.assign(a.href), 700);
+  });
+  addEventListener('pageshow', e => { if (e.persisted) document.querySelectorAll('.draw-curtain').forEach(c => c.remove()); });
 
   function addToCart(name) {
     const p = PRODUCTS.find(x => x.name === name);
