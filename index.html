@@ -347,7 +347,7 @@
   .s-empty { padding: 36px 0; color: var(--ink-soft); text-align: center; }
 
   /* reveal */
-  /* Beauty Draw: neon nav button, product card, page transition */
+  /* November Giveaway: neon nav button, product card, page transition */
   .draw-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 30px; background: #120d0f; color: #ffd3e2; border: 1px solid #ff8fb8; font: 600 11.5px Poppins, sans-serif; letter-spacing: 1.3px; text-transform: uppercase; white-space: nowrap;
     box-shadow: 0 0 10px rgba(255,92,154,.55), inset 0 0 8px rgba(255,92,154,.35); text-shadow: 0 0 6px rgba(255,92,154,.9); animation: neon 2.4s ease-in-out infinite; }
   .draw-btn:hover { color: #fff; }
@@ -428,7 +428,7 @@
       <a href="/partner-with-us">Partner With Us</a>
     </nav>
     <div class="nav-right">
-      <a href="/raffle" class="draw-btn" data-draw>🎟 Enter Raffle</a>
+      <a href="/raffle" class="draw-btn" data-draw>🎟 Enter Giveaway</a>
       <button class="icon-btn" onclick="openSearch()" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
       <button class="icon-btn" onclick="openCart()" aria-label="Open cart">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -460,11 +460,11 @@
   <div class="slide slide-draw" role="group" aria-roledescription="slide" aria-label="2 of 2">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <div class="eyebrow">Lash Cartel Beauty Draw · Live now</div>
+        <div class="eyebrow">Lash Cartel November Giveaway · 3 days only</div>
         <h1>Pick Your <span class="script">Lucky Number</span></h1>
-        <p>120 tickets. 3 prizes. $5 for 1 or $10 for 3, plus a free ticket with every DIY lash kit. Tickets close Sunday 6pm.</p>
+        <p>3 prizes worth $575, including a 3 Month Beauty Supply. 120 tickets at $5 for 1 or $10 for 3. Tickets open Thursday 26 November and close Sunday 29 November at 6pm.</p>
         <div class="mini-cd" id="heroCd" aria-label="Time until tickets close"></div>
-        <a href="/raffle" class="btn draw-cta" data-draw>🎟 Enter Raffle</a>
+        <a href="/raffle" class="btn draw-cta" data-draw>🎟 Enter Giveaway</a>
       </div>
       <div class="hero-visual"><div class="draw-frame" data-draw-machine></div></div>
     </div>
@@ -924,11 +924,11 @@
     const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
     const raffleCard = activeCat === 'all' ? `
       <a href="/raffle" class="card raffle-card reveal" data-draw>
-        <div class="card-img"><div data-draw-machine style="width:100%"></div><span class="badge">Live now</span></div>
+        <div class="card-img"><div data-draw-machine style="width:100%"></div><span class="badge">3 days only</span></div>
         <div class="card-body">
-          <span class="cat-label">Raffle · 120 tickets</span>
-          <h3>Enter the Raffle</h3>
-          <p class="desc">Pick your lucky number from 1–120 for a chance to win one of 3 prizes.</p>
+          <span class="cat-label">November Giveaway · 120 tickets</span>
+          <h3>Enter the Giveaway</h3>
+          <p class="desc">Pick your lucky number from 1–120 to win a 3 Month Beauty Supply, The Cartel Bag or The Cartel Classic.</p>
           <span class="price">$5 · 3 for $10</span>
           <span class="add-btn">Pick your number</span>
         </div>
@@ -969,7 +969,7 @@
     observeReveals();
   }
 
-  // Beauty Draw links: neon curtain wipes out from the click point, then opens the raffle page
+  // Giveaway links: neon curtain wipes out from the click point, then opens the raffle page
   document.addEventListener('click', e => {
     const a = e.target.closest('[data-draw]');
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -978,7 +978,7 @@
     const c = document.createElement('div');
     c.className = 'draw-curtain';
     c.style.setProperty('--x', e.clientX + 'px'); c.style.setProperty('--y', e.clientY + 'px');
-    c.innerHTML = '<span>Beauty Draw</span>';
+    c.innerHTML = '<span>November Giveaway</span>';
     document.body.appendChild(c);
     setTimeout(() => location.assign(a.href), 700);
   });

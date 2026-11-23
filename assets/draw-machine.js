@@ -1,10 +1,10 @@
-// Beauty Draw machine: animated globe of numbered balls, a winning ball drops down the chute,
+// Giveaway draw machine: animated globe of numbered balls, a winning ball drops down the chute,
 // then the prizes pop out of the tray. Fills every element with [data-draw-machine]. CSS-only animation.
 (function () {
-  var PRIZES = [ // sample prize photos until the owner confirms the prizes
-    '/assets/products/gift-box/gift-box-hero.jpg',
-    '/assets/products/cluster-lash-kit/Volume/volume_main.jpg',
-    '/assets/products/mascara/mascara-promo.jpg',
+  var PRIZES = [ // November Giveaway: 1st, 2nd, 3rd
+    '/assets/gifts/giveaway/prize-1-beauty-supply.jpg',
+    '/assets/gifts/giveaway/prize-2-cartel-bag.jpg',
+    '/assets/gifts/giveaway/prize-3-cartel-classic.jpg',
   ];
   var BALLS = ['12', '07', '33', '85', '41', '99', '26', '58', '114', '67'];
   var WINNERS = ['07', '41', '85'];
@@ -64,7 +64,7 @@
     var prizes = PRIZES.map(function (src, i) { return '<img class="dm-prize" src="' + src + '" alt="" loading="lazy" style="--w:' + i * 3 + 's">'; }).join('');
     var wins = WINNERS.map(function (n, i) { return '<span class="dm-win" style="--w:' + i * 3 + 's">#' + n + ' WINS</span>'; }).join('');
     var sparks = [[12, 30, 0], [84, 24, .7], [80, 70, 1.3], [14, 76, 1.9]].map(function (s) { return '<span class="dm-spark" style="left:' + s[0] + '%;top:' + s[1] + '%;--w:' + s[2] + 's">✦</span>'; }).join('');
-    return '<div class="dm" aria-hidden="true"><div class="dm-cab"></div><div class="dm-sign">BEAUTY DRAW</div><div class="dm-globe">' + balls + '</div>' +
+    return '<div class="dm" aria-hidden="true"><div class="dm-cab"></div><div class="dm-sign">GIVEAWAY</div><div class="dm-globe">' + balls + '</div>' +
       '<div class="dm-neck"></div><div class="dm-tray"></div><div class="dm-push">PUSH</div>' + drops + prizes + wins + sparks + '</div>';
   }
 
