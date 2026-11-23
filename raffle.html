@@ -91,31 +91,44 @@
   .price-card.best::after { content: 'Best value'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--pink-hot); color: #fff; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
   .price-card.kit b { font-size: 26px; padding: 7px 0; }
 
-  /* ticket board */
-  .board { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 26px; margin-top: 32px; }
-  .board-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
-  .counts { font-size: 14px; color: var(--muted); }
+  /* ticket board: vending machine with 4 shelves of 30 */
+  .board { margin-top: 32px; border-radius: 26px; padding: 18px; background: linear-gradient(180deg, #2a1d22, #140e10); border: 1px solid rgba(255,143,184,.35); box-shadow: 0 0 0 6px #1a1316, 0 0 44px rgba(255,92,154,.18); }
+  .board-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 2px 4px 14px; }
+  .marquee { font-family: 'Great Vibes', cursive; font-size: 32px; line-height: 1; color: var(--pink); text-shadow: 0 0 12px rgba(255,92,154,.8); }
+  .counts { font-size: 13.5px; color: var(--muted); }
   .counts b { color: #fff; }
-  .bar { height: 6px; border-radius: 6px; background: var(--sold); overflow: hidden; margin-top: 8px; width: 260px; max-width: 100%; }
+  .bar { height: 6px; border-radius: 6px; background: var(--sold); overflow: hidden; margin-top: 6px; width: 220px; max-width: 100%; }
   .bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff8fb8, #e8508c); }
-  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; }
-  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--pink); }
+  .shelves { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+  .shelves button { background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 10px; padding: 8px 4px; font: 600 13px Poppins, sans-serif; cursor: pointer; line-height: 1.25; }
+  .shelves button small { display: block; font-weight: 400; font-size: 10.5px; }
+  .shelves button.on { color: #fff; border-color: var(--pink); background: rgba(255,92,154,.12); }
+  .glass { border-radius: 16px; padding: 12px; border: 1px solid rgba(255,255,255,.09); background: linear-gradient(125deg, rgba(255,255,255,.07), rgba(255,255,255,0) 38%), #0e0a0b; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .t { position: relative; overflow: hidden; aspect-ratio: 1/.92; border-radius: 9px; border: 1px solid rgba(255,143,184,.55); background: rgba(255,92,154,.05); color: #fff; padding-bottom: 14px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: transform .12s, box-shadow .12s; font-variant-numeric: tabular-nums; }
+  .t small { position: absolute; left: 0; right: 0; bottom: 0; padding: 2px 0; font: 600 9px Poppins, sans-serif; letter-spacing: 1px; background: rgba(255,143,184,.16); color: var(--pink-soft); }
+  .t:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 14px rgba(255,92,154,.35); }
+  .t.sel { background: linear-gradient(180deg, #ff7aaa, #e2477f); border-color: #ff9cc0; box-shadow: 0 0 16px rgba(255,92,154,.55); }
+  .t.sel small { background: rgba(255,255,255,.25); color: #fff; }
+  .t:disabled { background: var(--sold); border-color: #3a3236; color: var(--sold-text); cursor: not-allowed; }
+  .t:disabled small { background: rgba(0,0,0,.25); color: var(--sold-text); }
+  .t.pop { animation: pop .5s; }
+  @keyframes pop { 40% { transform: scale(1.18); } }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; border: 1px solid var(--pink); }
   .legend .l-sel { background: var(--pink-hot); border-color: var(--pink-hot); }
   .legend .l-sold { background: var(--sold); border-color: #3a3236; }
-  .filters { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-  .filters button { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 20px; padding: 5px 14px; font: 500 12px Poppins, sans-serif; cursor: pointer; }
-  .filters button.on { color: #fff; border-color: var(--pink); }
-  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
-  .t { position: relative; aspect-ratio: 1.45/1; border-radius: 9px; border: 1px solid rgba(255,143,184,.55); background: rgba(255,92,154,.04); color: #fff;
-    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 22px; cursor: pointer; display: grid; place-items: center; line-height: 1; transition: transform .12s, background .12s, box-shadow .12s; font-variant-numeric: tabular-nums; }
-  .t:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 14px rgba(255,92,154,.35); }
-  .t small { display: block; font-family: 'Poppins', sans-serif; font-size: 8.5px; letter-spacing: 1px; font-weight: 600; margin-top: 2px; }
-  .t.sel { background: linear-gradient(180deg, #ff7aaa, #e2477f); border-color: #ff9cc0; box-shadow: 0 0 16px rgba(255,92,154,.55); }
-  .t.sel::after { content: '✓'; position: absolute; top: -7px; right: -7px; width: 18px; height: 18px; border-radius: 50%; background: #fff; color: #e2477f; font: 700 11px/18px Poppins, sans-serif; text-align: center; }
-  .t:disabled { background: var(--sold); border-color: #3a3236; color: var(--sold-text); cursor: not-allowed; }
-  .t[hidden] { display: none; }
-  .board.locked .t:not(:disabled) { cursor: not-allowed; opacity: .55; }
-  .locked-note { display: none; text-align: center; color: var(--pink-soft); font-size: 14px; margin-bottom: 14px; }
+  /* lucky dip slot reel */
+  .dip { display: flex; align-items: center; gap: 14px; margin-top: 12px; padding: 12px 14px; border-radius: 14px; background: #0e0a0b; border: 1px solid var(--line); flex-wrap: wrap; }
+  .reel { display: flex; gap: 4px; padding: 5px; border-radius: 9px; background: linear-gradient(180deg, #c9a24b, #8a6a24); }
+  .reel span { width: 34px; height: 46px; display: grid; place-items: center; background: #fff; color: #1a1316; font: 700 30px 'Cormorant Garamond', serif; border-radius: 5px; box-shadow: inset 0 8px 8px -4px rgba(0,0,0,.35), inset 0 -8px 8px -4px rgba(0,0,0,.35); }
+  .reel.spin span { filter: blur(1.2px); }
+  .dip p { flex: 1; min-width: 140px; font-size: 12.5px; color: var(--muted); }
+  .dip p b { color: #fff; font-weight: 600; display: block; font-size: 14px; }
+  .dip-btn { border: 0; border-radius: 30px; padding: 11px 18px; background: linear-gradient(180deg, #ff8fb8, #e8508c); color: #fff; font: 600 12px Poppins, sans-serif; letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer; }
+  .board.locked .t:not(:disabled), .board.locked .dip-btn { cursor: not-allowed; opacity: .55; }
+  .locked-note { display: none; text-align: center; color: var(--pink-soft); font-size: 14px; margin-bottom: 12px; }
   .board.locked .locked-note { display: block; }
 
   /* selection summary */
@@ -170,18 +183,17 @@
   @media (max-width: 900px) {
     .prizes, .confirm { grid-template-columns: 1fr; }
     .steps { grid-template-columns: 1fr 1fr; }
-    .grid { grid-template-columns: repeat(6, 1fr); }
     .fields { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
     .wrap { padding: 0 16px; }
     .steps { grid-template-columns: 1fr; }
     .grid { grid-template-columns: repeat(5, 1fr); gap: 7px; }
-    .t { font-size: 20px; }
+    .t { font-size: 21px; }
     .unit { min-width: 64px; } .unit b { font-size: 32px; }
     .summary { grid-template-columns: 1fr 1fr; }
     .summary > div:first-child { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
-    .board { padding: 16px; }
+    .board { padding: 12px; } .glass { padding: 8px; } .marquee { font-size: 26px; }
     .fact { border-right: 0; border-bottom: 1px solid var(--line); }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } html { scroll-behavior: auto; } }
@@ -283,18 +295,17 @@
     <div class="board" id="board">
       <div class="locked-note" id="lockedNote">Ticket sales open soon. Have a look around and pick your favourites.</div>
       <div class="board-head">
-        <div class="counts">
-          <b id="availCount">0</b> available · <b id="soldCount">0</b> sold of 120
-          <div class="bar"><i id="soldBar" style="width:0"></i></div>
-        </div>
-        <div class="legend"><span><i class="l-sel"></i>Selected</span><span><i></i>Available</span><span><i class="l-sold"></i>Sold</span></div>
+        <div class="marquee">Lucky Number Machine</div>
+        <div class="counts"><b id="availCount">0</b> left · <b id="soldCount">0</b> sold of 120<div class="bar"><i id="soldBar" style="width:0"></i></div></div>
       </div>
-      <div class="filters" role="group" aria-label="Show tickets">
-        <button type="button" class="on" data-filter="all">All</button>
-        <button type="button" data-filter="available">Available</button>
-        <button type="button" data-filter="sold">Sold</button>
+      <div class="shelves" id="shelves" role="tablist" aria-label="Ticket shelves"></div>
+      <div class="glass"><div class="grid" id="grid" aria-label="Ticket numbers"></div></div>
+      <div class="legend"><span><i class="l-sel"></i>Selected</span><span><i></i>Available</span><span><i class="l-sold"></i>Sold</span></div>
+      <div class="dip">
+        <div class="reel" id="reel" aria-hidden="true"><span>0</span><span>0</span><span>0</span></div>
+        <p><b>Can't decide?</b>Spin for a random available number.</p>
+        <button type="button" class="dip-btn" id="dipBtn">🎰 Lucky dip</button>
       </div>
-      <div class="grid" id="grid" aria-label="Ticket numbers 1 to 120"></div>
 
       <div class="summary">
         <div><div class="k">Your selection</div><div class="chips" id="chips"><span class="empty">Tap numbers above to choose</span></div></div>
@@ -375,7 +386,8 @@
 
   let state = 'open';
   let selected = new Set();
-  let filter = 'all';
+  const PER = 30; // 4 shelves of 30
+  let shelf = 0;
 
   const $ = id => document.getElementById(id);
   const grid = $('grid');
@@ -384,26 +396,54 @@
   // Price: every 3 tickets = $10, leftovers $5 each
   const priceFor = n => Math.floor(n / 3) * 10 + (n % 3) * 5;
 
-  function renderGrid() {
+  function renderGrid(popN) {
     grid.innerHTML = '';
-    for (let n = 1; n <= TOTAL; n++) {
-      const sold = SOLD.has(n);
+    for (let n = shelf * PER + 1; n <= (shelf + 1) * PER; n++) {
+      const sold = SOLD.has(n), sel = selected.has(n);
       const b = document.createElement('button');
       b.type = 'button';
-      b.className = 't' + (selected.has(n) ? ' sel' : '');
+      b.className = 't' + (sel ? ' sel' : '') + (n === popN ? ' pop' : '');
       b.disabled = sold;
-      b.innerHTML = sold ? `${pad(n)}<small>SOLD</small>` : pad(n);
-      b.setAttribute('aria-label', `Ticket ${n}${sold ? ', sold' : selected.has(n) ? ', selected' : ', available'}`);
-      b.setAttribute('aria-pressed', selected.has(n));
-      b.hidden = (filter === 'available' && sold) || (filter === 'sold' && !sold);
+      b.innerHTML = `${pad(n)}<small>${sold ? 'SOLD' : sel ? 'PICKED' : '$5'}</small>`;
+      b.setAttribute('aria-label', `Ticket ${n}${sold ? ', sold' : sel ? ', selected' : ', available'}`);
+      b.setAttribute('aria-pressed', sel);
       b.addEventListener('click', () => toggle(n));
       grid.appendChild(b);
     }
+    $('shelves').innerHTML = [0, 1, 2, 3].map(i => {
+      let left = 0;
+      for (let n = i * PER + 1; n <= (i + 1) * PER; n++) if (!SOLD.has(n)) left++;
+      return `<button type="button" role="tab" aria-selected="${i === shelf}" class="${i === shelf ? 'on' : ''}" data-shelf="${i}">${pad(i * PER + 1)}–${(i + 1) * PER}<small>${left} left</small></button>`;
+    }).join('');
     const soldN = SOLD.size;
     $('soldCount').textContent = soldN;
     $('availCount').textContent = TOTAL - soldN;
     $('soldBar').style.width = (soldN / TOTAL * 100) + '%';
   }
+  $('shelves').addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (b) { shelf = +b.dataset.shelf; renderGrid(); }
+  });
+
+  // Lucky dip: spin the reel, land on a random available number
+  $('dipBtn').addEventListener('click', () => {
+    if (state !== 'open') return;
+    const pool = [];
+    for (let n = 1; n <= TOTAL; n++) if (!SOLD.has(n) && !selected.has(n)) pool.push(n);
+    if (!pool.length) return;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    const reel = $('reel'), digits = reel.children, btn = $('dipBtn');
+    const show = v => String(v).padStart(3, '0').split('').forEach((d, i) => digits[i].textContent = d);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    btn.disabled = true; reel.classList.add('spin');
+    let spins = reduce ? 0 : 14;
+    const timer = setInterval(() => {
+      if (spins-- > 0) return show(Math.floor(Math.random() * 1000));
+      clearInterval(timer); reel.classList.remove('spin'); show(pick); btn.disabled = false;
+      selected.add(pick); shelf = Math.floor((pick - 1) / PER);
+      renderGrid(pick); renderSummary();
+    }, 70);
+  });
 
   function toggle(n) {
     if (state !== 'open' || SOLD.has(n)) return;
@@ -434,12 +474,6 @@
   $('fAgree').addEventListener('change', validate);
   $('continueBtn').addEventListener('click', () => { $('checkout').classList.add('show'); $('fName').focus(); });
   $('payBtn').addEventListener('click', () => alert('Sample only — this would open the secure Stripe payment.'));
-
-  document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
-    filter = b.dataset.filter;
-    document.querySelectorAll('.filters button').forEach(x => x.classList.toggle('on', x === b));
-    renderGrid();
-  }));
 
   // ---- Countdown + live clock ----
   const sydney = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Sydney', weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', second: '2-digit' });
