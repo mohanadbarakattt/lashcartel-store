@@ -1,3 +1,4 @@
+import { cashEnabled } from '../lib/cash.js';
 import { randomBytes, createHash } from 'node:crypto';
 import { db } from '../lib/db.js';
 import { sendEmail, escapeHtml } from '../lib/email.js';
@@ -7,8 +8,8 @@ import { sameOrigin } from '../lib/admin-auth.js';
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   if (!sameOrigin(req)) return res.status(403).end();
-  if (process.env.CARTEL_CASH_ENABLED !== 'true') return res.status(404).end();
-  if (!process.env.DATABASE_URL || !process.env.MEMBER_SESSION_SECRET) return res.status(503).json({ error: 'Cartel Cash is not configured.' });
+  if (!cashEnabled()) return res.status(404).end();
+  if (!process.env.DATABASE_URL) return res.status(503).json({ error: 'Cartel Cash is not configured.' });
   const email = String(req.body?.email || '').trim().toLowerCase();
   const marketingConsent = req.body?.marketingConsent === true;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 250) return res.status(400).json({ error: 'Enter a valid email address.' });

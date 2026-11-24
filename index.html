@@ -804,6 +804,10 @@
       </div>
       <div id="refStatus" role="status" style="font-size:12px;margin-top:4px;color:var(--rose-dark);"></div>
     </div>
+    <label id="cashBox" style="display:none;gap:10px;align-items:center;margin-top:12px;padding:11px;border:1px solid var(--blush-deep);border-radius:8px;font-size:13px;cursor:pointer;">
+      <input id="useCash" type="checkbox" style="width:18px;height:18px;" />
+      <span><b>Use my Cartel Cash</b><br><span id="cashText" style="color:var(--ink-soft);"></span></span>
+    </label>
     <label for="cartEmail" style="display:block;font-size:13px;font-weight:600;margin-top:12px;">Email for your order</label>
     <input id="cartEmail" type="email" autocomplete="email" required placeholder="you@email.com" style="width:100%;padding:11px;border:1px solid var(--blush-deep);border-radius:8px;margin:6px 0;" />
     <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="stripeCheckout()">Secure Checkout</button>
@@ -1182,6 +1186,23 @@
       if (!silent) status.textContent = e.message;
     }
   }
+  // Cartel Cash: show the signed-in balance in the bag. The server works out the actual discount.
+  let cashMember = null;
+  window.addEventListener('load', () => {
+    fetch('/api/member-data', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(d => {
+      if (!d) return;
+      cashMember = d;
+      const email = document.getElementById('cartEmail');
+      if (!email.value) email.value = d.email;
+      const min = d.reward.minimum_redemption_points;
+      document.getElementById('cashText').textContent = d.balance >= min
+        ? `${d.balance} points · ${d.reward.redemption_step_points} points = $${(d.reward.redemption_step_cents / 100).toFixed(2)} off`
+        : `${d.balance} points · you can spend them from ${min} points`;
+      document.getElementById('useCash').disabled = d.balance < min;
+      document.getElementById('useCash').checked = d.balance >= min;
+      document.getElementById('cashBox').style.display = 'flex';
+    }).catch(() => {});
+  });
   window.addEventListener('load', () => {
     const saved = window.LC_REFERRAL && LC_REFERRAL.get();
     if (saved) { document.getElementById('cartRefCode').value = saved; applyReferral(true); }
@@ -1227,13 +1248,17 @@
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: cart.map(i => ({ name: i.name, quantity: i.qty, addon: !!i.addon })), freeGift: selectedGift, customerEmail, referralCode: appliedReferral ? appliedReferral.code : undefined, referralTyped: !!appliedReferral })
+        body: JSON.stringify({ items: cart.map(i => ({ name: i.name, quantity: i.qty, addon: !!i.addon })), freeGift: selectedGift, customerEmail, referralCode: appliedReferral ? appliedReferral.code : undefined, referralTyped: !!appliedReferral, usePoints: !!(cashMember && document.getElementById('useCash').checked) })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Could not start checkout.');
 
+      const cashRow = data.pointsDiscount > 0 ? `<div class="row" style="color:var(--rose-dark);"><span>Cartel Cash (${data.pointsUsed} points)</span><span>−$${(data.pointsDiscount / 100).toFixed(2)} AUD</span></div>` : '';
+      const paidSummary = summaryHTML
+        .replace('<div class="row"><span>Delivery', cashRow + '<div class="row"><span>Delivery')
+        .replace(/<div class="row total"><span>Total<\/span><span>[^<]*<\/span>/, `<div class="row total"><span>Total</span><span>$${(data.amount / 100).toFixed(2)} AUD</span>`);
       body.innerHTML = `
-        ${summaryHTML}
+        ${paidSummary}
         <div class="checkout-section-label">Email</div>
         <input id="checkoutEmail" type="email" inputmode="email" autocomplete="email" required readonly placeholder="you@email.com"
           style="width:100%;padding:12px 14px;border:1px solid #e6dcd8;border-radius:10px;background:#fff;font-family:Poppins,sans-serif;font-size:15px;color:#2c2622;outline:none;"

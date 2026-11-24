@@ -40,6 +40,13 @@
       <div class="row"><span>Total paid</span><b id="orderTotal">—</b></div>
     </div>
 
+    <div class="order-box" id="cashBox" style="display:none;">
+      <div class="lbl">Cartel Cash</div>
+      <div class="num" id="cashEarned">—</div>
+      <div class="row"><span>Your balance</span><b id="cashBalance">—</b></div>
+      <p class="muted" style="margin:12px 0 0;">Saved to your account automatically. On another device, sign in at <a href="/account.html" style="color:#c2766c;">Cartel Cash</a> with your email and this order number.</p>
+    </div>
+
     <p>We'll pack your <span class="em">Lash Cartel</span> order and post it within 5–7 business days.</p>
     <p class="muted">Take a screenshot of your order number for your records.</p>
     <a class="btn" href="/">Back to Shopping</a>
@@ -66,6 +73,18 @@
         if (typeof d.amount === 'number') document.getElementById('orderTotal').textContent = fmt(d.amount, d.currency);
         else document.querySelector('#orderBox .row').style.display = 'none';
         box.style.display = 'block';
+      })
+      .catch(() => {});
+
+    // Cartel Cash: credit points now and keep this device signed in.
+    const secret = params.get('payment_intent_client_secret');
+    if (secret) fetch('/api/member-claim', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paymentIntent: pi, clientSecret: secret }) })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d) return;
+        document.getElementById('cashEarned').textContent = '+' + d.earned + ' points';
+        document.getElementById('cashBalance').textContent = d.balance + ' points';
+        document.getElementById('cashBox').style.display = 'block';
       })
       .catch(() => {});
   })();

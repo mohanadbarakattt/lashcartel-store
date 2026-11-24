@@ -1,3 +1,4 @@
+import { cashEnabled } from '../lib/cash.js';
 import { createHash } from 'node:crypto';
 import { db } from '../lib/db.js';
 import { memberCookie } from '../lib/member-auth.js';
@@ -6,7 +7,7 @@ import { siteUrl } from '../lib/links.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
-  if (process.env.CARTEL_CASH_ENABLED !== 'true') return res.status(404).end();
+  if (!cashEnabled()) return res.status(404).end();
   const token = req.body?.token;
   if (typeof token !== 'string' || !/^[a-f0-9]{64}$/.test(token)) return res.status(400).json({ error: 'Invalid sign-in link.' });
   try {

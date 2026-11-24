@@ -3,6 +3,8 @@ import { quote, GIFT_OPTIONS } from '../lib/catalog.js';
 import { getStock } from '../lib/stock.js';
 import { db } from '../lib/db.js';
 import { findCode, referralDiscountCents } from '../lib/referrals.js';
+import { memberId } from '../lib/member-auth.js';
+import { cashEnabled, balanceOf, rewardConfig, bestRedemption } from '../lib/cash.js';
 
 const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -23,7 +25,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { items, customerEmail, freeGift, referralCode } = req.body || {};
+    const { items, customerEmail, freeGift, referralCode, usePoints } = req.body || {};
     if (typeof customerEmail !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail) || customerEmail.length > 250) {
       return res.status(400).json({ error: 'Enter a valid email address.' });
     }
@@ -39,8 +41,17 @@ export default async function handler(req, res) {
     }
     const referralCents = referral ? referralDiscountCents(pricing.subtotal, referral.discountPercent) : 0;
     const subtotalCents = pricing.subtotal, shippingCents = pricing.shipping;
-    const discountCents = referralCents;
-    const totalCents = pricing.total - referralCents;
+    // Cartel Cash: a signed-in customer can spend points (worked out here, never trusted from the page).
+    const member = cashEnabled() && process.env.DATABASE_URL ? memberId(req) : null;
+    let redemption = { points: 0, cents: 0 };
+    if (member && usePoints === true) {
+      try {
+        const sqlCash = db();
+        redemption = bestRedemption(await balanceOf(sqlCash, member), subtotalCents - referralCents, await rewardConfig(sqlCash));
+      } catch (error) { console.error('Cartel Cash lookup failed:', error.message); }
+    }
+    const discountCents = referralCents + redemption.cents;
+    const totalCents = pricing.total - discountCents;
     const summary = pricing.lines.map(line => `${line.name} x${line.quantity}`);
 
     const gift = GIFT_OPTIONS.includes(freeGift) ? freeGift : GIFT_OPTIONS[0];
@@ -75,6 +86,8 @@ export default async function handler(req, res) {
           referral_influencer: referral.influencer.slice(0, 450),
           referral_discount: `${referral.discountPercent}% (-$${(referralCents / 100).toFixed(2)})`,
         } : {}),
+        ...(member ? { member_id: String(member) } : {}),
+        ...(redemption.points ? { points_redeemed: String(redemption.points), points_discount: `-$${(redemption.cents / 100).toFixed(2)}` } : {}),
         free_gift: gift,
         ...(orderId ? { order_id: String(orderId) } : {}),
       },
@@ -89,6 +102,8 @@ export default async function handler(req, res) {
       shipping: shippingCents,
       referralCode: referral?.code || null,
       referralDiscount: referralCents,
+      pointsUsed: redemption.points,
+      pointsDiscount: redemption.cents,
       currency: 'aud',
     });
   } catch (err) {

@@ -2,6 +2,7 @@ import Stripe from 'stripe';
 import { db } from '../lib/db.js';
 import { confirmationEmail } from '../lib/order-emails.js';
 import { sendEmail } from '../lib/email.js';
+import { creditOrder, reverseOrder, cashEnabled } from '../lib/cash.js';
 import { confirmPayment, kitTickets, sendTickets, releasePayment } from '../lib/giveaway.js';
 
 export const config = { api: { bodyParser: false } };
@@ -27,6 +28,8 @@ export default async function handler(req, res) {
       const address = intent.shipping?.address || null;
       const updated = await sql`UPDATE orders SET status = 'paid', shipping_address = ${JSON.stringify(address)}::jsonb
         WHERE payment_intent_id = ${intent.id} AND status = 'pending' RETURNING *`;
+      // Cartel Cash: credit points as soon as the order is paid (the success page may already have done it).
+      try { await creditOrder(sql, intent); } catch (error) { console.error('Cartel Cash credit failed:', error.message); }
       if (updated.length) {
         const order = updated[0];
         await sql`UPDATE carts SET purchased_at = now() WHERE email = ${order.customer_email} AND purchased_at IS NULL`;
@@ -53,9 +56,7 @@ export default async function handler(req, res) {
         const refunded = await sql`UPDATE orders SET status = 'refunded' WHERE payment_intent_id = ${intentId} AND status IN ('paid','dispatched') RETURNING *`;
         for (const order of refunded) {
           await sql`UPDATE giveaway_tickets SET status = 'refunded' WHERE payment_ref = ${`order:${order.id}`} AND status = 'sold'`;
-          if (process.env.CARTEL_CASH_ENABLED !== 'true') continue;
-          const earn = await sql`SELECT member_id,points FROM points_ledger WHERE event_key = ${`order:${order.id}:earn`}`;
-          if (earn.length) await sql`INSERT INTO points_ledger(member_id,points,reason,event_key) VALUES (${earn[0].member_id},${-earn[0].points},${`Refund ${order.order_number}`},${`order:${order.id}:refund`}) ON CONFLICT(event_key) DO NOTHING`;
+          if (cashEnabled()) await reverseOrder(sql, order);
         }
       }
     }

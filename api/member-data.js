@@ -1,9 +1,10 @@
+import { cashEnabled } from '../lib/cash.js';
 import { db } from '../lib/db.js';
 import { memberId } from '../lib/member-auth.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
-  if (process.env.CARTEL_CASH_ENABLED !== 'true') return res.status(404).end();
+  if (!cashEnabled()) return res.status(404).end();
   const id = memberId(req);
   if (!id) return res.status(401).json({ error: 'Sign in to view Cartel Cash.' });
   try {
