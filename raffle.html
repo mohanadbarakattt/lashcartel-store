@@ -275,7 +275,7 @@
       <div class="fact"><b>120</b><span>Tickets only</span></div>
       <div class="fact"><b>$575</b><span>3 prizes</span></div>
       <div class="fact"><b>$5</b><span>1 ticket · 3 for $10</span></div>
-      <div class="fact"><b style="white-space:nowrap">Thu 26 – Sun 29</b><span>Nov · closes 6pm</span></div>
+      <div class="fact"><b style="white-space:nowrap">On sale now</b><span>Closes Sun 29 Nov · 6pm</span></div>
     </div>
 
     <div class="clock" id="clock" aria-live="polite">
@@ -403,7 +403,7 @@
     <div class="faq">
       <details><summary>How much are tickets?</summary><p>$5 for 1 ticket or $10 for 3 tickets. Each ticket is one number from 1 to 120.</p></details>
       <details><summary>Do I get a ticket when I buy lashes?</summary><p>Yes. Every DIY Cluster Lash Kit (Volume or Natural) bought during the giveaway comes with 1 free ticket. Other products don't include a ticket. We assign you an available number automatically and it goes straight into the draw.</p></details>
-      <details><summary>When can I buy tickets?</summary><p>From Thursday 26 November until Sunday 29 November 2026 at 6:00 pm Sydney time, or until all 120 tickets sell out. <span class="tbc">Confirm opening time on Thursday</span></p></details>
+      <details><summary>When can I buy tickets?</summary><p>Right now, until Sunday 29 November 2026 at 6:00 pm Sydney time, or until all 120 tickets sell out.</p></details>
       <details><summary>How are winners picked and contacted?</summary><p>Three winning numbers are drawn at random from all sold tickets. Winners are revealed in a live draw at 7pm Sunday 29 November, with the video posted on TikTok and Instagram. Each winner is also called on the number given at checkout.</p></details>
       <details><summary>Can I choose my own numbers?</summary><p>Yes. Pick any number that isn't greyed out. Once you pay, that number is yours.</p></details>
       <details><summary>Who can enter?</summary><p>Everyone can enter.</p></details>
@@ -424,7 +424,7 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Settings come from /api/giveaway; these defaults only show until it answers.
-  let G = { total: 120, opensAt: '2026-11-26T00:00:00+11:00', closesAt: '2026-11-29T18:00:00+11:00', maxPerOrder: 30 };
+  let G = { total: 120, opensAt: '2026-11-24T00:00:00+11:00', closesAt: '2026-11-29T18:00:00+11:00', maxPerOrder: 30 };
   let taken = new Set(), selected = new Set(), mine = new Set(); // mine = numbers this buyer is holding mid-checkout
   let shelf = 0, state = 'before', offset = 0, unavailable = false, draw = null, played = false;
   let stripe = null, elements = null, hold = null, prevHold = null, holdTimer = null;
@@ -593,7 +593,7 @@
     const t = now(), opens = Date.parse(G.opensAt), closes = Date.parse(G.closesAt);
     $('nowClock').textContent = sydney.format(t);
     let target = null, label, sub;
-    if (t < opens) { state = 'before'; target = opens; label = 'Tickets open in'; sub = 'Tickets open Thursday 26 November · close Sunday 6:00 pm'; }
+    if (t < opens) { state = 'before'; target = opens; label = 'Tickets open in'; sub = 'Tickets close Sunday 29 November, 6:00 pm Sydney time'; }
     else if (t < closes && taken.size < G.total) { state = 'open'; target = closes; label = 'Tickets close in'; sub = 'Sunday 29 November 2026, 6:00 pm Sydney time'; }
     else { state = 'closed'; label = taken.size >= G.total && t < closes ? 'Sold out!' : 'Tickets are closed'; sub = 'Winners are revealed live at 7pm Sunday. Stay on this page to watch.'; }
     if (unavailable && state === 'open') { label = 'Tickets unavailable'; sub = 'Ticket sales are not available right now. Please check back soon.'; }
