@@ -248,6 +248,9 @@
     .summary > div:first-child { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
     .board { padding: 12px; } .glass { padding: 8px; } .marquee { font-size: 26px; }
     .fact { border-right: 0; border-bottom: 1px solid var(--line); }
+    .fact b { font-size: 22px; }
+    .fields input { font-size: 16px; }
+    .nav a.back { padding: 12px 0; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } html { scroll-behavior: auto; } }
 </style>
@@ -272,7 +275,7 @@
       <div class="fact"><b>120</b><span>Tickets only</span></div>
       <div class="fact"><b>$575</b><span>3 prizes</span></div>
       <div class="fact"><b>$5</b><span>1 ticket · 3 for $10</span></div>
-      <div class="fact"><b>Thu 26 – Sun 29</b><span>Nov · closes 6pm</span></div>
+      <div class="fact"><b style="white-space:nowrap">Thu 26 – Sun 29</b><span>Nov · closes 6pm</span></div>
     </div>
 
     <div class="clock" id="clock" aria-live="polite">
@@ -326,7 +329,7 @@
     <div class="steps">
       <div class="step"><h3>Pick your numbers</h3><p>Choose any available numbers from 1 to 120. Grey numbers are already taken.</p></div>
       <div class="step"><h3>Pay securely</h3><p>$5 for 1 ticket or $10 for 3. Enter your name, email and mobile so we can reach you.</p></div>
-      <div class="step"><h3>Get your tickets</h3><p>Your ticket numbers arrive straight away by email and SMS.</p></div>
+      <div class="step"><h3>Get your tickets</h3><p>Your ticket numbers show on screen as soon as you pay. Screenshot them to keep.</p></div>
       <div class="step"><h3>Winners drawn</h3><p>Tickets close Sunday 6pm. Winners are revealed at 7pm in a live draw, posted on TikTok and Instagram, and called by phone.</p></div>
     </div>
     <div class="pricing">
@@ -399,7 +402,7 @@
     <h2>Questions</h2>
     <div class="faq">
       <details><summary>How much are tickets?</summary><p>$5 for 1 ticket or $10 for 3 tickets. Each ticket is one number from 1 to 120.</p></details>
-      <details><summary>Do I get a ticket when I buy lashes?</summary><p>Yes. Every DIY Cluster Lash Kit (Volume or Natural) bought during the giveaway comes with 1 free ticket. Other products don't include a ticket. We assign you an available number and email it to you.</p></details>
+      <details><summary>Do I get a ticket when I buy lashes?</summary><p>Yes. Every DIY Cluster Lash Kit (Volume or Natural) bought during the giveaway comes with 1 free ticket. Other products don't include a ticket. We assign you an available number automatically and it goes straight into the draw.</p></details>
       <details><summary>When can I buy tickets?</summary><p>From Thursday 26 November until Sunday 29 November 2026 at 6:00 pm Sydney time, or until all 120 tickets sell out. <span class="tbc">Confirm opening time on Thursday</span></p></details>
       <details><summary>How are winners picked and contacted?</summary><p>Three winning numbers are drawn at random from all sold tickets. Winners are revealed in a live draw at 7pm Sunday 29 November, with the video posted on TikTok and Instagram. Each winner is also called on the number given at checkout.</p></details>
       <details><summary>Can I choose my own numbers?</summary><p>Yes. Pick any number that isn't greyed out. Once you pay, that number is yours.</p></details>
@@ -577,7 +580,7 @@
   function showDone(numbers) {
     const box = $('done');
     box.innerHTML = `<h3>You're in! 🎉</h3>${numbers ? `<div class="chips">${numbers.map(n => `<span class="chip">${pad(n)}</span>`).join('')}</div>` : ''}
-      <p>Payment received. Your ticket numbers are on their way by email and SMS.</p>
+      <p>Payment received. ${numbers ? "Screenshot your numbers to keep them." : "Your tickets are saved and in the draw."}</p>
       <p>Winners are revealed live at 7pm Sunday and called by phone. Good luck!</p>`;
     box.hidden = false; $('checkout').classList.remove('show');
     box.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });

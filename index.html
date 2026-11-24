@@ -41,7 +41,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/upgrades.css" />
+<link rel="stylesheet" href="/assets/upgrades.css?v=2" />
 <script src="https://js.stripe.com/v3/"></script>
 <style>
   :root {
@@ -411,6 +411,22 @@
   }
   @media (max-width: 520px) {
     .grid { grid-template-columns: 1fr; }
+    /* phone: one step per row, number beside the text */
+    .steps { grid-template-columns: 1fr; gap: 12px; }
+    .step { display: grid; grid-template-columns: 46px 1fr; column-gap: 16px; text-align: left; padding: 20px 18px; }
+    .step .num { margin: 0; grid-row: span 2; }
+    .step h4 { margin-bottom: 2px; }
+    /* phone: comfortable tap targets */
+    .icon-btn { min-width: 44px; min-height: 44px; }
+    .slide-dots { gap: 0; }
+    .slide-dots button { box-sizing: content-box; border: 14px solid transparent; background-clip: padding-box; }
+    .foot-col a { padding: 6px 0; margin-bottom: 2px; }
+    .qty { gap: 4px; padding: 2px; }
+    .qty button { width: 38px; height: 38px; font-size: 18px; }
+    .cart-row .right .rm { padding: 10px 0 10px 10px; margin-top: 2px; }
+    .close-x { min-width: 44px; min-height: 44px; }
+    /* 16px stops iPhone zooming into the field when tapped */
+    #drawer input, #checkoutBody input { font-size: 16px !important; min-height: 46px; }
   }
 </style>
 </head>
@@ -841,7 +857,7 @@
 </div>
 
 <script src="/assets/catalog.js"></script>
-<script src="/assets/draw-machine.js?v=1"></script>
+<script src="/assets/draw-machine.js?v=2"></script>
 <script>
   let STRIPE_PUBLISHABLE_KEY = '';
 
@@ -1341,7 +1357,7 @@
   if (/[?&]bag=1/.test(window.location.search) && cart.length) { openCart(); }
 </script>
 <script type="module" src="/assets/quiz.js"></script>
-<script type="module" src="/assets/rewards-popup.js"></script>
+<script type="module" src="/assets/rewards-popup.js?v=2"></script>
 <script>
 document.getElementById('chat-launcher').addEventListener('click', async () => {
   const chat = await import('/assets/chatbot.js');

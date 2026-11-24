@@ -1,9 +1,69 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Cartel Cash | Lash Cartel</title><link rel="stylesheet" href="/legal.css"><link rel="stylesheet" href="/assets/upgrades.css"></head>
-<body><header class="legal-header"><a href="/">LASH CARTEL</a></header><main class="legal-main" style="max-width:760px;margin:auto;padding:32px 20px;"><h1>Cartel Cash</h1><p id="notice" role="status"></p>
-<section id="join"><p>You get points automatically every time you shop, and they're saved to your account straight after you pay. On a new phone or browser, sign in with the email you ordered with and any order number (it starts with LC-).</p><form id="member-form"><label for="member-email">Email</label><input id="member-email" type="email" required autocomplete="email" style="display:block;width:100%;padding:12px;margin:8px 0 14px"><label for="member-order">Order number</label><input id="member-order" type="text" required placeholder="LC-10001" autocapitalize="characters" style="display:block;width:100%;padding:12px;margin:8px 0 14px;text-transform:uppercase"><button type="submit" style="margin-top:8px;padding:12px 20px">Sign in</button></form><p style="margin-top:16px">No order yet? Shop now and your points appear as soon as you pay.</p></section>
-<section id="dashboard" hidden><h2>Your points</h2><p id="balance" style="font-size:28px"></p><p id="rewards"></p><p id="expiry"></p><p><a href="/#shop">Spend them at checkout</a></p><h2>Points history</h2><ul id="history"></ul><button id="logout" type="button">Sign out</button></section>
-<p><a href="/cartel-cash-terms.html">Read draft Cartel Cash terms</a></p></main>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Cartel Cash | Lash Cartel</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png?v=3" />
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: linear-gradient(180deg, #f5d6d2, #fbe9e6 40%, #fffaf8); color: #2c2622; font-family: 'Poppins', sans-serif; min-height: 100vh; line-height: 1.6; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
+  header img { width: 56px; height: 56px; border-radius: 50%; }
+  header a.back { color: #6b615b; font-size: 13px; text-decoration: none; padding: 12px 4px; }
+  main { max-width: 480px; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 700; line-height: 1.1; text-align: center; }
+  h1 span { font-family: 'Pinyon Script', cursive; color: #c2766c; font-weight: 400; }
+  .intro { text-align: center; color: #6b615b; font-size: 14.5px; margin: 10px 0 22px; }
+  .card { background: #fff; border-radius: 20px; padding: 22px 18px; box-shadow: 0 12px 34px rgba(178,118,108,.16); }
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  input { width: 100%; font: 16px 'Poppins', sans-serif; padding: 14px; border: 1px solid #e8b5ae; border-radius: 12px; background: #fffaf8; margin-bottom: 14px; outline: none; }
+  input:focus { border-color: #c2766c; box-shadow: 0 0 0 3px rgba(194,118,108,.18); }
+  #member-order { text-transform: uppercase; }
+  button, .btn { display: block; width: 100%; min-height: 50px; border: 0; border-radius: 50px; background: #d98f86; color: #fff; font: 600 13px 'Poppins', sans-serif; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; text-align: center; text-decoration: none; line-height: 50px; }
+  button:active, .btn:active { background: #c2766c; }
+  .ghost { background: none; color: #6b615b; border: 1px solid #e8b5ae; margin-top: 18px; }
+  .hint { font-size: 12.5px; color: #8a7f7a; margin-top: 14px; text-align: center; }
+  #notice { text-align: center; font-size: 14px; color: #c2766c; min-height: 1.4em; margin-bottom: 10px; }
+  .balance { text-align: center; padding: 26px 18px; background: linear-gradient(160deg, #2c2622, #4a2c34); color: #fff; border-radius: 20px; box-shadow: 0 14px 36px rgba(44,38,34,.28); }
+  .balance .lbl { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #f3b8cc; }
+  .balance .pts { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 700; line-height: 1.1; margin-top: 6px; }
+  .balance .worth { color: #f6dbe5; font-size: 14px; }
+  .rules { margin: 16px 0; font-size: 13.5px; color: #6b615b; text-align: center; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; margin: 26px 0 8px; }
+  #history { list-style: none; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(178,118,108,.1); }
+  #history li { display: flex; justify-content: space-between; gap: 12px; padding: 13px 16px; border-bottom: 1px solid rgba(44,38,34,.08); font-size: 13.5px; }
+  #history li:last-child { border-bottom: 0; }
+  #history .pos { color: #2f8a5b; font-weight: 600; white-space: nowrap; }
+  #history .neg { color: #c2766c; font-weight: 600; white-space: nowrap; }
+  #history small { display: block; color: #8a7f7a; font-size: 11.5px; }
+  .terms { display: block; text-align: center; margin-top: 26px; font-size: 13px; color: #c2766c; padding: 10px; }
+</style></head>
+<body>
+<header><a href="/"><img src="/assets/logo.png" alt="Lash Cartel home" /></a><a class="back" href="/">← Back to shop</a></header>
+<main>
+<h1>Cartel <span>Cash</span></h1>
+<p id="notice" role="status"></p>
+<section id="join">
+  <p class="intro">Earn 1 point for every $1 you spend. Points land in your account the moment you pay. 100 points = $5 off.</p>
+  <form id="member-form" class="card">
+    <label for="member-email">Email you ordered with</label>
+    <input id="member-email" type="email" required autocomplete="email" inputmode="email" placeholder="you@email.com">
+    <label for="member-order">Any order number</label>
+    <input id="member-order" type="text" required placeholder="LC-10001" autocapitalize="characters" autocomplete="off">
+    <button type="submit">See my points</button>
+    <p class="hint">Your order number is on your order confirmation page. It starts with LC-.</p>
+  </form>
+  <p class="hint">No order yet? <a href="/#shop" style="color:#c2766c">Shop now</a> and your points appear as soon as you pay.</p>
+</section>
+<section id="dashboard" hidden>
+  <div class="balance"><div class="lbl">Your balance</div><div class="pts" id="balance"></div><div class="worth" id="worth"></div></div>
+  <p class="rules" id="rewards"></p>
+  <a class="btn" href="/#shop">Spend at checkout</a>
+  <h2>Points history</h2>
+  <ul id="history"></ul>
+  <button id="logout" type="button" class="ghost">Sign out</button>
+  <p class="hint" id="expiry"></p>
+</section>
+<a class="terms" href="/cartel-cash-terms.html">Cartel Cash terms</a>
+</main>
 <script>
 const notice=document.getElementById('notice');
 const money=n=>'$'+(n/100).toFixed(2);
@@ -12,11 +72,12 @@ async function load(){
   if(response.status===404){notice.textContent='Cartel Cash is not available yet.';document.getElementById('join').hidden=true;return;}
   if(!response.ok)return;
   const data=await response.json();document.getElementById('join').hidden=true;document.getElementById('dashboard').hidden=false;
-  document.getElementById('balance').textContent=`${data.balance} points`;
+  document.getElementById('balance').textContent=`${data.balance} pts`;
   const step=data.reward.redemption_step_points, cents=data.reward.redemption_step_cents;
+  const steps=Math.floor(data.balance/step); document.getElementById('worth').textContent=data.balance>=data.reward.minimum_redemption_points?`Worth ${money(steps*cents)} off your next order`:`${data.reward.minimum_redemption_points-data.balance} more points until your first reward`;
   document.getElementById('rewards').textContent=`${step} points = ${money(cents)} off an eligible purchase. Minimum redemption: ${data.reward.minimum_redemption_points} points.`;
   document.getElementById('expiry').textContent=data.reward.expiry_days===null?'Points currently do not expire.':`Points expire after ${data.reward.expiry_days} days.`;
-  document.getElementById('history').replaceChildren(...data.history.map(row=>{const li=document.createElement('li');li.textContent=`${row.points>0?'+':''}${row.points} · ${row.reason} · ${new Date(row.created_at).toLocaleDateString('en-AU')}`;return li;}));
+  document.getElementById('history').replaceChildren(...data.history.map(row=>{const li=document.createElement('li');const left=document.createElement('span');left.textContent=row.reason;const d=document.createElement('small');d.textContent=new Date(row.created_at).toLocaleDateString('en-AU');left.append(d);const pts=document.createElement('span');pts.className=row.points>0?'pos':'neg';pts.textContent=`${row.points>0?'+':''}${row.points}`;li.append(left,pts);return li;}));
 }
 document.getElementById('member-form').addEventListener('submit',async e=>{e.preventDefault();notice.textContent='Signing in…';try{const response=await fetch('/api/member-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('member-email').value,orderNumber:document.getElementById('member-order').value})});const data=await response.json();if(response.ok){notice.textContent='';load();}else notice.textContent=data.error||'Please try again.';}catch(_){notice.textContent='Sign-in is unavailable right now.';}});
 document.getElementById('logout').addEventListener('click',async()=>{await fetch('/api/member-logout',{method:'POST'});location.reload();});
