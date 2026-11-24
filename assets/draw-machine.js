@@ -2,9 +2,9 @@
 // then the prizes pop out of the tray. Fills every element with [data-draw-machine]. CSS-only animation.
 (function () {
   var PRIZES = [ // November Giveaway: 1st, 2nd, 3rd
-    '/assets/gifts/giveaway/prize-1-beauty-supply.jpg',
+    '/assets/gifts/giveaway/p1-thumb.jpg',
     '/assets/gifts/giveaway/prize-2-cartel-bag.jpg',
-    '/assets/gifts/giveaway/prize-3-cartel-classic.jpg',
+    '/assets/gifts/giveaway/p3-thumb.jpg',
   ];
   var BALLS = ['12', '07', '33', '85', '41', '99', '26', '58', '114', '67'];
   var WINNERS = ['07', '41', '85'];
