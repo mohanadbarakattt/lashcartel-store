@@ -4,7 +4,7 @@ import { escapeHtml, sendEmail } from '../../lib/email.js';
 import { sign, siteUrl } from '../../lib/links.js';
 
 const products = {
-  'pretty-ambition': { name:'Pretty Ambition', url:'/pretty-ambition', image:'/assets/products/pretty-ambition/pa-result.jpg' },
+  'pretty-ambition': { name:'Pretty Ambition', url:'/pretty-ambition', image:'/assets/products/pretty-ambition/pa-new-set.jpg' },
   'diy-volume': { name:'DIY Cluster Lash Kit — Volume', url:'/cluster-lash-kit?style=Volume', image:'/assets/products/cluster-lash-kit/Volume/volume_main.jpg' },
   'diy-natural': { name:'DIY Cluster Lash Kit — Natural', url:'/cluster-lash-kit?style=Natural', image:'/assets/products/cluster-lash-kit/Natural/Natural_Main.jpg' },
   mascara: { name:'Ultra Fine Precision Mascara', url:'/mascara', image:'/assets/products/mascara/mascara-promo.jpg' },
