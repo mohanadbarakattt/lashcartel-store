@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pretty Ambition™ Pre-Glued Cluster Lashes — Lash Cartel Cosmetics</title>
-<meta name="description" content="Pretty Ambition pre-glued cluster lashes — thin, seamless band, wispy clusters in 10/12/14mm with an applicator tweezer. Effortless, custom, salon-level glam at home." />
+<meta name="description" content="Pretty Ambition pre-glued cluster lashes — 48 clusters in 8/10/12/14mm plus tweezers. Thin, seamless band, no separate glue, lashes on in 5 minutes." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Lash Cartel Cosmetics" />
 <meta property="og:title" content="Pretty Ambition™ Pre-Glued Cluster Lashes — Lash Cartel Cosmetics" />
-<meta property="og:description" content="Pre-glued cluster lashes — thin, seamless band, wispy clusters in 10/12/14mm with an applicator tweezer. Effortless, salon-level glam at home." />
+<meta property="og:description" content="Pre-glued cluster lashes — 48 clusters in 8/10/12/14mm plus tweezers. Thin, seamless band, no separate glue, lashes on in 5 minutes." />
 <meta property="og:url" content="https://www.lashcartelcosmetics.com/pretty-ambition" />
 <meta property="og:image" content="https://www.lashcartelcosmetics.com/assets/products/pretty-ambition/pa-result.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -26,14 +26,14 @@
   "@type": "Product",
   "name": "Pretty Ambition Pre-Glued Cluster Lashes",
   "image": "https://www.lashcartelcosmetics.com/assets/products/pretty-ambition/pa-result.jpg",
-  "description": "Pretty Ambition pre-glued cluster lashes — thin, seamless band, wispy clusters in 10/12/14mm with an applicator tweezer. Effortless, custom, salon-level glam at home.",
+  "description": "Pretty Ambition pre-glued cluster lashes — 48 clusters in 8/10/12/14mm plus tweezers. Thin, seamless band, no separate glue, lashes on in 5 minutes.",
   "brand": { "@type": "Brand", "name": "Lash Cartel Cosmetics" },
   "offers": {
     "@type": "Offer",
     "url": "https://www.lashcartelcosmetics.com/pretty-ambition",
     "priceCurrency": "AUD",
     "price": "51.99",
-    "availability": "https://schema.org/OutOfStock",
+    "availability": "https://schema.org/PreOrder",
     "itemCondition": "https://schema.org/NewCondition"
   }
 }
@@ -93,6 +93,7 @@
   .add-bag.is-sold-out { background: #e3dcd6; color: #8a8079; cursor: not-allowed; }
   .add-bag.is-sold-out:hover { background: #e3dcd6; }
   .sold-note { font-size: 13px; color: #8a8079; margin: -4px 0 14px; }
+  .preorder-note { font-size: 15px; font-weight: 600; color: var(--rose-dark); margin: 4px 0 14px; }
   .reassure { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 20px 0 6px; }
   .reassure span { font-size: 12px; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 7px; }
   .reassure svg { color: var(--rose-dark); }
@@ -167,13 +168,13 @@
       <h1>Pretty Ambition<sup>™</sup></h1>
       <div class="price">$51.99 AUD</div>
       <p class="tax-note">Tax included. $4.95 flat-rate delivery to Australia &amp; New Zealand, or <b>FREE delivery when you buy 2 kits</b>.</p>
-      <p class="lede">Effortless, salon-level glam at home. Soft, wispy pre-glued clusters lift, define and open the eye — no strip lash, no gluey mess. A thin, seamless band sits close to your lash line for a natural, long-lasting finish.</p>
+      <p class="lede">Your next lash look in 5 minutes. Press the pre-glued clusters underneath your natural lashes for a lifted, eye-opening finish. Each lightweight cluster has a thin band that blends into your lash line, so all you see are the lashes. No separate glue, no mess.</p>
 
       <div class="buy-row">
-        <button class="add-bag is-sold-out" id="addBtn" onclick="addProduct()" disabled aria-disabled="true">Sold Out</button>
+        <button class="add-bag" id="addBtn" onclick="addProduct()">Pre-order now · $51.99</button>
       </div>
-      <p class="sold-note" id="soldNote">Out of stock — the next batch is on its way.</p>
-      <form id="stockForm" style="margin:16px 0;display:grid;gap:8px;max-width:360px;">
+      <p class="sold-note preorder-note" id="soldNote">Back in stock in 10 days! Pre-order now</p>
+      <form id="stockForm" style="margin:16px 0;display:none;gap:8px;max-width:360px;">
         <label for="stockEmail">Notify Me When Back in Stock</label>
         <input id="stockEmail" type="email" autocomplete="email" required placeholder="Email address" style="padding:12px;border:1px solid #e8b5ae;border-radius:8px;" />
         <p style="font-size:12px;">We’ll only email you about this restock.</p>
@@ -183,7 +184,6 @@
 
       <div class="reassure">
         <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Wudu-friendly &amp; water-permeable</span>
-        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Reusable with care</span>
         <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> $4.95 AU delivery · FREE on 2+ kits</span>
       </div>
 
@@ -191,37 +191,44 @@
         <div class="acc-item open">
           <button class="acc-q" onclick="toggleAcc(this)">Description<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
           <div class="acc-a"><div class="acc-a-inner">
-            <p>Meet <strong>Pretty Ambition</strong> — our pre-glued cluster lash set for effortless, customisable, salon-level glam at home. Soft, wispy clusters lift, define and open the eye with a lightweight, barely-there feel. No mascara, no strip-lash struggle, no gluey mess — just clean, custom volume that's unapologetically you.</p>
-            <p>Each set includes three lengths (10mm, 12mm, 14mm) so you can map your look exactly how you like it — natural on the inner corners, fuller on the outer edge. The pre-bonded band presses on close to your natural lash line with a <strong>thin, seamless finish</strong> that blends right in. Reusable with proper care.</p>
+            <p>Your next lash look in 5 minutes. Press the pre-glued clusters underneath your natural lashes for a lifted, eye-opening finish. Each lightweight cluster has a thin band that blends into your lash line, so all you see are the lashes. No separate glue, no mess.</p>
+            <p>Each set includes <strong>48 cluster pieces and a pair of tweezers</strong>, in 4 lengths (8mm, 10mm, 12mm, 14mm) so you can map your look exactly how you like it. The pre-glued band presses on close to your natural lash line with a <strong>thin, seamless finish</strong> that blends right in.</p>
             <h4>Key Features</h4>
             <ul>
+              <li><strong>5-minute application</strong></li>
+              <li><strong>No glue, no mess</strong></li>
+              <li><strong>5–7 day wear</strong></li>
               <li><strong>Pre-Glued Press-On Clusters</strong> — ready to wear, no separate glue needed.</li>
               <li><strong>Thin, Seamless Band</strong> — sits close to the lash line for a natural, invisible finish.</li>
-              <li><strong>3 Lengths · 10/12/14mm</strong> — build a custom, seamless lash map.</li>
-              <li><strong>Lightweight &amp; Wispy</strong> — natural definition that opens the eye, all-day comfort.</li>
-              <li><strong>Precision Applicator Included</strong> — angled tweezer for easy, accurate placement.</li>
-              <li><strong>Reusable</strong> — gentle care keeps them looking new, wear after wear.</li>
+              <li><strong>4 Lengths · 8/10/12/14mm</strong> — build a custom, seamless lash map.</li>
+              <li><strong>Lightweight</strong> — a weightless feel.</li>
+              <li><strong>Latex-free</strong> and gentle on lashes.</li>
             </ul>
-            <h4>How to Use</h4>
-            <ul>
-              <li>Map your look — shorter clusters for the inner corners, longer for the outer edge.</li>
-              <li>Using the tweezer, pick up a cluster and place it just above your natural lash line.</li>
-              <li>Press gently to set and hold for a few seconds.</li>
-              <li>Work along the lash line, then lightly press to blend for a seamless finish.</li>
-            </ul>
+            <h4>How to Use — 3 Easy Steps</h4>
+            <ol style="padding-left:20px;">
+              <li>Curl your natural lashes.</li>
+              <li>Apply the clusters under your natural lashes.</li>
+              <li>Use the tweezers to press in the lashes to lock the clusters in place.</li>
+            </ol>
             <h4>Suitable For</h4>
-            <p>Anyone who wants effortless, customisable, salon-level lashes at home — easy enough for beginners, perfect for everyday wear.</p>
+            <ul>
+              <li>First-time lash users who want an easy, three-step application.</li>
+              <li>Anyone who wants lashes on in five minutes for busy mornings or last-minute plans.</li>
+              <li>Anyone who loves lightweight lashes with a thin, natural-looking band.</li>
+              <li>Anyone who wants to skip the extra glue step and mess.</li>
+              <li>People with sensitive eyes who prefer latex-free, pre-glued lashes.</li>
+            </ul>
             <h4>Specifications</h4>
-            <div class="spec"><b>Lengths</b><span>10mm / 12mm / 14mm</span></div>
-            <div class="spec"><b>Style</b><span>Wispy cluster lashes</span></div>
-            <div class="spec"><b>Includes</b><span>Cluster lashes + precision applicator tweezer</span></div>
-            <div class="spec"><b>Features</b><span>Pre-Glued, Thin Seamless Band, Lightweight, Reusable</span></div>
+            <div class="spec"><b>Lengths</b><span>8mm / 10mm / 12mm / 14mm</span></div>
+            <div class="spec"><b>Includes</b><span>48 pre-glued cluster pieces + tweezers</span></div>
+            <div class="spec"><b>Wear</b><span>5–7 days</span></div>
+            <div class="spec"><b>Features</b><span>Pre-Glued, Thin Seamless Band, Lightweight, Latex-Free</span></div>
           </div></div>
         </div>
         <div class="acc-item">
           <button class="acc-q" onclick="toggleAcc(this)">Care<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
           <div class="acc-a"><div class="acc-a-inner">
-            <p>To maintain the beauty and integrity of your purchase, we recommend treating it with care. Simple maintenance practices, such as gentle washing and proper storage, can effectively preserve the longevity of your favorites. We encourage you to refer to the care instructions included with each item, designed to help you keep your purchase in top condition.</p>
+            <p>To maintain the beauty and integrity of your purchase, we recommend treating it with care. Handle your lashes gently when washing. Keep unused clusters in their original tray until you’re ready to apply them.</p>
           </div></div>
         </div>
         <div class="acc-item">
@@ -288,7 +295,6 @@
   }
 
   function addProduct() {
-    if (soldOut) return;
 
     const cart = loadCart();
     const key = PRODUCT.name;
@@ -298,7 +304,7 @@
     saveCart(cart);
     updateBagCount();
     const t = document.getElementById('toast');
-    document.getElementById('toastMsg').textContent = `Added ${qty} to your bag ✓`;
+    document.getElementById('toastMsg').textContent = soldOut ? `Pre-order added to your bag ✓` : `Added ${qty} to your bag ✓`;
     t.classList.add('show');
     clearTimeout(window._toastT);
     window._toastT = setTimeout(() => t.classList.remove('show'), 3500);
@@ -311,11 +317,9 @@
     if (!stock) return;
     soldOut = !stock['pretty-ambition'];
     const button = document.getElementById('addBtn');
-    button.disabled = soldOut;
-    button.setAttribute('aria-disabled', String(soldOut));
-    button.textContent = soldOut ? 'Sold Out' : `Add to Bag · $${PRODUCT.price.toFixed(2)}`;
+    // Out of stock = pre-order (checkout stays open); in stock = normal add to bag.
+    button.textContent = soldOut ? `Pre-order now · $${PRODUCT.price.toFixed(2)}` : `Add to Bag · $${PRODUCT.price.toFixed(2)}`;
     document.getElementById('soldNote').style.display = soldOut ? '' : 'none';
-    document.getElementById('stockForm').style.display = soldOut ? 'grid' : 'none';
   }).catch(() => {});
   fetch('/api/public-config', { cache: 'no-store' }).then(response => response.json()).then(config => {
     if (!config.restockAlertsEnabled) {

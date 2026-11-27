@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     const [stock, enquiries, orders] = await Promise.all([
       sql`SELECT product_key, in_stock, updated_at FROM stock_status ORDER BY product_key`,
       sql`SELECT id, kind, name, business, email, phone, location, rental_period, intended_placement, message, email_status, created_at FROM enquiries ORDER BY created_at DESC LIMIT 100`,
-      sql`SELECT id, order_number, customer_email, status, total_cents, tracking_number, created_at FROM orders ORDER BY created_at DESC LIMIT 100`,
+      sql`SELECT id, order_number, customer_email, status, items, total_cents, tracking_number, created_at FROM orders ORDER BY created_at DESC LIMIT 100`,
     ]);
     res.setHeader('Cache-Control', 'private, no-store');
     return res.status(200).json({ stock, enquiries, orders });

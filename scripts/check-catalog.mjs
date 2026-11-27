@@ -18,7 +18,10 @@ assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 3 }]).t
 // Mascara is not a kit: kit + mascara still pays delivery; 2 mascaras pay delivery
 assert.equal(quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }, { name: 'Ultra Fine Precision Mascara', quantity: 1 }]).total, 7490);
 assert.equal(quote([{ name: 'Ultra Fine Precision Mascara', quantity: 2 }]).total, 4695);
-assert.throws(() => quote([{ name: 'Pretty Ambition', quantity: 1 }]), /sold out/);
+// Pretty Ambition out of stock = pre-order (still sold, line flagged); in stock = normal line.
+{ const pre = quote([{ name: 'Pretty Ambition', quantity: 1 }]); assert.equal(pre.lines[0].preorder, true); assert.equal(pre.total, 5199 + 495); }
+assert.equal(quote([{ name: 'Pretty Ambition', quantity: 1 }], { 'pretty-ambition': true }).lines[0].preorder, undefined);
+assert.equal(quote([{ name: 'Pretty Ambition', quantity: 1 }, { name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }]).shipping, 0);
 assert.throws(() => quote([{ name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]), /not available/);
 assert.throws(() => quote([{ name: 'DIY Cluster Lash Kit — Volume', quantity: 1 }, { name: 'Ultra Fine Precision Mascara', quantity: 1, addon: true }]), /not available/);
 ADDONS['Ultra Fine Precision Mascara'].addonPriceCents = 1500;

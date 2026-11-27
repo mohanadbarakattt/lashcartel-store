@@ -52,7 +52,7 @@ export default async function handler(req, res) {
     }
     const discountCents = referralCents + redemption.cents;
     const totalCents = pricing.total - discountCents;
-    const summary = pricing.lines.map(line => `${line.name} x${line.quantity}`);
+    const summary = pricing.lines.map(line => `${line.name}${line.preorder ? ' (PRE-ORDER)' : ''} x${line.quantity}`);
 
     const gift = GIFT_OPTIONS.includes(freeGift) ? freeGift : GIFT_OPTIONS[0];
 

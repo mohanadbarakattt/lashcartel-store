@@ -864,7 +864,7 @@
   // Buy 2 Kits, Get Free Delivery (mirrors lib/catalog.js; the server sets the real amount).
   const FREE_DELIVERY_MIN_KITS = 2;
   const SHIPPING_FLAT = 4.95;
-  const SOLD_OUT = ['Pretty Ambition'];
+  const SOLD_OUT = []; // Pretty Ambition is on pre-order while out of stock, so it stays in the bag
   const GIFT_OPTIONS = ['Tea Tree Mint Foot Mask', 'Coconut Repair Foot Mask'];
   let ADDON_OFFERS = {};
 
@@ -897,7 +897,7 @@
   const PRODUCTS = [
     { name: 'DIY Cluster Lash Kit — Volume', cat: 'lashes', kind: 'lash', tag: 'Complete DIY Set', price: LC_CATALOG['DIY Cluster Lash Kit — Volume'], desc: 'The full-glam set — dense volume clusters in 8–16mm plus bond, seal, remover and applicator. For the baddies on the go.', badge: 'Bestseller', faith: false, tm: false, img: '/assets/products/cluster-lash-kit/Volume/volume_main.jpg', href: '/cluster-lash-kit?style=Volume' },
     { name: 'DIY Cluster Lash Kit — Natural', cat: 'lashes', kind: 'lash', tag: 'Complete DIY Set', price: LC_CATALOG['DIY Cluster Lash Kit — Natural'], desc: 'The everyday set — soft, wispy natural clusters in 8–16mm plus bond, seal, remover and applicator. Your lashes, but better.', badge: 'New', faith: false, tm: false, img: '/assets/products/cluster-lash-kit/Natural/Natural_Main.jpg', href: '/cluster-lash-kit?style=Natural' },
-    { name: 'Pretty Ambition', cat: 'lashes', kind: 'lash', tag: 'Pre-Glued Press-On', price: LC_CATALOG['Pretty Ambition'], soldOut: true, desc: 'Pre-glued press-on cluster lashes with a thin, invisible band — natural-looking, long-lasting, and no glue needed.', badge: 'Beginner-Friendly', faith: false, tm: true, img: '/assets/products/pretty-ambition/pa-result.jpg', href: '/pretty-ambition' },
+    { name: 'Pretty Ambition', cat: 'lashes', kind: 'lash', tag: 'Pre-Glued Press-On', price: LC_CATALOG['Pretty Ambition'], soldOut: true, preorder: true, desc: 'Pre-glued press-on cluster lashes with a thin, invisible band — natural-looking, long-lasting, and no glue needed.', badge: 'Beginner-Friendly', faith: false, tm: true, img: '/assets/products/pretty-ambition/pa-result.jpg', href: '/pretty-ambition' },
     { name: 'Ultra Fine Precision Mascara', cat: 'lashes', kind: 'mascara', tag: 'Lengthening & Curling', price: LC_CATALOG['Ultra Fine Precision Mascara'], desc: 'An ultra-fine precision brush for lengthening, curling and waterproof definition — clump-free, all-day hold.', badge: 'New', faith: false, tm: false, img: '/assets/products/mascara/mascara-promo.jpg', href: '/mascara' },
   ];
 
@@ -961,17 +961,20 @@
     document.getElementById('productGrid').innerHTML = raffleCard + list.map(p => {
       const imgInner = p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : motif(p);
       const titleHTML = `${p.name}${p.tm ? '<span style="font-size:13px;vertical-align:super;">™</span>' : ''}`;
-      const badgeText = p.soldOut ? 'Sold Out' : p.badge;
-      const badgeCls = p.soldOut ? 'sold' : (p.faith ? 'faith' : '');
+      const isPre = p.soldOut && p.preorder, isSold = p.soldOut && !p.preorder;
+      const badgeText = isPre ? 'Pre-order' : isSold ? 'Sold Out' : p.badge;
+      const badgeCls = isSold ? 'sold' : (p.faith ? 'faith' : '');
       const badgeTag = badgeText ? `<span class="badge ${badgeCls}">${badgeText}</span>` : '';
       const imgBlock = p.hideImg
         ? ''
         : p.href
-        ? `<a href="${p.href}" class="card-img${p.soldOut ? ' is-sold' : ''}" aria-label="${p.name}">${badgeTag}${imgInner}</a>`
-        : `<div class="card-img${p.soldOut ? ' is-sold' : ''}">${badgeTag}${imgInner}</div>`;
+        ? `<a href="${p.href}" class="card-img${isSold ? ' is-sold' : ''}" aria-label="${p.name}">${badgeTag}${imgInner}</a>`
+        : `<div class="card-img${isSold ? ' is-sold' : ''}">${badgeTag}${imgInner}</div>`;
       const badgePill = p.hideImg && badgeText ? `<span class="card-badge-inline ${badgeCls}">${badgeText}</span>` : '';
       const titleBlock = p.href ? `<a href="${p.href}"><h3>${titleHTML}</h3></a>` : `<h3>${titleHTML}</h3>`;
-      const cta = p.soldOut
+      const cta = isPre && p.href
+        ? `<a class="add-btn" href="${p.href}" style="text-align:center;text-decoration:none;">Pre-order now</a>`
+        : isSold
         ? `<button class="add-btn is-sold-out" disabled aria-disabled="true">Sold Out</button>`
         : p.href
         ? `<a class="add-btn" href="${p.href}" style="text-align:center;text-decoration:none;">View Product</a>`
@@ -1104,7 +1107,7 @@
       <div class="cart-row">
         <div class="thumb" style="${img ? 'overflow:hidden;' : ''}">${img ? `<img src="${img}" alt="" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" />` : (i.kind === 'skin' ? skinSVG() : lashSVG())}</div>
         <div class="info">
-          <span class="cat-label">${i.tag}</span>
+          <span class="cat-label">${i.tag}</span>${i.name === 'Pretty Ambition' && PRODUCTS.some(p => p.name === 'Pretty Ambition' && p.soldOut) ? '<span style="display:block;font-size:12px;color:var(--rose-dark);font-weight:600;">Pre-order · back in stock in 10 days</span>' : ''}
           <h4>${i.name}</h4>
           ${i.variant ? `<span class="cat-label" style="color:var(--ink-soft);letter-spacing:.4px;text-transform:none;">${i.variant}</span>` : ''}
           <div class="qty">
@@ -1350,7 +1353,6 @@
     if (!stock) return;
     const pretty = PRODUCTS.find(p => p.name === 'Pretty Ambition');
     pretty.soldOut = !stock['pretty-ambition'];
-    if (!pretty.soldOut) SOLD_OUT.splice(SOLD_OUT.indexOf('Pretty Ambition'), 1);
     renderProducts();
   }).catch(() => {});
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); closeCheckoutModal(); closeSearch(); } });
